@@ -9,10 +9,11 @@ package Config;
 public abstract class Config {
 
     private static String host = "localhost";
-    private static String port = "54804";
+    private static String port = "3306";
     private static String dbUsername = "root";
-    private static String dbPassword = "root";
+    private static String dbPassword = "ukamm19";
     private static String dbCalendar = "cbscalendar";
+    private static String resPath = "res/";
 
     public static String getHost() {
         return host;
@@ -32,6 +33,10 @@ public abstract class Config {
 
     public static String getDbCalendar() {
         return dbCalendar;
+    }
+
+    public static String getResPath() {
+        return resPath;
     }
 
     public static void setHost(String host) {

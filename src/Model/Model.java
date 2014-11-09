@@ -18,13 +18,12 @@ public abstract class Model {
     private static String dbName = Config.getDbCalendar();
     
     private Statement stmt;
-    protected Connection conn = null;
+    protected static Connection conn = null;
     protected PreparedStatement sqlStatement;
     protected ResultSet resultSet;
 
     /**
      * Overwrite default database url
-     *
      * @param
      */
     public static void setSelectedDatabase(String db) {
@@ -33,13 +32,16 @@ public abstract class Model {
         }
     }
 
-
-    public boolean doesDatabaseExist() throws SQLException {
+    /**
+     * Checks if the databse exists or not
+     * @return bool
+     * @throws SQLException
+     */
+    public static boolean doesDatabaseExist() throws SQLException {
         getConnection(true);
         ResultSet resultSet = getConn().getMetaData().getCatalogs();
         while (resultSet.next()) {
             String databaseName = resultSet.getString(1);
-            System.out.println(databaseName);
             if(databaseName.equals(dbName)){
                 return true;
             }
@@ -55,7 +57,7 @@ public abstract class Model {
      * @throws java.io.IOException
      * @throws java.sql.SQLException
      */
-    protected void readfromSqlFile(String filepath) throws IOException, SQLException {
+    protected static void readfromSqlFile(String filepath) throws IOException, SQLException {
         getConnection(true);
         ScriptRunner runner = new ScriptRunner(getConn(), false, false);
         InputStreamReader reader = new InputStreamReader(new FileInputStream(filepath));
@@ -150,7 +152,7 @@ public abstract class Model {
      *
      * @throws java.sql.SQLException
      */
-    public void getConnection(Boolean init) throws SQLException {
+    public static void getConnection(Boolean init) throws SQLException {
     	if(init) {
     		setConn(DriverManager.getConnection(sqlUrl, sqlUser, sqlPasswd));
     	}else{
@@ -181,7 +183,7 @@ public abstract class Model {
      *
      * @return Connection class
      */
-    public Connection getConn() {
+    public static Connection getConn() {
         return conn;
     }
 
@@ -190,8 +192,8 @@ public abstract class Model {
      *
      * @param conn
      */
-    private void setConn(Connection conn) {
-        this.conn = conn;
+    private static void setConn(Connection conn) {
+        Model.conn = conn;
     }
 
 
