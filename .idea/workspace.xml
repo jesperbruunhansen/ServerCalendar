@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3eb9b633-641b-4de9-af36-33d59e640149" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Config/Config.java" afterPath="$PROJECT_DIR$/src/Config/Config.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Controller/Controller.java" afterPath="$PROJECT_DIR$/src/Controller/Controller.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Model/Model.java" afterPath="$PROJECT_DIR$/src/Model/Model.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="ServerCalendar.iws" />
@@ -560,7 +557,11 @@
       <created>1415531637946</created>
       <updated>1415531637946</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="View files added, cleaned up model-code in Gui">
+      <created>1415534471801</created>
+      <updated>1415534471801</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -608,7 +609,8 @@
       <TodoPanelSettings />
     </option>
     <MESSAGE value="Basic structure of new project&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Basic structure of new project&#10;" />
+    <MESSAGE value="View files added, cleaned up model-code in Gui" />
+    <option name="LAST_COMMIT_MESSAGE" value="View files added, cleaned up model-code in Gui" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
