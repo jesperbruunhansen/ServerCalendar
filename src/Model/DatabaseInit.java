@@ -25,6 +25,7 @@ public class DatabaseInit extends Model {
             System.err.println(e.getStackTrace());
         }
 
+        //Note fra helena
 
     }
 
