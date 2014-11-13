@@ -17,8 +17,11 @@ import java.util.Map;
  */
 public class Server {
 
+    private static Map<String, String> paramValue = new HashMap<String, String>();
     private static final String CALL_PARAMETER = "call?";
     private String idValue;
+    private SwitchController switchController = new SwitchController();
+
 
     /**
      * WebServer constructor.
@@ -53,13 +56,11 @@ public class Server {
                     if (line.isEmpty()) break;
                    header += line;
                 }
-               // System.out.println(header);
-
 
                 // Send the response
                 // Send the headers
                 out.println("HTTP/1.0 200 OK");
-                out.println("Content-Type: text/html");
+                out.println("Content-Type: application/json");
                 out.println("Server: Bot");
                 // this blank line signals the end of the headers
                 out.println("");
@@ -67,12 +68,15 @@ public class Server {
 
                 parseGetParameters(header);
 
-                //SwitchController.foo("id", getHeaderParams().get("id"));
+                switchController.keyValuePair("id", getHeaderParams().get("id"));
+
+
 
                 if(getHeaderParams() != null){
-                    for(String key : getHeaderParams().keySet()){
-                        out.println(key + " -> " + getHeaderParams().get(key));
-                    }
+                    //out.println(switchController.getJsonResponse());
+                //    for(String key : getHeaderParams().keySet()){
+                //        out.println(key + " -> " + getHeaderParams().get(key));
+                //    }
                 }
                 out.flush();
                 remote.close();
@@ -82,8 +86,6 @@ public class Server {
         }
 
     }
-
-    private static Map<String, String> paramValue = new HashMap<String, String>();
 
     /**
      * Read response from client and set key and values from GET parameters
@@ -111,14 +113,6 @@ public class Server {
             }
 
         }
-    }
-
-    private void setIdValue(String value){
-       this.idValue = value;
-    }
-
-    public String getIdValue(){
-        return idValue;
     }
 
     /**
