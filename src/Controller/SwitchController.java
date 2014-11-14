@@ -1,34 +1,19 @@
 package Controller;
 
+import Model.QueryBuild.QueryBuilder;
+import Server.ServerRequestHandler;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  * Created by jesperbruun on 13/11/14.
  */
-public class SwitchController {
+public class SwitchController extends ServerRequestHandler{
 
-    public enum API {
-        GET_ALL_EVENTS(200, "OK"),
-        BAD_REQUEST(400, "Bad Request"),
-        SERVER_ERROR(500, "Internal Server Error");
-
-        private int statusCode;
-        private String statusMessage;
-
-        private API(int statusCode, String  statusMessage){
-            this.statusCode = statusCode;
-            this.statusMessage = statusMessage;
-        }
-
-        public int getStatusCode(){
-            return statusCode;
-        }
-        public String getStatusMessage(){
-            return statusMessage;
-        }
-
-
-    }
-
+    private QueryBuilder queryBuilder = new QueryBuilder();
     private String jsonResponse;
+    private ResultSet rs;
 
     /**
      * Server calls this method, every time a client is requesting
@@ -41,18 +26,22 @@ public class SwitchController {
         if(!value.isEmpty()){
             switch (value){
                 case "getAllEvents" :
+                    setHTTPResponseCode(HTTP.OK);
                     setJsonResponse("{This is a json representation of all events}");
                     break;
                 case "getJustSomeEvents" :
+                    setHTTPResponseCode(HTTP.OK);
                     setJsonResponse("{This is just some of the events}");
                     break;
                 default:
-                    setJsonResponse("You mad a bad request brah");
+                    setHTTPResponseCode(HTTP.BAD_REQUEST);
+                    setJsonResponse("Something went wrong!");
                     break;
             }
         }
         else {
-            setJsonResponse("You made a bad reuest brah");
+
+
         }
 
 
