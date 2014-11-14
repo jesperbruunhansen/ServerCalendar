@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class Server {
 
-    private static Map<String, String> paramValue = new HashMap<String, String>();
+    private static Map<String, String> paramValue;
     private static final String CALL_PARAMETER = "call?";
     private String idValue;
     private SwitchController switchController = new SwitchController();
@@ -29,11 +29,12 @@ public class Server {
     public void runServer(int port) {
         ServerSocket s;
 
-        System.out.println("Webserver starting up on port " + port);
+        //System.out.println("Webserver starting up on port " + port);
         System.out.println("(press ctrl-c to exit)");
         try {
             // create the main server socket
             s = new ServerSocket(port);
+            System.out.println("Opening socket on port " + s.getLocalPort());
         } catch (Exception e) {
             System.out.println("Error: " + e);
             return;
@@ -57,6 +58,13 @@ public class Server {
                    header += line;
                 }
 
+                parseGetParameters(header);
+
+                if(getHeaderParams() != null){
+                    switchController.keyValuePair(getHeaderParams().get("id"));
+                    out.println(switchController.getJsonResponse());
+                }
+
                 // Send the response
                 // Send the headers
                 out.println("HTTP/1.0 200 OK");
@@ -66,18 +74,7 @@ public class Server {
                 out.println("");
                 // Send the HTML page
 
-                parseGetParameters(header);
 
-                switchController.keyValuePair("id", getHeaderParams().get("id"));
-
-
-
-                if(getHeaderParams() != null){
-                    //out.println(switchController.getJsonResponse());
-                //    for(String key : getHeaderParams().keySet()){
-                //        out.println(key + " -> " + getHeaderParams().get(key));
-                //    }
-                }
                 out.flush();
                 remote.close();
             } catch (Exception e) {
@@ -86,6 +83,7 @@ public class Server {
         }
 
     }
+
 
     /**
      * Read response from client and set key and values from GET parameters
@@ -108,10 +106,16 @@ public class Server {
 
                 //Split key and value
                 String[] pair = param.split("=");
-                paramValue.put(pair[0], pair[1]);
 
+                //Create new object of Hashmap and insert array in key/value
+                paramValue = new HashMap<>();
+                paramValue.put(pair[0], pair[1]);
             }
 
+        }
+        else {
+            //Set to null, if GET request for some reason is not from an API call
+            paramValue = null;
         }
     }
 
