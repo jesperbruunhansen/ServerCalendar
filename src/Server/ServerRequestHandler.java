@@ -34,11 +34,13 @@ public class ServerRequestHandler {
 
     }
 
-    private static final String MIME_TYPE = "Content-Type: application/json";
-    private static final String SERVER_INFO = "Server: Bot";
     private static Map<String, String> paramValue;
-    private static final String CALL_PARAMETER = "call?";
     private static String HTTPHeader;
+
+    private static final String MIME_TYPE       = "Content-Type: application/json";
+    private static final String SERVER_INFO     = "Server: Bot";
+    private static final String CALL_PARAMETER  = "call?";
+
 
     /**
      * Read response from client and set key and values from GET parameters
@@ -65,13 +67,13 @@ public class ServerRequestHandler {
                     //Create new object of Hashmap and insert array in key/value
                     paramValue = new HashMap<>();
                     paramValue.put(pair[0], pair[1]);
-                    ServerRequestHandler.HTTPHeader = HTTP.OK.toString();
+                    setHTTPResponseCode(HTTP.OK);
                 }
 
             }
         }
         else {
-            ServerRequestHandler.HTTPHeader = HTTP.BAD_REQUEST.toString();
+            setHTTPResponseCode(HTTP.BAD_REQUEST);
             paramValue = null;
         }
     }
@@ -97,8 +99,8 @@ public class ServerRequestHandler {
         return ServerRequestHandler.SERVER_INFO;
     }
 
-    protected void setHTTPResponseCode(HTTP code){
-        this.HTTPHeader = code.toString();
+    protected static void setHTTPResponseCode(HTTP code){
+        ServerRequestHandler.HTTPHeader = code.toString();
     }
 
 

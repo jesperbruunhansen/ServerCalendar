@@ -17,6 +17,25 @@ import java.util.Map;
  */
 public class Server {
 
+    /**
+     * Definition of API calls
+     */
+    private enum API {
+        ID("id");
+
+        private API(String key){
+            this.apiKey = key;
+        }
+
+        private String apiKey;
+
+        public String toString(){
+            return apiKey;
+        }
+
+    }
+
+
     private SwitchController switchController = new SwitchController();
 
     /**
@@ -54,7 +73,7 @@ public class Server {
                 ServerRequestHandler.parseGetParameters(header.substring(0, header.indexOf("\n")));
 
                 if(ServerRequestHandler.getHeaderParams() != null){
-                    switchController.keyValuePair(ServerRequestHandler.getHeaderParams().get("id"));
+                    switchController.keyValuePair(ServerRequestHandler.getHeaderParams().get(API.ID.toString()));
                     System.out.println("Connection!");
                     // Send the response
                     // Send the headers
@@ -71,14 +90,6 @@ public class Server {
 
                     out.println(switchController.getJsonResponse());
                 }
-
-                //if(getHeaderParams() != null){
-                //    switchController.keyValuePair(getHeaderParams().get("id"));
-                //    out.println(switchController.getJsonResponse());
-                //}
-
-
-
 
                 out.flush();
                 remote.close();

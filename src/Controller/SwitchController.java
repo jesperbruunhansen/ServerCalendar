@@ -5,6 +5,7 @@ import Server.ServerRequestHandler;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Map;
 
 /**
  * Created by jesperbruun on 13/11/14.
@@ -40,7 +41,8 @@ public class SwitchController extends ServerRequestHandler{
             }
         }
         else {
-
+            setHTTPResponseCode(HTTP.BAD_REQUEST);
+            setJsonResponse("{failed}");
 
         }
 
