@@ -1,147 +1,86 @@
 package View;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-
-import java.awt.Font;
-
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-
 import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.BevelBorder;
-
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JButton;
 import java.awt.Color;
-
-import javax.swing.border.MatteBorder;
-
-import java.awt.Cursor;
-
+import java.awt.Font;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import java.awt.Dimension;
-
-import javax.swing.JPasswordField;
-
+/**
+ * Created by Casper on 14/11/14.
+ */
 public class Login extends JPanel {
-	private final JLabel lblWelcome = new JLabel("Welcome");
-	private final JLabel lblUsername = new JLabel("Username");
-	private final JLabel lblPassword = new JLabel("Password");
-	private final JButton btnLogIn = new JButton("Log In");
-	private final JButton btnForgotLogIn = new JButton("Forgot username or password?");
-	private final JTextField textFieldUsername = new JTextField();
-	private final JLabel lblCBSlogo = new JLabel("");
-	private final JLabel lblBackground = new JLabel("");
-	private final JPasswordField textFieldPassword = new JPasswordField();
 	
+	public JPanel panel;
+	public ImageIcon image;
+	public JLabel lbWall;
+	public JLabel lbIcon;
+	public JButton btnLogin;
+	public JPasswordField textPass;
+	public JTextField textUser;
 
-
-	/**
-	 * Create the panel.
-	 */
 	public Login() {
-		setSize(new Dimension(1366, 768));
-		setForeground(new Color(255, 255, 255));
-		setBackground(new Color(105, 105, 105));
 		setLayout(null);
-		lblWelcome.setCursor(Cursor.getPredefinedCursor(Cursor.N_RESIZE_CURSOR));
-		lblWelcome.setForeground(new Color(255, 255, 255));
-		lblWelcome.setFont(new Font("Arial", Font.BOLD, 78));
-		lblWelcome.setBounds(510, 90, 346, 107);
+		setBounds(150, 150, 1024, 768);
 		
-		add(lblWelcome);
-		lblUsername.setForeground(new Color(255, 255, 255));
-		lblUsername.setFont(new Font("Arial", Font.BOLD, 26));
-		lblUsername.setBounds(499, 335, 125, 30);
+		panel = new JPanel();
+		panel.setBackground(new Color(255, 255, 255, 100));
+		panel.setBounds(358, 131, 300, 450);
+		add(panel);
+		panel.setLayout(null);
 		
-		add(lblUsername);
-		lblPassword.setForeground(new Color(255, 255, 255));
-		lblPassword.setFont(new Font("Arial", Font.BOLD, 26));
-		lblPassword.setBounds(499, 378, 123, 30);
+		image = new ImageIcon(getClass().getResource("images/login.jpg"));
+		lbWall = new JLabel(image);
+		lbWall.setBounds(0, 0, 1024, 768);
+		add(lbWall);
 		
-		add(lblPassword);
-		btnLogIn.setContentAreaFilled(false);
-		btnLogIn.setFont(new Font("Arial", Font.BOLD, 30));
-		btnLogIn.setForeground(new Color(255, 255, 255));
-		btnLogIn.setBackground(Color.WHITE);
-		btnLogIn.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.LOWERED, new Color(255, 255, 255), new Color(0, 0, 0), new Color(255, 255, 255), new Color(0, 0, 0)), new BevelBorder(BevelBorder.LOWERED, new Color(255, 255, 255), new Color(0, 0, 0), new Color(255, 255, 255), new Color(0, 0, 0))));
-		btnLogIn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		textFieldUsername.setOpaque(false);
-		textFieldUsername.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldUsername.setForeground(Color.BLACK);
-		textFieldUsername.setFont(new Font("Lucida Grande", Font.PLAIN, 17));
-		textFieldUsername.setColumns(10);
-		textFieldUsername.setBorder(new BevelBorder(BevelBorder.LOWERED, new Color(0, 0, 0), new Color(255, 255, 255), new Color(0, 0, 0), new Color(255, 255, 255)));
-		textFieldUsername.setBounds(705, 334, 164, 37);
+		image = new ImageIcon(getClass().getResource("images/hait.png"));
 		
-		add(textFieldUsername);
-		btnLogIn.setBounds(572, 449, 222, 51);
+		textUser = new JTextField();
+		textUser.setHorizontalAlignment(SwingConstants.CENTER);
+		textUser.setFont(new Font("HelveticaNeueLT Pro 55 Roman", Font.PLAIN, 13));
+		textUser.setBounds(36, 283, 225, 30);
+		textUser.setText("Username");
+		textUser.setColumns(10);
+		textUser.setBorder(null);
+		textUser.setColumns(10);
+		panel.add(textUser);
 		
-		add(btnLogIn);
-		btnForgotLogIn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			JOptionPane.showInputDialog("Bad Luck!");
-			}
-		});
-		btnForgotLogIn.setContentAreaFilled(false);
-		btnForgotLogIn.setForeground(new Color(255, 255, 255));
-		btnForgotLogIn.setBorderPainted(false);
-		btnForgotLogIn.setBounds(485, 502, 403, 41);
+		textPass = new JPasswordField();
+		textPass.setHorizontalAlignment(SwingConstants.CENTER);
+		textPass.setFont(new Font("HelveticaNeueLT Pro 55 Roman", Font.PLAIN, 13));
+		textPass.setBounds(36, 324, 225, 30);
+		textPass.setText("Password");
+		textPass.setColumns(10);
+		textPass.setBorder(null);
+		panel.add(textPass);
 		
-		add(btnForgotLogIn);
-		//lblCBSlogo.setIcon(new ImageIcon(Login.class.getResource("/Images/CBSLogo3.png")));
-		//lblCBSlogo.setBounds(10, 698, 250, 59);
+		btnLogin = new JButton("Login");
+		btnLogin.setFont(new Font("HelveticaNeueLT Pro 55 Roman", Font.PLAIN, 15));
+		btnLogin.setForeground(new Color(255, 255, 255));
+		btnLogin.setBounds(36, 382, 225, 30);
+		btnLogin.setBackground(new Color(0, 204, 153));
+		btnLogin.setBorderPainted(false);
+		btnLogin.setFocusPainted(false);
+		btnLogin.setOpaque(true);
+		panel.add(btnLogin);
 		
-	//	add(lblCBSlogo);
-		setFont(new Font("Lucida Grande", Font.PLAIN, 17));
-		textFieldPassword.setOpaque(false);
-		textFieldPassword.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldPassword.setColumns(10);
-		textFieldPassword.setBorder(new BevelBorder(BevelBorder.LOWERED, new Color(0, 0, 0), new Color(255, 255, 255), new Color(0, 0, 0), new Color(255, 255, 255)));
-		textFieldPassword.setBounds(705, 372, 164, 37);
-		
-		add(textFieldPassword);
-		lblBackground.setHorizontalAlignment(SwingConstants.CENTER);
-		lblBackground.setIcon(new ImageIcon("src/View/Images/MetalBackground.jpg"));
-		lblBackground.setSize(new Dimension(1366, 768));
-		lblBackground.setBounds(0, 0, 1366, 768);
-
-		add(lblBackground);
+		lbIcon = new JLabel(image);
+		lbIcon.setBounds(0, 15, 300, 257);
+		panel.add(lbIcon);
 
 	}
-
-	public JTextField getTextField() {
-		return textFieldUsername;
+	
+	public JButton getBtnLogin() {
+    		return btnLogin;
 	}
-
-
-	public JButton getBtnLogIn() {
-		return btnLogIn;
+	
+	public void addListeners(ActionListener l){
+		btnLogin.addActionListener(l);
 	}
-
-	public JButton getBtnForgotLogIn() {
-		return btnForgotLogIn;
-	}
-	public void addActionListener(ActionListener l) {
-		btnLogIn.addActionListener(l);
-		btnForgotLogIn.addActionListener(l);
 }
-
-	public JTextField getTextFieldUsername() {
-		return textFieldUsername;
-	}
-
-	public JPasswordField getTextFieldPassword() {
-		return textFieldPassword;
-	}
-
-
-	}

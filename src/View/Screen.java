@@ -1,96 +1,66 @@
 package View;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.CardLayout;
 
+import java.awt.CardLayout;
+import java.awt.Color;
+
+/**
+ * Created by Casper on 14/11/14.
+ */
 public class Screen extends JFrame {
 
-	public static final String LOGIN = "name_276091497157488";
-	public static final String MAINMENU = "name_276416022878030";
-	public static final String USERINFO = "name_277892826656058";
-	public static final String ADDUSERGUI = "name_278604525733268";
-	public static final String NOTELIST = "name_278522430661848";
-	public static final String USERLIST = "name_280161954000083";
-	public static final String EVENTLIST = "name_534038022095149";
-	public static final String ADDEVENTGUI = "name_6308445225625";
-	public static final String ADDUSER = "name_10334207821613";
+	//Final representation of screens
+	public static final String LOGIN = "login";
+	public static final String WELCOME = "welcome";
+    public static final String USERLIST = "userlist";
 	
-	private JPanel contentPane;
-	private final Login login = new Login();
-	private final MainMenu mainMenu = new MainMenu();
-	private final UserInfo userInfo = new UserInfo();
-	private final NoteList noteList = new NoteList();
-	private final UserList userlist = new UserList();
-	CardLayout c;
-	private final EventList eventList = new EventList();
-	private AddEventGUI addEventGUI;
-	private final AddUser addUser = new AddUser();
+	public JPanel contentPane;
+	public final Login login;
+	public final Welcome welcome;
+    public final UserList userList;
 
+	CardLayout c;
+	
 	public Screen() {
-		setTitle("Doek4life");
-        setVisible(true);
-		setResizable(false);
+
+        setTitle("HAIT Calendar");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1366, 768);
-		
-		JPanel contentPane = (JPanel) this.getContentPane();
-		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
-		this.setContentPane(contentPane);
+		setBounds(150, 150, 1024, 768);
+		setResizable(false);
+
+		//Create new contentpane
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(0, 153, 204));
 		contentPane.setLayout(new CardLayout(0, 0));
+		setContentPane(contentPane);
+
+		//Add login-screen
+		login = new Login();
+		contentPane.add(login, LOGIN);
 		
-		contentPane.add(addUser, "name_10334207821613");
-		
-		addEventGUI = new AddEventGUI();
-		contentPane.add(addEventGUI, "name_6308445225625");
-		login.getBtnLogIn().setContentAreaFilled(false);
-		login.getBtnForgotLogIn().setContentAreaFilled(false);
-		
-		contentPane.add(login, "name_276091497157488");
-		
-		contentPane.add(mainMenu, "name_276416022878030");
-		
-		contentPane.add(userInfo, "name_277892826656058");
-		
-		contentPane.add(noteList, "name_278522430661848");
-		
-		contentPane.add(eventList, "name_534038022095149");
-		
-		contentPane.add(userlist, "name_280161954000083");
+		//Add Welcome-screen
+		welcome = new Welcome();
+		contentPane.add(welcome, WELCOME);
+
+        //Add User List-screen
+        userList = new UserList();
+        contentPane.add(userList, USERLIST);
+
+		//Get Layout for contentpane
 		c = (CardLayout) getContentPane().getLayout();
+
+        show(Screen.LOGIN);
+        setVisible(true);
+	}
+
+	public void show(String card) {
+		c.show(getContentPane(), card);
 	}
 	
 	public Login getLogin() {
 		return login;
 	}
-	
-	public MainMenu getMainMenu() {
-		return mainMenu;
-	}
-	public UserInfo getUserInfo() {
-		return userInfo;
-	}
-	
-	public NoteList getNoteList() {
-		return noteList;
-	}
-	public UserList getUserList() {
-		return userlist;
-	}
-	public void show(String card) {
-		c.show(getContentPane(),  card);
-	}
-	public EventList getEventlist() {
-		return eventList;
-	}
-	public AddEventGUI getAddEventGUI() {
-		return addEventGUI;
-	}
-	public AddUser getAddUser() {
-		return addUser;
-	}
+
 }
