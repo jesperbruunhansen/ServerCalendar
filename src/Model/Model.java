@@ -94,7 +94,7 @@ public abstract class Model {
                 return true;
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
 
         return false;
