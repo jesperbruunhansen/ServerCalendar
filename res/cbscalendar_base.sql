@@ -23,6 +23,7 @@
 # Dump of table Calender
 # ------------------------------------------------------------
 
+USE cbscalendar;
 DROP TABLE IF EXISTS `Calender`;
 
 CREATE TABLE `Calender` (

@@ -25,6 +25,8 @@ public class WelcomeController extends Controller implements ActionListener {
         //If login button is clicked
         if(e.getSource() == screen.welcome.getBtnLogout()){
             screen.show(Screen.LOGIN);
+            screen.login.setUsername("E-mail");
+            screen.login.setPassword("Password");
         }
     }
 

@@ -14,7 +14,7 @@ import java.util.*;
  */
 public class Controller{
 
-    protected QueryBuilder queryBuilder;
+    protected QueryBuilder queryBuilder = new QueryBuilder();
     protected ResultSet resultSet;
 
     public void init(){

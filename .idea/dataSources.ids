@@ -8,6 +8,7 @@
     <case-sensitivity plain-identifiers="mixed" quoted-identifiers="upper"/>
     <schema name="" catalog="Exercise"/>
     <schema name="" catalog="batm"/>
+    <schema name="" catalog="cbscalendar"/>
     <schema name="" catalog="information_schema"/>
     <schema name="" catalog="mysql"/>
     <schema name="" catalog="performance_schema"/>
@@ -44,6 +45,82 @@
     </table>
     <table name="exrate" schema="" catalog="batm" type="TABLE">
       <column name="exchangerate" sqlType="DOUBLE" precision="22" scale="0" nullable="false" jdbcType="8"/>
+    </table>
+    <table name="Calender" schema="" catalog="cbscalendar" type="TABLE">
+      <column name="CalenderID" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="Name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="Active" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
+      <column name="CreatedBy" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="PrivatePublic" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6" remarks="MSA9IHB1YmxpYyAJMiA9IHByaXZhdGU="/>
+      <primary-key name="PRIMARY" columns="CalenderID"/>
+      <exported-key name="events_ibfk_1" table="events" schema="" catalog="cbscalendar" columns="CalenderID"/>
+      <exported-key name="userevents_ibfk_1" table="userevents" schema="" catalog="cbscalendar" columns="CalenderID"/>
+    </table>
+    <table name="dailyupdate" schema="" catalog="cbscalendar" type="TABLE">
+      <column name="date" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="apparentTemperature" sqlType="DOUBLE" precision="22" scale="0" nullable="true" jdbcType="8"/>
+      <column name="summary" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="windspeed" sqlType="DOUBLE" precision="22" scale="0" nullable="true" jdbcType="8"/>
+      <column name="qotd" sqlType="VARCHAR" precision="300" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="date"/>
+      <index name="date" unique="true" columns="date"/>
+    </table>
+    <table name="events" schema="" catalog="cbscalendar" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="activity_id" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="event_id" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="location" sqlType="VARCHAR" precision="105" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="createdby" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="start" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="end" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="title" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="text" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="customevent" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6" remarks="RGVjaWRlcyB3ZXRoZXIgdGhlIGV2ZW50IGlzIGFuIGltcG9ydC1ldmVudCBvciB1c2VyIGNyZWF0ZWQg"/>
+      <column name="CalenderID" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="events_ibfk_1" columns="CalenderID" ref-table="Calender" ref-schema="" ref-catalog="cbscalendar" ref-columns="CalenderID" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="events_ibfk_2" columns="createdby" ref-table="users" ref-schema="" ref-catalog="cbscalendar" ref-columns="userid" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+    <table name="locationdata" schema="" catalog="cbscalendar" type="TABLE">
+      <column name="locationdataid" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="longitude" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="latitude" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="locationdataid"/>
+      <index name="latitude" unique="true" columns="latitude"/>
+    </table>
+    <table name="notes" schema="" catalog="cbscalendar" type="TABLE">
+      <column name="noteid" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="eventid" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="createdby" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="text" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="created" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="noteid"/>
+      <foreign-key name="notes_ibfk_1" columns="createdby" ref-table="users" ref-schema="" ref-catalog="cbscalendar" ref-columns="userid" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+    <table name="roles" schema="" catalog="cbscalendar" type="TABLE">
+      <column name="roleid" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="userid" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="type" sqlType="VARCHAR" precision="200" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="roleid"/>
+      <foreign-key name="roles_ibfk_1" columns="userid" ref-table="users" ref-schema="" ref-catalog="cbscalendar" ref-columns="userid" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+    <table name="userevents" schema="" catalog="cbscalendar" type="TABLE">
+      <column name="userid" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="CalenderID" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <foreign-key name="userevents_ibfk_1" columns="CalenderID" ref-table="Calender" ref-schema="" ref-catalog="cbscalendar" ref-columns="CalenderID" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="userevents_ibfk_2" columns="userid" ref-table="users" ref-schema="" ref-catalog="cbscalendar" ref-columns="userid" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+    <table name="users" schema="" catalog="cbscalendar" type="TABLE">
+      <column name="userid" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="email" sqlType="VARCHAR" precision="40" scale="0" nullable="false" jdbcType="12"/>
+      <column name="active" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
+      <column name="created" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="password" sqlType="VARCHAR" precision="200" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="userid"/>
+      <exported-key name="events_ibfk_2" table="events" schema="" catalog="cbscalendar" columns="createdby"/>
+      <exported-key name="notes_ibfk_1" table="notes" schema="" catalog="cbscalendar" columns="createdby"/>
+      <exported-key name="roles_ibfk_1" table="roles" schema="" catalog="cbscalendar" columns="userid"/>
+      <exported-key name="userevents_ibfk_2" table="userevents" schema="" catalog="cbscalendar" columns="userid"/>
     </table>
     <table name="CHARACTER_SETS" schema="" catalog="information_schema" type="SYSTEM VIEW">
       <column name="CHARACTER_SET_NAME" sqlType="VARCHAR" precision="32" scale="0" nullable="false" jdbcType="12" def="Jyc="/>

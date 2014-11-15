@@ -3,6 +3,7 @@
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/libs/ibatis-2.3.0.677.jar!/" />
       <root url="jar://$PROJECT_DIR$/libs/gson-2.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/mysql-connector-java-5.1.29-bin.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

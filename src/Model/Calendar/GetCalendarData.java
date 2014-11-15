@@ -80,7 +80,7 @@ public class GetCalendarData {
 
             List<Event> eventList = new ArrayList<>();
 
-            while (rs.next()){
+            /*while (rs.next()){
                 Event event = new Event();
                 event.setActivityid(rs.getString("activity_id"));
                 event.setEventid(rs.getString("event_id"));
@@ -88,13 +88,14 @@ public class GetCalendarData {
                 event.setCreatedby(rs.getInt("createdby"));
                 event.setSt
                 userList.add(users);
-            }
+            }*/
 
-            return gson.toJson(userList);
+           // return gson.toJson(userList);
         }
         catch (Exception e){
             e.printStackTrace();
         }
+        return null;
     }
 
     public void setCalendarEventsToDb() throws Exception {

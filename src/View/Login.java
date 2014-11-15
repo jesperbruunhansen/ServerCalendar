@@ -1,6 +1,8 @@
 package View;
 
 import java.awt.event.ActionListener;
+import java.awt.event.FocusListener;
+import java.awt.event.KeyListener;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -45,7 +47,7 @@ public class Login extends JPanel {
 		textUser.setHorizontalAlignment(SwingConstants.CENTER);
 		textUser.setFont(new Font("HelveticaNeueLT Pro 55 Roman", Font.PLAIN, 13));
 		textUser.setBounds(36, 283, 225, 30);
-		textUser.setText("Username");
+		textUser.setText("E-mail");
 		textUser.setColumns(10);
 		textUser.setBorder(null);
 		textUser.setColumns(10);
@@ -75,12 +77,62 @@ public class Login extends JPanel {
 		panel.add(lbIcon);
 
 	}
-	
+
+    //Return login button
 	public JButton getBtnLogin() {
     		return btnLogin;
 	}
-	
-	public void addListeners(ActionListener l){
+
+    //Return username TextField
+    public JTextField getFieldUsername(){
+        return textUser;
+    }
+
+    //Returns password-field
+    public JTextField getFieldPassword(){
+        return textPass;
+    }
+
+    //Returns contents of username as a string
+    public String getUsername(){
+        return textUser.getText();
+    }
+
+    //Set username textfield
+    public void setUsername(String s){
+        textUser.setText(s);
+    }
+
+    //Returns contents of password as a string
+    public String getPassword(){
+        return textPass.getText();
+    }
+
+    //Set set password field
+    public void setPassword(String s){
+        textPass.setText(s);
+    }
+
+    public void addListeners(ActionListener l, KeyListener kl, FocusListener fl){
+        btnLogin.addActionListener(l);
+        textUser.addKeyListener(kl);
+        textPass.addKeyListener(kl);
+        textUser.addFocusListener(fl);
+        textPass.addFocusListener(fl);
+    }
+
+	//Adding actionlisteners
+/*	public void addListeners(ActionListener l){
 		btnLogin.addActionListener(l);
 	}
+
+    public void addKeyListener(KeyListener kl){
+        textUser.addKeyListener(kl);
+        textPass.addKeyListener(kl);
+    }
+
+    public void addFocusListener(FocusListener fl){
+        textUser.addFocusListener(fl);
+        textPass.addFocusListener(fl);
+    }*/
 }

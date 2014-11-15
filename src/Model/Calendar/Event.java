@@ -16,7 +16,6 @@ public class Event {
     private int createdby;
     private ArrayList<String> start;
     private ArrayList<String> end;
-    private String string
 
     // Settere og gettere for Event objektet 
     public void setActivityid(String activityid){
@@ -78,7 +77,7 @@ public class Event {
     public void setEnd(ArrayList<String> end){
         this.end = end;
     }
-    public void setEnd(String end) {this.}
+
     public ArrayList<String> getEnd(){
         return end;
     }
