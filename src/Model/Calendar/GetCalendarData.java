@@ -22,16 +22,7 @@ public class GetCalendarData {
     private Gson gson;
     private QueryBuilder queryBuilder;
     private ResultSet rs;
-    private String jsonResponse;
 
-
-    public String getJsonResponse(){
-        return jsonResponse;
-    }
-
-    private void setJsonResponse(String json){
-        this.jsonResponse = json;
-    }
 
     //henter data fra URL og l??er ind til en string
     private static String readUrl(String urlString) throws Exception {
@@ -52,7 +43,7 @@ public class GetCalendarData {
         }
     }
 
-    public void getDataFromCalendar() {
+    public String getAllUsers() {
 
         try{
             queryBuilder = new QueryBuilder();
@@ -70,14 +61,40 @@ public class GetCalendarData {
                 userList.add(users);
             }
 
-            setJsonResponse(gson.toJson(userList));
+            return gson.toJson(userList);
         }
         catch (Exception e){
             e.printStackTrace();
         }
 
+        return null;
 
+    }
 
+    public String getAllEvents(){
+        try{
+            queryBuilder = new QueryBuilder();
+            gson = new Gson();
+
+            rs = queryBuilder.selectFrom("events").all().ExecuteQuery();
+
+            List<Event> eventList = new ArrayList<>();
+
+            while (rs.next()){
+                Event event = new Event();
+                event.setActivityid(rs.getString("activity_id"));
+                event.setEventid(rs.getString("event_id"));
+                event.setLocation(rs.getString("location"));
+                event.setCreatedby(rs.getInt("createdby"));
+                event.setSt
+                userList.add(users);
+            }
+
+            return gson.toJson(userList);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void setCalendarEventsToDb() throws Exception {

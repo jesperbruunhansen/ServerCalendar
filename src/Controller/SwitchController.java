@@ -13,9 +13,7 @@ import java.util.Map;
  */
 public class SwitchController extends ServerRequestHandler{
 
-    private QueryBuilder queryBuilder = new QueryBuilder();
     private String jsonResponse;
-    private ResultSet rs;
 
     /**
      * Server calls this method, every time a client is requesting
@@ -35,11 +33,10 @@ public class SwitchController extends ServerRequestHandler{
                     setHTTPResponseCode(HTTP.OK);
                     setJsonResponse("{This is just some of the events}");
                     break;
-                case "getAllUserNames" :
+                case "getAllUsers" :
                     setHTTPResponseCode(HTTP.OK);
                     GetCalendarData calendarData = new GetCalendarData();
-                    calendarData.getDataFromCalendar();
-                    setJsonResponse(calendarData.getJsonResponse());
+                    setJsonResponse(calendarData.getAllUsers());
                     break;
                 default:
                     setHTTPResponseCode(HTTP.BAD_REQUEST);

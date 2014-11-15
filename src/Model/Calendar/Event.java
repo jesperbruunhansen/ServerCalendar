@@ -13,9 +13,10 @@ public class Event {
     private String title;
     private String description;
     private String location;
-    private String createdby;
+    private int createdby;
     private ArrayList<String> start;
     private ArrayList<String> end;
+    private String string
 
     // Settere og gettere for Event objektet 
     public void setActivityid(String activityid){
@@ -60,10 +61,10 @@ public class Event {
         return location;
     }
 
-    public void setCreatedby(String createdby){
+    public void setCreatedby(int createdby){
         this.createdby = createdby;
     }
-    public String getCreatedby(){
+    public int getCreatedby(){
         return createdby;
     }
     
@@ -77,11 +78,12 @@ public class Event {
     public void setEnd(ArrayList<String> end){
         this.end = end;
     }
+    public void setEnd(String end) {this.}
     public ArrayList<String> getEnd(){
         return end;
     }
 	public Event(String activityid, String eventid, String type, String title,
-			String description, String location, String createdby, ArrayList<String> start,
+			String description, String location, int createdby, ArrayList<String> start,
 			ArrayList<String> end) {
 		super();
 		this.activityid = activityid;
