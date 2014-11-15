@@ -14,8 +14,6 @@ import java.util.*;
  */
 public class Controller{
 
-
-    protected Screen screen;
     protected QueryBuilder queryBuilder;
     protected ResultSet resultSet;
 
@@ -24,7 +22,12 @@ public class Controller{
         /**
          * Start GUI layer of app.
          */
-        screen = new Screen();
+        Screen screen = new Screen();
+
+        new LoginController(screen);
+        new WelcomeController(screen);
+        new UserListController(screen);
+
     }
 
 
