@@ -2,9 +2,11 @@ package Controller;
 
 import Config.Config;
 import Model.DatabaseInit;
+import Model.QueryBuild.QueryBuilder;
 import View.Screen;
 import Server.Server;
 
+import java.sql.ResultSet;
 import java.util.*;
 
 /**
@@ -12,30 +14,18 @@ import java.util.*;
  */
 public class Controller{
 
-    public Controller(){
 
-        /**
-         * Initialize database environment
-         * If env. does not exist, create new based on SQL file in res/createDBscript.sql
-         */
-        //DatabaseInit.init();
+    protected Screen screen;
+    protected QueryBuilder queryBuilder;
+    protected ResultSet resultSet;
 
+    public void init(){
 
         /**
          * Start GUI layer of app.
          */
-        //Screen app = new Screen();
-
-
-        /**
-         * Create new server object, to make server run on specified port nr.
-         */
-        Server server = new Server();
-        server.runServer(Config.getServerPort());
+        screen = new Screen();
     }
-
-
-
 
 
 }
