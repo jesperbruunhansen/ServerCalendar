@@ -16,8 +16,8 @@ public class Bootstrap {
          */
         //DatabaseInit.init();
 
-        Controller controller = new Controller();
-        controller.init();
+        //Controller controller = new Controller();
+        //controller.init();
 
 
         /**

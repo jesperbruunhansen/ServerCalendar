@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.Calendar.GetCalendarData;
 import Model.QueryBuild.QueryBuilder;
 import Server.ServerRequestHandler;
 
@@ -34,6 +35,11 @@ public class SwitchController extends ServerRequestHandler{
                     setHTTPResponseCode(HTTP.OK);
                     setJsonResponse("{This is just some of the events}");
                     break;
+                case "getAllUserNames" :
+                    setHTTPResponseCode(HTTP.OK);
+                    GetCalendarData calendarData = new GetCalendarData();
+                    calendarData.getDataFromCalendar();
+                    break;
                 default:
                     setHTTPResponseCode(HTTP.BAD_REQUEST);
                     setJsonResponse("Something went wrong!");
@@ -43,7 +49,6 @@ public class SwitchController extends ServerRequestHandler{
         else {
             setHTTPResponseCode(HTTP.BAD_REQUEST);
             setJsonResponse("{failed}");
-
         }
 
 

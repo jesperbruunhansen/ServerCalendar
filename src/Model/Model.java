@@ -12,7 +12,7 @@ import java.sql.*;
  **/
 public abstract class Model {
 
-    private static String sqlUrl = "jdbc:mysql://" + Config.getHost() + ":" + Config.getPort() + "/";
+    private static String sqlUrl = "jdbc:mysql://" + Config.getHost() + ":" + Config.getPort();
     private static String sqlUser = Config.getDbUsername();
     private static String sqlPasswd = Config.getDbPassword();
     private static String dbName = Config.getDbCalendar();
@@ -38,7 +38,7 @@ public abstract class Model {
      * @throws SQLException
      */
     public static boolean doesDatabaseExist() throws SQLException {
-        getConnection(true);
+        getConnection();
         ResultSet resultSet = getConn().getMetaData().getCatalogs();
         while (resultSet.next()) {
             String databaseName = resultSet.getString(1);
@@ -58,7 +58,7 @@ public abstract class Model {
      * @throws java.sql.SQLException
      */
     protected static void readfromSqlFile(String filepath) throws IOException, SQLException {
-        getConnection(true);
+        getConnection();
         ScriptRunner runner = new ScriptRunner(getConn(), false, false);
         InputStreamReader reader = new InputStreamReader(new FileInputStream(filepath));
         runner.runScript(reader);
@@ -74,7 +74,7 @@ public abstract class Model {
      */
     public PreparedStatement doQuery(String sql) {
         try {
-            getConnection(false);
+            getConnection();
             getConn();
             sqlStatement = getConn().prepareStatement(sql);
 
@@ -88,8 +88,7 @@ public abstract class Model {
 
     public boolean testConnection() {
         try {
-
-            getConnection(false);
+            getConnection();
 
             if (getConn().isValid(5)) //5 seconds
                 return true;
@@ -102,7 +101,7 @@ public abstract class Model {
     }
 
     public int doUpdate(String update) throws SQLException {
-        getConnection(false);
+        getConnection();
         int temp = 0;
 
         try {
@@ -152,8 +151,8 @@ public abstract class Model {
      *
      * @throws java.sql.SQLException
      */
-    public static void getConnection(Boolean init) throws SQLException {
-    	if(init) {
+    public static void getConnection() throws SQLException {
+    	if(sqlUrl.contains(Config.getDbCalendar())) {
     		setConn(DriverManager.getConnection(sqlUrl, sqlUser, sqlPasswd));
     	}else{
     		setConn(DriverManager.getConnection(sqlUrl+"/"+dbName, sqlUser, sqlPasswd));

@@ -1,6 +1,7 @@
 package Model.QueryBuild;
 
 
+import Config.Config;
 import Model.Model;
 
 import java.sql.ResultSet;
@@ -47,13 +48,13 @@ public class Execute extends Model {
     }
 
     public ResultSet ExecuteQuery() throws SQLException{
-        setSelectedDatabase("cbscalendar");
+        //setSelectedDatabase(Config.getDbCalendar());
 
         String sql = "";
         if(isGetAll()){
              sql = SELECT + getQueryBuilder().getSelectValue() + FROM + getQueryBuilder().getTableName() + ";";
             try {
-                getConnection(true);
+                getConnection();
                 getConn();
                 sqlStatement = getConn().prepareStatement(sql);
 
@@ -65,14 +66,19 @@ public class Execute extends Model {
             sql = SELECT + getQueryBuilder().getSelectValue() +
                     FROM + getQueryBuilder().getTableName() +
                     WHERE + getWhere().getWhereKey() + " " + getWhere().getWhereOperator() + " ?;";
+
             try {
-                getConnection(true);
+                getConnection();
                 getConn();
                 sqlStatement = getConn().prepareStatement(sql);
                 sqlStatement.setString(1, getWhere().getWhereValue());
 
             } catch (SQLException e) {
                 e.printStackTrace();
+            }
+            finally {
+                sqlStatement.close();
+                getConn().close();
             }
         }
         return sqlStatement.executeQuery();
@@ -96,7 +102,7 @@ public class Execute extends Model {
             sql += " );";
 
             try {
-                getConnection(true);
+                getConnection();
                 getConn();
                 sqlStatement = getConn().prepareStatement(sql);
                 int x = 0;
@@ -107,6 +113,10 @@ public class Execute extends Model {
 
             } catch (SQLException e) {
                 e.printStackTrace();
+            }
+            finally {
+                sqlStatement.close();
+                getConn().close();
             }
         }
 

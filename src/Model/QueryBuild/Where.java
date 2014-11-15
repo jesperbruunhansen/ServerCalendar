@@ -45,7 +45,7 @@ public class Where {
     }
 
     public Execute all(){
-        return new Execute(getQueryBuilder(), false);
+        return new Execute(getQueryBuilder(), true);
     }
 
     public Execute where(String key, String operator, String value){
