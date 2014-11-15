@@ -22,7 +22,16 @@ public class GetCalendarData {
     private Gson gson;
     private QueryBuilder queryBuilder;
     private ResultSet rs;
+    private String jsonResponse;
 
+
+    public String getJsonResponse(){
+        return jsonResponse;
+    }
+
+    private void setJsonResponse(String json){
+        this.jsonResponse = json;
+    }
 
     //henter data fra URL og l??er ind til en string
     private static String readUrl(String urlString) throws Exception {
@@ -61,9 +70,7 @@ public class GetCalendarData {
                 userList.add(users);
             }
 
-            String json = gson.toJson(userList);
-            System.out.println(json);
-
+            setJsonResponse(gson.toJson(userList));
         }
         catch (Exception e){
             e.printStackTrace();

@@ -39,6 +39,7 @@ public class SwitchController extends ServerRequestHandler{
                     setHTTPResponseCode(HTTP.OK);
                     GetCalendarData calendarData = new GetCalendarData();
                     calendarData.getDataFromCalendar();
+                    setJsonResponse(calendarData.getJsonResponse());
                     break;
                 default:
                     setHTTPResponseCode(HTTP.BAD_REQUEST);

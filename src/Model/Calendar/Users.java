@@ -5,30 +5,30 @@ package Model.Calendar;
  */
 public class Users {
     public void setUserId(int userId) {
-        this.userId = userId;
+        this.userid = userId;
     }
 
     public void setUserName(String userName) {
-        this.userName = userName;
+        this.username = userName;
     }
 
     public void setActive(int active) {
         this.active = active;
     }
 
-    private int userId;
-    private String userName;
+    private int userid;
+    private String username;
     private int active;
 
     public Users(int userId, String userName, int active){
-        this.userId = userId;
-        this.userName = userName;
+        this.userid = userId;
+        this.username = userName;
         this.active = active;
     }
     public Users(){}
 
-    public int getUserId(){return userId;}
+    public int getUserId(){return userid;}
 
-    public String getUserName(){return userName; }
+    public String getUserName(){return username; }
     public int getActiveStatus(){return active;}
 }
