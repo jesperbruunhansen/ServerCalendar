@@ -15,11 +15,13 @@ public class Screen extends JFrame {
 	public static final String LOGIN = "login";
 	public static final String WELCOME = "welcome";
     public static final String USERLIST = "userlist";
+    public static final String ADDUSER = "adduser";
 	
 	public JPanel contentPane;
 	public final Login login;
 	public final Welcome welcome;
     public final UserList userList;
+    public final AddUser addUser;
 
 	CardLayout c;
 	
@@ -47,6 +49,10 @@ public class Screen extends JFrame {
         //Add User List-screen
         userList = new UserList();
         contentPane.add(userList, USERLIST);
+
+        //Add Add-User-screen
+        addUser = new AddUser();
+        contentPane.add(addUser, ADDUSER);
 
 		//Get Layout for contentpane
 		c = (CardLayout) getContentPane().getLayout();

@@ -17,8 +17,6 @@ public class WelcomeController extends Controller implements ActionListener {
         screen.welcome.addListeners(this);
     }
 
-
-
     //ActionListener
     public void actionPerformed(ActionEvent e){
 

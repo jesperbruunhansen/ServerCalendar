@@ -21,8 +21,6 @@ public class LoginController extends Controller implements ActionListener, KeyLi
     public LoginController(Screen screen){
         this.screen = screen;
         screen.login.addListeners(this, this, this);
-        //screen.login.addKeyListener(this);
-        //screen.login.addFocusListener(this);
     }
 
     //ActionListener
@@ -107,7 +105,7 @@ public class LoginController extends Controller implements ActionListener, KeyLi
 
         if(auth(user, pass)){
 
-        //Send user to USERMENU-Screen.
+        //Send user to Welcome-Screen.
         screen.show(Screen.WELCOME);
 
         }

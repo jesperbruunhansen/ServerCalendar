@@ -7,13 +7,13 @@ import java.awt.event.ActionListener;
 /**
  * Created by Casper on 15/11/14.
  */
-public class UserListController extends Controller implements ActionListener {
+public class AddUserController extends Controller implements ActionListener {
 
     private Screen screen;
 
-    public UserListController(Screen screen){
+    public AddUserController(Screen screen){
         this.screen = screen;
-        screen.userList.addListeners(this);
+            screen.addUser.addListeners(this);
     }
 
 
@@ -23,7 +23,3 @@ public class UserListController extends Controller implements ActionListener {
     }
 
 }
-
-
-
-

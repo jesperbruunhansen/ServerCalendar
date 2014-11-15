@@ -113,6 +113,7 @@ public class Login extends JPanel {
         textPass.setText(s);
     }
 
+    //Add action, key and focuslisteners
     public void addListeners(ActionListener l, KeyListener kl, FocusListener fl){
         btnLogin.addActionListener(l);
         textUser.addKeyListener(kl);
@@ -121,18 +122,4 @@ public class Login extends JPanel {
         textPass.addFocusListener(fl);
     }
 
-	//Adding actionlisteners
-/*	public void addListeners(ActionListener l){
-		btnLogin.addActionListener(l);
-	}
-
-    public void addKeyListener(KeyListener kl){
-        textUser.addKeyListener(kl);
-        textPass.addKeyListener(kl);
-    }
-
-    public void addFocusListener(FocusListener fl){
-        textUser.addFocusListener(fl);
-        textPass.addFocusListener(fl);
-    }*/
 }

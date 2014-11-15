@@ -5,7 +5,6 @@ import Model.DatabaseInit;
 import Model.QueryBuild.QueryBuilder;
 import View.Screen;
 import Server.Server;
-
 import java.sql.ResultSet;
 import java.util.*;
 
@@ -27,6 +26,7 @@ public class Controller{
         new LoginController(screen);
         new WelcomeController(screen);
         new UserListController(screen);
+        new AddUserController(screen);
 
     }
 
