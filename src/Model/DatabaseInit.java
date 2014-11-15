@@ -19,10 +19,10 @@ public class DatabaseInit extends Model {
             }
         }
         catch (SQLException e){
-            System.err.println(e.getStackTrace());
+            e.printStackTrace();
         }
         catch (IOException e) {
-            System.err.println(e.getStackTrace());
+            e.printStackTrace();
         }
 
         //Note fra helena
