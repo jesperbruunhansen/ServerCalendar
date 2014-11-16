@@ -15,13 +15,13 @@ public class Bootstrap {
          * Initialize database environment
          * If env. does not exist, create new based on SQL file in res/createDBscript.sql
          */
-        DatabaseInit.init();
+        //DatabaseInit.init();
 
         /**
          * Create new screen object
          */
-        Controller controller = new Controller();
-        controller.init();
+        //Controller controller = new Controller();
+        //controller.init();
 
 
         /**

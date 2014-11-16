@@ -17,6 +17,37 @@ public class Event {
     private ArrayList<String> start;
     private ArrayList<String> end;
 
+    private String stringStart;
+    private String stringEnd;
+    private String text;
+    private ArrayList<Note> noter;
+    private int customevent;
+
+
+    public int getCalendarid() {
+        return calendarid;
+    }
+    public ArrayList<Note> getNoter() {
+        return noter;
+    }
+
+    public void setNoter(ArrayList<Note> noter) {
+        this.noter = noter;
+    }
+    public void setCalendarid(int calendarid) {
+        this.calendarid = calendarid;
+    }
+
+    public int getCustomevent() {
+        return customevent;
+    }
+
+    public void setCustomevent(int customevent) {
+        this.customevent = customevent;
+    }
+
+    private int calendarid;
+
     // Settere og gettere for Event objektet 
     public void setActivityid(String activityid){
         this.activityid = activityid;
@@ -74,6 +105,15 @@ public class Event {
         return start;
     }
 
+    public void setStringStart(String start){this.stringStart = start;}
+    public String getStringStart(){return stringStart;}
+
+    public void setStringEnd(String end){this.stringEnd = end;}
+    public String getStringEnd(){return stringEnd;}
+
+    public void setText(String text){this.text = text;}
+    public String getText(){return text;}
+
     public void setEnd(ArrayList<String> end){
         this.end = end;
     }
@@ -95,6 +135,7 @@ public class Event {
 		this.start = start;
 		this.end = end;
 	}
+    public Event(){}
     
     
 

@@ -1,12 +1,16 @@
 package Model.Calendar;
 
+import Model.QueryBuild.Execute;
 import com.google.gson.Gson;
 import Model.QueryBuild.QueryBuilder;
+import Model.Model;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,10 +18,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+
 /**
  * Created by jesperbruun on 13/10/14.
  */
-public class GetCalendarData {
+public class GetCalendarData extends Model{
 
     private Gson gson;
     private QueryBuilder queryBuilder;
@@ -66,13 +71,51 @@ public class GetCalendarData {
         catch (Exception e){
             e.printStackTrace();
         }
+        finally {
+            try {
+                rs.close();
+            }
+            catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
 
         return null;
 
     }
 
+    public void joinTest(){
+        queryBuilder = new QueryBuilder();
+        try {
+            rs = queryBuilder
+                    .selectFrom(new String[]{"events.event_id", "notes.text"}, "events")
+                    .innerJoin("notes")
+                    .on("events.event_id", "=", "notes.eventid")
+                    .ExecuteQuery();
+
+            while (rs.next()) {
+                System.out.println("EventID: " + rs.getString("events.event_id"));
+                System.out.println("Note: " + rs.getString("notes.text"));
+            }
+        }
+        catch (SQLException ex){
+            ex.printStackTrace();
+        }
+        finally {
+            try {
+                rs.close();
+            }
+            catch (SQLException e){
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
     public String getAllEvents(){
         try{
+            ResultSet rsNote;
             queryBuilder = new QueryBuilder();
             gson = new Gson();
 
@@ -85,6 +128,7 @@ public class GetCalendarData {
             		
             List<Event> eventList = new ArrayList<>();
 
+<<<<<<< HEAD
 //            while (rs.next()){
 //                Event event = new Event();
 //                event.setActivityid(rs.getString("activity_id"));
@@ -97,16 +141,57 @@ public class GetCalendarData {
             
 
            // return gson.toJson(userList);
+=======
+            while (rs.next()){
+                Event event = new Event();
+                event.setActivityid(rs.getString("activity_id"));
+                event.setEventid(rs.getString("event_id"));
+                event.setLocation(rs.getString("location"));
+                event.setCreatedby(rs.getInt("createdby"));
+                event.setStringStart(rs.getString("start"));
+                event.setStringEnd(rs.getString("end"));
+                event.setTitle(rs.getString("title"));
+                event.setText(rs.getString("text"));
+                event.setCustomevent(rs.getInt("customevent"));
+                event.setCalendarid(rs.getInt("CalenderID"));
+
+                ArrayList<Note> noteList = new ArrayList<>();
+                rsNote = new QueryBuilder().selectFrom("notes").where("eventid", "=", rs.getString("event_id")).ExecuteQuery();
+                while(rsNote.next()){
+                    Note note = new Note();
+                    note.setCreatedby(rsNote.getInt("createdby"));
+                    note.setText(rsNote.getString("text"));
+                    note.setCreatedon(rsNote.getTimestamp("created").toString());
+                    noteList.add(note);
+                }
+
+                event.setNoter(noteList);
+
+                eventList.add(event);
+            }
+            return gson.toJson(eventList);
+>>>>>>> FETCH_HEAD
         }
         catch (Exception e){
             e.printStackTrace();
         }
+        finally {
+            try {
+                rs.close();
+            }
+            catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
         return null;
     }
 
-    public void setCalendarEventsToDb() throws Exception {
+    public void setCalendarEventsToDb() throws Exception{
 
-        String json = readUrl("http://calendar.cbs.dk/events.php/" + EncryptUserID.getUserId() + "/" + EncryptUserID.getKey() + ".json");
+
+          String json = readUrl("http://calendar.cbs.dk/events.php/" + EncryptUserID.getUserId() + "/" + EncryptUserID.getKey() + ".json");
+
+
 //        String json = readUrl("http://calendar.cbs.dk/events.php/caha13ag/02a24d4e002e6e3571227c39e2f63784.json");
 
 
@@ -120,7 +205,7 @@ public class GetCalendarData {
         long time;
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yy hh:mm");
 
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < events.getEvents().size(); i++) {
 
             int monthStart = Integer.parseInt(events.getEvents().get(i).getStart().get(1)) + 1;
             String start =

@@ -23,6 +23,7 @@ public class Execute extends Model {
     private Where where;
     private Values values;
     private boolean getAll = false;
+    private On on;
 
     public QueryBuilder getQueryBuilder() {
         return queryBuilder;
@@ -33,6 +34,7 @@ public class Execute extends Model {
     }
     public Values getValues(){return values;}
     public boolean isGetAll(){return getAll;}
+    public On getOn(){return on;}
 
     public Execute(QueryBuilder queryBuilder, boolean getAll){
         this.queryBuilder = queryBuilder;
@@ -46,43 +48,66 @@ public class Execute extends Model {
         this.queryBuilder = queryBuilder;
         this.values = values;
     }
+    public Execute(QueryBuilder queryBuilder, Where where,  On onobj){
+        this.queryBuilder = queryBuilder;
+        this.on = onobj;
+        this.where = where;
+    }
 
     public ResultSet ExecuteQuery() throws SQLException{
-        //setSelectedDatabase(Config.getDbCalendar());
+        try {
+            String sql = "";
+            if(isGetAll()){
+                sql = SELECT + getQueryBuilder().getSelectValue() + FROM + getQueryBuilder().getTableName() + ";";
+                try {
+                    getConnection();
+                    getConn();
+                    sqlStatement = getConn().prepareStatement(sql);
 
-        String sql = "";
-        if(isGetAll()){
-             sql = SELECT + getQueryBuilder().getSelectValue() + FROM + getQueryBuilder().getTableName() + ";";
-            try {
-                getConnection();
-                getConn();
-                sqlStatement = getConn().prepareStatement(sql);
-
-            } catch (SQLException e) {
-                e.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
+            else if(getOn() != null){
+                sql =
+                        SELECT + getQueryBuilder().getSelectValue() +
+                                FROM + getQueryBuilder().getTableName() +
+                                " INNER JOIN " + getWhere().getJoinTableName() +
+                                " ON " + getOn().getLeftTableName() + " " + getOn().getOperator() + " " + getOn().getRightTableName() + " ;";
+                System.out.println(sql);
+                try{
+                    getConnection();
+                    sqlStatement = getConn().prepareStatement(sql);
+                    //sqlStatement.setString(1, getOn().getLeftTableName());
+                    //sqlStatement.setString(2, getOn().getRightTableName());
+                }
+                catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            else {
+                sql = SELECT + getQueryBuilder().getSelectValue() +
+                        FROM + getQueryBuilder().getTableName() +
+                        WHERE + getWhere().getWhereKey() + " " + getWhere().getWhereOperator() + " ?;";
+
+                try {
+                    getConnection();
+                    sqlStatement = getConn().prepareStatement(sql);
+                    sqlStatement.setString(1, getWhere().getWhereValue());
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            return sqlStatement.executeQuery();
         }
-        else {
-            sql = SELECT + getQueryBuilder().getSelectValue() +
-                    FROM + getQueryBuilder().getTableName() +
-                    WHERE + getWhere().getWhereKey() + " " + getWhere().getWhereOperator() + " ?;";
-
-            try {
-                getConnection();
-                getConn();
-                sqlStatement = getConn().prepareStatement(sql);
-                sqlStatement.setString(1, getWhere().getWhereValue());
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            finally {
-                sqlStatement.close();
-                getConn().close();
-            }
+        catch (SQLException ex){
+            ex.printStackTrace();
+            return null;
         }
-        return sqlStatement.executeQuery();
     }
+
+
 
     public boolean Execute() throws SQLException{
         //setSelectedDatabase("cbscalendar");
@@ -103,7 +128,6 @@ public class Execute extends Model {
 
             try {
                 getConnection();
-                getConn();
                 sqlStatement = getConn().prepareStatement(sql);
                 int x = 0;
                 for(int i = 0; i < getValues().getValues().length; i++){
@@ -114,21 +138,11 @@ public class Execute extends Model {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            finally {
-                sqlStatement.close();
-                getConn().close();
-            }
         }
 
 
         return sqlStatement.execute();
     }
-
-    public String test(){
-        return INSERTINTO + getQueryBuilder().getTableName() + " (" + getQueryBuilder().getFields() + ")" + VALUES + "(" + getValues().getValues() + ");";
-
-    }
-
 
     public String toString(){
         return SELECT + getQueryBuilder().getSelectValue() +
