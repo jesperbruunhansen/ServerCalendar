@@ -3,9 +3,6 @@ package Model;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.util.Vector;
-
-import com.google.gson.Gson;
-
 import Model.QueryBuild.QueryBuilder;
 
 /**
@@ -13,28 +10,23 @@ import Model.QueryBuild.QueryBuilder;
  */
 public class ViewModel {
 
-	private Gson gson;
-	private QueryBuilder queryBuilder;
 	private ResultSet rs;
-	
+
+    protected QueryBuilder queryBuilder = new QueryBuilder();
+
 	public Vector<Vector<Object>> userData(){
 		
 		//Create new Vector Object which contains Vector-objects
-		Vector<Vector<Object>> data = new Vector<Vector<Object>>();
+        Vector<Vector<Object>> data = new Vector<Vector<Object>>();
 
 		try{
-			
-			queryBuilder = new QueryBuilder();
-			gson = new Gson();
 
 			rs = queryBuilder.selectFrom("users").all().ExecuteQuery();
-
-			//  List<Users> userList = new ArrayList<>();
 
 			//Get Metadata from ResultSet
 			ResultSetMetaData metaData = rs.getMetaData();
 
-			//Get numbet of columns from ResultSet
+			//Get number of columns from ResultSet
 			int columns = metaData.getColumnCount();
 
 			while (rs.next()) {
@@ -67,7 +59,7 @@ public class ViewModel {
 		try{
 			rs = queryBuilder.selectFrom("users").all().ExecuteQuery();
 
-			//Get Meta Deta from table
+			//Get Meta Data from table
 			ResultSetMetaData metaData = rs.getMetaData();
 			int columns = metaData.getColumnCount();
 			for (int i = 1; i <= columns; i++) {

@@ -36,10 +36,6 @@ public class CalendarController extends Controller implements ActionListener {
             screen.show(Screen.ADDUSER);
         }
 
-        //If Delete user button is clicked
-        if (e.getSource() == screen.calendar.getBtnDeleteUser()) {
-            screen.show(Screen.USERLIST);
-        }
 
         //If Calendar button is clicked
         if (e.getSource() == screen.calendar.getBtnCalendars()) {

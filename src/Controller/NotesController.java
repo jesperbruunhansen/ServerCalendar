@@ -36,11 +36,6 @@ public class NotesController extends Controller implements ActionListener {
             screen.show(Screen.ADDUSER);
         }
 
-        //If Delete user button is clicked
-        if (e.getSource() == screen.notes.getBtnDeleteUser()) {
-            screen.show(Screen.USERLIST);
-        }
-
         //If Calendar button is clicked
         if (e.getSource() == screen.notes.getBtnCalendars()) {
             screen.show(Screen.CALENDAR);

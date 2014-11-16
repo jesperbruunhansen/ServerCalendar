@@ -25,7 +25,6 @@ public class Calendar extends JPanel {
     public JLabel lblMenu;
     public JButton btnUserList;
     public JButton btnAddUser;
-    public JButton btnDeleteUser;
     public JButton btnCalendars;
     public JButton btnEvents;
     public JButton btnNotes;
@@ -110,16 +109,6 @@ public class Calendar extends JPanel {
         btnAddUser.setOpaque(true);
         panelSide.add(btnAddUser);
 
-        btnDeleteUser = new JButton("Delete User");
-        btnDeleteUser.setBounds(0, 106, 190, 25);
-        btnDeleteUser.setOpaque(true);
-        btnDeleteUser.setForeground(Color.WHITE);
-        btnDeleteUser.setFont(new Font("Dialog", Font.BOLD, 12));
-        btnDeleteUser.setFocusPainted(false);
-        btnDeleteUser.setBorder(BorderFactory.createLineBorder(new Color(183, 183, 183)));
-        btnDeleteUser.setBackground(new Color(80, 141, 221));
-        panelSide.add(btnDeleteUser);
-
         btnCalendars = new JButton("Calendars");
         btnCalendars.setBounds(0, 157, 190, 25);
         btnCalendars.setOpaque(true);
@@ -187,10 +176,6 @@ public class Calendar extends JPanel {
         return btnAddUser;
     }
 
-    public JButton getBtnDeleteUser() {
-        return btnDeleteUser;
-    }
-
     public JButton getBtnCalendars() {
         return btnCalendars;
     }
@@ -207,7 +192,6 @@ public class Calendar extends JPanel {
         btnLogout.addActionListener(l);
         btnUserList.addActionListener(l);
         btnAddUser.addActionListener(l);
-        btnDeleteUser.addActionListener(l);
         btnCalendars.addActionListener(l);
         btnEvents.addActionListener(l);
         btnNotes.addActionListener(l);

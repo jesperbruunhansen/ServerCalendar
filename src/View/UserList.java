@@ -3,15 +3,11 @@ package View;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
-
 import java.awt.Color;
-
 import javax.swing.JButton;
-
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.util.Vector;
-
 import javax.swing.JTextPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -30,7 +26,6 @@ public class UserList extends JPanel {
     public JLabel lblMenu;
     public JButton btnUserList;
     public JButton btnAddUser;
-    public JButton btnDeleteUser;
     public JButton btnCalendars;
     public JButton btnEvents;
     public JButton btnNotes;
@@ -38,7 +33,7 @@ public class UserList extends JPanel {
     public JPanel panelVer;
     // PANELS //
     public JScrollPane scrollPane;
-    public JButton btnDeleteUser2;
+    public JButton btnDeleteUser;
     public JLabel lblUserList;
     private JTable table;
 
@@ -119,16 +114,6 @@ public class UserList extends JPanel {
         btnAddUser.setOpaque(true);
         panelSide.add(btnAddUser);
 
-        btnDeleteUser = new JButton("Delete User");
-        btnDeleteUser.setBounds(0, 106, 190, 25);
-        btnDeleteUser.setOpaque(true);
-        btnDeleteUser.setForeground(Color.WHITE);
-        btnDeleteUser.setFont(new Font("Dialog", Font.BOLD, 12));
-        btnDeleteUser.setFocusPainted(false);
-        btnDeleteUser.setBorder(BorderFactory.createLineBorder(new Color(183, 183, 183)));
-        btnDeleteUser.setBackground(new Color(80, 141, 221));
-        panelSide.add(btnDeleteUser);
-
         btnCalendars = new JButton("Calendars");
         btnCalendars.setBounds(0, 157, 190, 25);
         btnCalendars.setOpaque(true);
@@ -187,15 +172,15 @@ public class UserList extends JPanel {
         scrollPane.setBorder(BorderFactory.createLineBorder(new Color(183, 183, 183)));
         panelContent.add(scrollPane);
 
-        btnDeleteUser2 = new JButton("Delete User");
-        btnDeleteUser2.setOpaque(true);
-        btnDeleteUser2.setForeground(Color.WHITE);
-        btnDeleteUser2.setFont(new Font("Dialog", Font.BOLD, 12));
-        btnDeleteUser2.setFocusPainted(false);
-        btnDeleteUser2.setBorder(BorderFactory.createLineBorder(new Color(183, 183, 183)));
-        btnDeleteUser2.setBackground(new Color(204, 51, 51));
-        btnDeleteUser2.setBounds(661, 630, 146, 32);
-        panelContent.add(btnDeleteUser2);
+        btnDeleteUser = new JButton("Delete User");
+        btnDeleteUser.setOpaque(true);
+        btnDeleteUser.setForeground(Color.WHITE);
+        btnDeleteUser.setFont(new Font("Dialog", Font.BOLD, 12));
+        btnDeleteUser.setFocusPainted(false);
+        btnDeleteUser.setBorder(BorderFactory.createLineBorder(new Color(183, 183, 183)));
+        btnDeleteUser.setBackground(new Color(204, 51, 51));
+        btnDeleteUser.setBounds(661, 630, 146, 32);
+        panelContent.add(btnDeleteUser);
 
         lblUserList = new JLabel("User List");
         lblUserList.setForeground(Color.GRAY);
@@ -238,7 +223,6 @@ public class UserList extends JPanel {
         btnLogout.addActionListener(l);
         btnUserList.addActionListener(l);
         btnAddUser.addActionListener(l);
-        btnDeleteUser.addActionListener(l);
         btnCalendars.addActionListener(l);
         btnEvents.addActionListener(l);
         btnNotes.addActionListener(l);

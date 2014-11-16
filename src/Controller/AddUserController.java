@@ -36,11 +36,6 @@ public class AddUserController extends Controller implements ActionListener {
             screen.show(Screen.ADDUSER);
         }
 
-        //If Delete user button is clicked
-        if (e.getSource() == screen.addUser.getBtnDeleteUser()) {
-            screen.show(Screen.USERLIST);
-        }
-
         //If Calendar button is clicked
         if (e.getSource() == screen.addUser.getBtnCalendars()) {
             screen.show(Screen.CALENDAR);
