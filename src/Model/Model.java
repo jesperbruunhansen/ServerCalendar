@@ -18,8 +18,8 @@ public abstract class Model {
     private static String dbName = Config.getDbCalendar();
     
     private Statement stmt;
-    protected PreparedStatement sqlStatement;
     protected static Connection conn = null;
+    protected PreparedStatement sqlStatement;
     protected ResultSet resultSet;
 
     /**
@@ -66,6 +66,26 @@ public abstract class Model {
         conn.close();
     }
 
+    /**
+     * Use a preparedstatment to run SQL on the database
+     *
+     * @param sql
+     * @return PreparedStatement
+     */
+    public PreparedStatement doQuery(String sql) {
+        try {
+            getConnection();
+            getConn();
+            sqlStatement = getConn().prepareStatement(sql);
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return sqlStatement;
+    }
+
     public boolean testConnection() {
         try {
             getConnection();
@@ -78,6 +98,31 @@ public abstract class Model {
         }
 
         return false;
+    }
+
+    public int doUpdate(String update) throws SQLException {
+        getConnection();
+        int temp = 0;
+
+        try {
+            setStmt(getConn().createStatement());
+            temp = getStmt().executeUpdate(update);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        //luk forbindelser
+        finally {
+            if (getStmt() != null) {
+                try {
+                    getStmt().close();
+                } catch (SQLException sqlEx) {  //ignore
+                    setStmt(null);
+                }
+            }
+        }
+
+        return temp;
     }
 
 
@@ -115,6 +160,24 @@ public abstract class Model {
     }
 
     /**
+     * Getter-method for Statement class
+     *
+     * @return statement class
+     */
+    public Statement getStmt() {
+        return stmt;
+    }
+
+    /**
+     * Setter-method for Statement class
+     *
+     * @param stmt object
+     */
+    private void setStmt(Statement stmt) {
+        this.stmt = stmt;
+    }
+
+    /**
      * Getter-method for Connection class
      *
      * @return Connection class
@@ -132,6 +195,20 @@ public abstract class Model {
         Model.conn = conn;
     }
 
+    public static void closeEverything(PreparedStatement stmt, Connection con) {
+        if (stmt != null) {
+            try {
+                stmt.close();
+            } catch (SQLException e) {
+            }
+        }
+        if (con != null) {
+            try {
+                con.close();
+            } catch (SQLException e) {
+            }
+        }
+    }
 
 
 }
