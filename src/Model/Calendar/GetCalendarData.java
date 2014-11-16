@@ -76,19 +76,25 @@ public class GetCalendarData {
             queryBuilder = new QueryBuilder();
             gson = new Gson();
 
+            //rs = queryBuilder.selectFrom(new String[]{"",""}, "events")
             rs = queryBuilder.selectFrom("events").all().ExecuteQuery();
 
+            while(rs.next()){
+            	
+            }
+            		
             List<Event> eventList = new ArrayList<>();
 
-            /*while (rs.next()){
-                Event event = new Event();
-                event.setActivityid(rs.getString("activity_id"));
-                event.setEventid(rs.getString("event_id"));
-                event.setLocation(rs.getString("location"));
-                event.setCreatedby(rs.getInt("createdby"));
-                event.setSt
-                userList.add(users);
-            }*/
+//            while (rs.next()){
+//                Event event = new Event();
+//                event.setActivityid(rs.getString("activity_id"));
+//                event.setEventid(rs.getString("event_id"));
+//                event.setLocation(rs.getString("location"));
+//                event.setCreatedby(rs.getInt("createdby"));
+//                event.setSt
+//                userList.add(users);
+//            }
+            
 
            // return gson.toJson(userList);
         }

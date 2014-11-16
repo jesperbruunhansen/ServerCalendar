@@ -1,8 +1,19 @@
 package Controller;
 
+import Model.Calendar.Users;
+import Model.QueryBuild.QueryBuilder;
 import View.Screen;
+import View.UserList;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.jws.soap.SOAPBinding.Use;
+
+import com.google.gson.Gson;
 
 /**
  * Created by Casper on 15/11/14.
@@ -11,11 +22,50 @@ public class WelcomeController extends Controller implements ActionListener {
 
     private Screen screen;
 
+    private Gson gson;
+    private QueryBuilder queryBuilder;
+    private ResultSet rs;
+    
     public WelcomeController(Screen screen){
         this.screen = screen;
         screen.welcome.addListeners(this);
     }
 
+    public void getAllUsers() {
+
+        try{
+            queryBuilder = new QueryBuilder();
+            gson = new Gson();
+
+            rs = queryBuilder.selectFrom("users").all().ExecuteQuery();
+
+            List<Users> userList = new ArrayList<>();
+
+            while (rs.next()){
+                Users users = new Users();
+                users.setUserId(rs.getInt("userid"));
+                users.setUserName(rs.getString("email"));
+                users.setActive(rs.getInt("active"));
+                userList.add(users);
+            }
+            
+            for(Users user : userList){
+            	System.out.println(user.getUserName());
+            	
+            }
+            
+            
+
+            //return gson.toJson(userList);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+       //	 return null;
+ }
+    
+    
     //ActionListener
     public void actionPerformed(ActionEvent e) {
 
@@ -28,7 +78,9 @@ public class WelcomeController extends Controller implements ActionListener {
 
         //If User list button is clicked
         if (e.getSource() == screen.welcome.getBtnUserList()) {
-            screen.show(Screen.USERLIST);
+        
+        	getAllUsers();
+        	 
         }
 
         //If Add user button is clicked

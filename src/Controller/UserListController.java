@@ -1,8 +1,15 @@
 package Controller;
 
+import Model.Calendar.Event;
+import Model.QueryBuild.QueryBuilder;
 import View.Screen;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.google.gson.Gson;
 
 /**
  * Created by Casper on 15/11/14.
@@ -30,7 +37,8 @@ public class UserListController extends Controller implements ActionListener {
         if (e.getSource() == screen.userList.getBtnUserList()) {
             screen.show(Screen.USERLIST);
         }
-
+        
+   
         //If Add user button is clicked
         if (e.getSource() == screen.userList.getBtnAddUser()) {
             screen.show(Screen.ADDUSER);
@@ -56,5 +64,6 @@ public class UserListController extends Controller implements ActionListener {
             screen.show(Screen.NOTES);
         }
     }
-
+    
+    
 }
