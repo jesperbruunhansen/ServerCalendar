@@ -2,7 +2,9 @@ package Model;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.util.Vector;
+
 import Model.QueryBuild.QueryBuilder;
 
 /**
@@ -73,5 +75,17 @@ public class ViewModel {
 		return columnNames;
 	}
 
+	public void addUser(String email, String password) {
+	
+		try {
+			queryBuilder
+			.insertInto("users", new String[]{"email", "password"})
+			.values(new String[]{email, password})
+			.Execute();
+		} catch (SQLException e) {
+		
+		e.printStackTrace();
+		}
 
+	}
 }

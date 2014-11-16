@@ -35,8 +35,8 @@ public class AddUser extends JPanel {
 	public JTextPane txtpnHeader;
 	public JTextPane txtpnEmail;
 	public JTextPane txtpnPassword;
-	public JTextField textField;
-	public JTextField textField_1;
+	public JTextField textEmail;
+	public JTextField textPassword;
 	public JRadioButton rdbtnUser;
 	public JRadioButton rdbtnAdmin;
 	public JTextPane txtpnCreateRegularUser;
@@ -196,15 +196,15 @@ public class AddUser extends JPanel {
 		txtpnPassword.setBounds(27, 139, 100, 17);
 		panelContent.add(txtpnPassword);
 		
-		textField = new JTextField();
-		textField.setBounds(130, 99, 300, 28);
-		panelContent.add(textField);
-		textField.setColumns(10);
+		textEmail = new JTextField();
+		textEmail.setBounds(130, 99, 300, 28);
+		panelContent.add(textEmail);
+		textEmail.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(130, 133, 300, 28);
-		panelContent.add(textField_1);
+		textPassword = new JTextField();
+		textPassword.setColumns(10);
+		textPassword.setBounds(130, 133, 300, 28);
+		panelContent.add(textPassword);
 		
 		rdbtnUser = new JRadioButton("User");
 		rdbtnUser.setFont(new Font("Dialog", Font.PLAIN, 12));
@@ -257,7 +257,20 @@ public class AddUser extends JPanel {
     public JButton getBtnNotes() {
         return btnNotes;
     }
-
+    public JButton getBtnCreateUser() {
+    	return btnCreateUser;
+    }
+    
+    public String getTextEmail(){
+    	String email = textEmail.getText();
+    	return email;
+    }
+    
+    public String getTextPassword() {
+    	String password = textPassword.getText();
+    	return password;
+    }
+    
     public void addListeners(ActionListener l){
         btnLogout.addActionListener(l);
         btnUserList.addActionListener(l);
@@ -265,5 +278,6 @@ public class AddUser extends JPanel {
         btnCalendars.addActionListener(l);
         btnEvents.addActionListener(l);
         btnNotes.addActionListener(l);
+        btnCreateUser.addActionListener(l);
     }
 }

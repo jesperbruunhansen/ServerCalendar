@@ -44,11 +44,6 @@ public class UserListController extends Controller implements ActionListener {
             screen.show(Screen.ADDUSER);
         }
 
-        //If Delete user button is clicked
-        if (e.getSource() == screen.userList.getBtnDeleteUser()) {
-            screen.show(Screen.USERLIST);
-        }
-
         //If Calendar button is clicked
         if (e.getSource() == screen.userList.getBtnCalendars()) {
             screen.show(Screen.CALENDAR);
@@ -63,7 +58,15 @@ public class UserListController extends Controller implements ActionListener {
         if (e.getSource() == screen.userList.getBtnNotes()) {
             screen.show(Screen.NOTES);
         }
+      //If Delete user button is clicked
+        if (e.getSource() == screen.userList.getBtnDeleteUser()) {
+            
+        
+        }
+        
+    
     }
+    
     
     
 }
