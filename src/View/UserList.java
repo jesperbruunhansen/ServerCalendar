@@ -3,10 +3,15 @@ package View;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+
 import java.awt.Color;
+
 import javax.swing.JButton;
+
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.util.Vector;
+
 import javax.swing.JTextPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;

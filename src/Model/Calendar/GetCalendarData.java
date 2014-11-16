@@ -128,7 +128,6 @@ public class GetCalendarData extends Model{
             		
             List<Event> eventList = new ArrayList<>();
 
-<<<<<<< HEAD
 //            while (rs.next()){
 //                Event event = new Event();
 //                event.setActivityid(rs.getString("activity_id"));
@@ -141,7 +140,7 @@ public class GetCalendarData extends Model{
             
 
            // return gson.toJson(userList);
-=======
+
             while (rs.next()){
                 Event event = new Event();
                 event.setActivityid(rs.getString("activity_id"));
@@ -170,7 +169,6 @@ public class GetCalendarData extends Model{
                 eventList.add(event);
             }
             return gson.toJson(eventList);
->>>>>>> FETCH_HEAD
         }
         catch (Exception e){
             e.printStackTrace();

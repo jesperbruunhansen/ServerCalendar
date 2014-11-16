@@ -75,7 +75,7 @@ public class Screen extends JFrame {
 		//Get Layout for contentpane
 		c = (CardLayout) getContentPane().getLayout();
 
-        show(Screen.WELCOME);
+        show(Screen.LOGIN);
         setVisible(true);
 	}
 

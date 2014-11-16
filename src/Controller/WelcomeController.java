@@ -1,6 +1,8 @@
 package Controller;
 
+import Model.ViewModel;
 import View.Screen;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -10,6 +12,7 @@ import java.awt.event.ActionListener;
 public class WelcomeController extends Controller implements ActionListener {
 
     private Screen screen;
+    private ViewModel viewmodel; 
 
     public WelcomeController(Screen screen){
         this.screen = screen;
@@ -28,7 +31,9 @@ public class WelcomeController extends Controller implements ActionListener {
 
         //If User list button is clicked
         if (e.getSource() == screen.welcome.getBtnUserList()) {
-            screen.show(Screen.USERLIST);
+            screen.userList.setTable(viewmodel.userData(),viewmodel.columnNames());
+        	screen.show(Screen.USERLIST);
+            
         }
 
         //If Add user button is clicked
