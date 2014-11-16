@@ -226,6 +226,7 @@ public class UserList extends JPanel {
         btnCalendars.addActionListener(l);
         btnEvents.addActionListener(l);
         btnNotes.addActionListener(l);
+        btnDeleteUser.addActionListener(l);
     }
 
     public void setTable(Vector data, Vector columns){

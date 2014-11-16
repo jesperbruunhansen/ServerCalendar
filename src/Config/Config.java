@@ -11,7 +11,7 @@ public abstract class Config {
     private static String dbHost = "localhost";
     private static String dbPort = "3306";
     private static String dbUsername = "root";
-    private static String dbPassword = "ukamm19";
+    private static String dbPassword = "";
     private static String dbCalendar = "cbscalendar";
 
     private static String serverAddress = "127.0.0.1";
