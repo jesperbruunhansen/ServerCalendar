@@ -21,7 +21,7 @@ public class Event {
     private String stringEnd;
     private String text;
     private ArrayList<Note> noter;
-    private int customevent;
+    private boolean customevent;
 
 
     public int getCalendarid() {
@@ -38,11 +38,11 @@ public class Event {
         this.calendarid = calendarid;
     }
 
-    public int getCustomevent() {
+    public boolean getCustomevent() {
         return customevent;
     }
 
-    public void setCustomevent(int customevent) {
+    public void setCustomevent(boolean customevent) {
         this.customevent = customevent;
     }
 

@@ -1,12 +1,9 @@
 package Model.QueryBuild;
 
-
-import Config.Config;
 import Model.Model;
-
-import java.sql.ResultSet;
+import com.sun.rowset.CachedRowSetImpl;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 
 /**
  * Created by jesperbruun on 16/10/14.
@@ -20,6 +17,7 @@ public class Execute extends Model {
     private final String VALUES = " VALUES ";
 
     private QueryBuilder queryBuilder;
+    private ResultSetMetaData resultSetMetaData;
     private Where where;
     private Values values;
     private boolean getAll = false;
@@ -54,18 +52,25 @@ public class Execute extends Model {
         this.where = where;
     }
 
-    public ResultSet ExecuteQuery() throws SQLException{
+    public CachedRowSetImpl ExecuteQuery() throws SQLException{
+        String sql;
         try {
-            String sql = "";
             if(isGetAll()){
                 sql = SELECT + getQueryBuilder().getSelectValue() + FROM + getQueryBuilder().getTableName() + ";";
                 try {
                     getConnection();
-                    getConn();
                     sqlStatement = getConn().prepareStatement(sql);
+                    CachedRowSetImpl cachedRowSet = new CachedRowSetImpl();
+                    cachedRowSet.populate(sqlStatement.executeQuery());
+
+                    return cachedRowSet;
 
                 } catch (SQLException e) {
                     e.printStackTrace();
+                }
+                finally {
+                    sqlStatement.close();
+                    getConn().close();
                 }
             }
             else if(getOn() != null){
@@ -74,15 +79,21 @@ public class Execute extends Model {
                                 FROM + getQueryBuilder().getTableName() +
                                 " INNER JOIN " + getWhere().getJoinTableName() +
                                 " ON " + getOn().getLeftTableName() + " " + getOn().getOperator() + " " + getOn().getRightTableName() + " ;";
-                System.out.println(sql);
+                //System.out.println(sql);
                 try{
                     getConnection();
                     sqlStatement = getConn().prepareStatement(sql);
-                    //sqlStatement.setString(1, getOn().getLeftTableName());
-                    //sqlStatement.setString(2, getOn().getRightTableName());
+                    CachedRowSetImpl cachedRowSet = new CachedRowSetImpl();
+                    cachedRowSet.populate(sqlStatement.executeQuery());
+
+                    return cachedRowSet;
                 }
                 catch (SQLException e){
                     e.printStackTrace();
+                }
+                finally {
+                    sqlStatement.close();
+                    getConn().close();
                 }
             }
             else {
@@ -94,17 +105,27 @@ public class Execute extends Model {
                     getConnection();
                     sqlStatement = getConn().prepareStatement(sql);
                     sqlStatement.setString(1, getWhere().getWhereValue());
+                    CachedRowSetImpl cachedRowSet = new CachedRowSetImpl();
+
+                    cachedRowSet.populate(sqlStatement.executeQuery());
+
+                    return cachedRowSet;
 
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
+                finally {
+                    sqlStatement.close();
+                    getConn().close();
+                }
             }
-            return sqlStatement.executeQuery();
         }
         catch (SQLException ex){
             ex.printStackTrace();
-            return null;
         }
+
+        return null;
+
     }
 
 
@@ -137,6 +158,10 @@ public class Execute extends Model {
 
             } catch (SQLException e) {
                 e.printStackTrace();
+            }
+            finally {
+                sqlStatement.close();
+                getConn().close();
             }
         }
 

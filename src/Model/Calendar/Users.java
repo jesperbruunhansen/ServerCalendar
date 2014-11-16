@@ -12,15 +12,15 @@ public class Users {
         this.username = userName;
     }
 
-    public void setActive(int active) {
+    public void setActive(boolean active) {
         this.active = active;
     }
 
     private int userid;
     private String username;
-    private int active;
+    private boolean active;
 
-    public Users(int userId, String userName, int active){
+    public Users(int userId, String userName, boolean active){
         this.userid = userId;
         this.username = userName;
         this.active = active;
@@ -30,5 +30,5 @@ public class Users {
     public int getUserId(){return userid;}
 
     public String getUserName(){return username; }
-    public int getActiveStatus(){return active;}
+    public boolean getActiveStatus(){return active;}
 }

@@ -4,6 +4,7 @@ import Model.QueryBuild.Execute;
 import com.google.gson.Gson;
 import Model.QueryBuild.QueryBuilder;
 import Model.Model;
+import com.sun.rowset.CachedRowSetImpl;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -53,31 +54,24 @@ public class GetCalendarData extends Model{
         try{
             queryBuilder = new QueryBuilder();
             gson = new Gson();
+            CachedRowSetImpl cachedRowSet;
 
-            rs = queryBuilder.selectFrom("users").all().ExecuteQuery();
+            cachedRowSet = queryBuilder.selectFrom("users").all().ExecuteQuery();
 
             List<Users> userList = new ArrayList<>();
 
-            while (rs.next()){
-                Users users = new Users();
-                users.setUserId(rs.getInt("userid"));
-                users.setUserName(rs.getString("email"));
-                users.setActive(rs.getInt("active"));
-                userList.add(users);
+            while (cachedRowSet.next()){
+                Users user = new Users();
+                user.setUserId(cachedRowSet.getInt("userid"));
+                user.setUserName(cachedRowSet.getString("email"));
+                user.setActive(cachedRowSet.getBoolean("active"));
+                userList.add(user);
             }
 
             return gson.toJson(userList);
         }
         catch (Exception e){
             e.printStackTrace();
-        }
-        finally {
-            try {
-                rs.close();
-            }
-            catch (SQLException e){
-                e.printStackTrace();
-            }
         }
 
         return null;
@@ -113,39 +107,41 @@ public class GetCalendarData extends Model{
 
     }
 
+
     public String getAllEvents(){
         try{
-            ResultSet rsNote;
+
+            CachedRowSetImpl cachedRowSet, cachedRowSetNote;
             queryBuilder = new QueryBuilder();
+            QueryBuilder queryBuilderNote = new QueryBuilder();
             gson = new Gson();
 
-            rs = queryBuilder.selectFrom("events").all().ExecuteQuery();
+            cachedRowSet = queryBuilder.selectFrom("events").all().ExecuteQuery();
 
             List<Event> eventList = new ArrayList<>();
 
-            while (rs.next()){
+            while (cachedRowSet.next()){
                 Event event = new Event();
-                event.setActivityid(rs.getString("activity_id"));
-                event.setEventid(rs.getString("event_id"));
-                event.setLocation(rs.getString("location"));
-                event.setCreatedby(rs.getInt("createdby"));
-                event.setStringStart(rs.getString("start"));
-                event.setStringEnd(rs.getString("end"));
-                event.setTitle(rs.getString("title"));
-                event.setText(rs.getString("text"));
-                event.setCustomevent(rs.getInt("customevent"));
-                event.setCalendarid(rs.getInt("CalenderID"));
+                event.setActivityid(cachedRowSet.getString("activity_id"));
+                event.setEventid(cachedRowSet.getString("event_id"));
+                event.setLocation(cachedRowSet.getString("location"));
+                event.setCreatedby(cachedRowSet.getInt("createdby"));
+                event.setStringStart(cachedRowSet.getString("start"));
+                event.setStringEnd(cachedRowSet.getString("end"));
+                event.setTitle(cachedRowSet.getString("title"));
+                event.setText(cachedRowSet.getString("text"));
+                event.setCustomevent(cachedRowSet.getBoolean("customevent"));
+                event.setCalendarid(cachedRowSet.getInt("CalenderID"));
 
                 ArrayList<Note> noteList = new ArrayList<>();
-                rsNote = new QueryBuilder().selectFrom("notes").where("eventid", "=", rs.getString("event_id")).ExecuteQuery();
-                while(rsNote.next()){
+                cachedRowSetNote = queryBuilderNote.selectFrom("notes").where("eventid", "=", cachedRowSet.getString("event_id")).ExecuteQuery();
+                while(cachedRowSetNote.next()){
                     Note note = new Note();
-                    note.setCreatedby(rsNote.getInt("createdby"));
-                    note.setText(rsNote.getString("text"));
-                    note.setCreatedon(rsNote.getTimestamp("created").toString());
+                    note.setCreatedby(cachedRowSetNote.getInt("createdby"));
+                    note.setText(cachedRowSetNote.getString("text"));
+                    note.setCreatedon(cachedRowSetNote.getTimestamp("created").toString());
                     noteList.add(note);
                 }
-
                 event.setNoter(noteList);
 
                 eventList.add(event);
@@ -154,14 +150,6 @@ public class GetCalendarData extends Model{
         }
         catch (Exception e){
             e.printStackTrace();
-        }
-        finally {
-            try {
-                rs.close();
-            }
-            catch (SQLException e){
-                e.printStackTrace();
-            }
         }
         return null;
     }
