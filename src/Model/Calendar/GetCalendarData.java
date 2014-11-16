@@ -117,10 +117,10 @@ public class GetCalendarData extends Model{
             gson = new Gson();
 
             cachedRowSet = queryBuilder.selectFrom("events").all().ExecuteQuery();
-
+            		
             List<Event> eventList = new ArrayList<>();
 
-            while (cachedRowSet.next()){
+                while (cachedRowSet.next()){
                 Event event = new Event();
                 event.setActivityid(cachedRowSet.getString("activity_id"));
                 event.setEventid(cachedRowSet.getString("event_id"));
