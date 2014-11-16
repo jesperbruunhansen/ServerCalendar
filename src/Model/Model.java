@@ -195,5 +195,20 @@ public abstract class Model {
         Model.conn = conn;
     }
 
+    public static void closeDbConnections(PreparedStatement stmt, Connection con) {
+        if (stmt != null) {
+            try {
+                stmt.close();
+            } catch (SQLException e) {
+            }
+        }
+        if (con != null) {
+            try {
+                con.close();
+            } catch (SQLException e) {
+            }
+        }
+    }
+
 
 }

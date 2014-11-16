@@ -10,6 +10,18 @@ public class Where {
     private String whereOperator;
     private String whereValue;
 
+
+
+    private String joinTableName;
+    protected String getJoinTableName() {
+        return joinTableName;
+    }
+
+    protected void setJoinTableName(String joinTableName) {
+        this.joinTableName = joinTableName;
+    }
+
+
     protected String getWhereKey() {
         return whereKey;
     }
@@ -46,6 +58,12 @@ public class Where {
 
     public Execute all(){
         return new Execute(getQueryBuilder(), true);
+    }
+
+    public On innerJoin(String joinTableName){
+        Where where = new Where();
+        where.setJoinTableName(joinTableName);
+        return new On(getQueryBuilder(), where);
     }
 
     public Execute where(String key, String operator, String value){
