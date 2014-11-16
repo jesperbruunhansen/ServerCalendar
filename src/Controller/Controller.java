@@ -1,12 +1,9 @@
 package Controller;
 
-import Config.Config;
-import Model.DatabaseInit;
 import Model.QueryBuild.QueryBuilder;
 import View.Screen;
-import Server.Server;
+
 import java.sql.ResultSet;
-import java.util.*;
 
 /**
  * Created by jesperbruun on 09/11/14.
@@ -27,6 +24,9 @@ public class Controller{
         new WelcomeController(screen);
         new UserListController(screen);
         new AddUserController(screen);
+        new CalendarController(screen);
+        new EventsController(screen);
+        new NotesController(screen);
 
     }
 

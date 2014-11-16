@@ -244,12 +244,42 @@ public class AddUser extends JPanel {
 		panelContent.add(btnCreateUser);
 			
 	}
-	
-	public JButton getBtnLogout() {
-		return btnLogout;
-	}
-	
-	public void addListeners(ActionListener l){
-		btnLogout.addActionListener(l);
-	}
+
+    public JButton getBtnLogout() {
+        return btnLogout;
+    }
+
+    public JButton getBtnUserList() {
+        return btnUserList;
+    }
+
+    public JButton getBtnAddUser() {
+        return btnAddUser;
+    }
+
+    public JButton getBtnDeleteUser() {
+        return btnDeleteUser;
+    }
+
+    public JButton getBtnCalendars() {
+        return btnCalendars;
+    }
+
+    public JButton getBtnEvents() {
+        return btnEvents;
+    }
+
+    public JButton getBtnNotes() {
+        return btnNotes;
+    }
+
+    public void addListeners(ActionListener l){
+        btnLogout.addActionListener(l);
+        btnUserList.addActionListener(l);
+        btnAddUser.addActionListener(l);
+        btnDeleteUser.addActionListener(l);
+        btnCalendars.addActionListener(l);
+        btnEvents.addActionListener(l);
+        btnNotes.addActionListener(l);
+    }
 }

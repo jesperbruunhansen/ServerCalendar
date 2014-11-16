@@ -16,12 +16,18 @@ public class Screen extends JFrame {
 	public static final String WELCOME = "welcome";
     public static final String USERLIST = "userlist";
     public static final String ADDUSER = "adduser";
+    public static final String CALENDAR = "calendar";
+    public static final String EVENTS = "events";
+    public static final String NOTES = "notes";
 	
 	public JPanel contentPane;
 	public final Login login;
 	public final Welcome welcome;
     public final UserList userList;
     public final AddUser addUser;
+    public final Calendar calendar;
+    public final Events events;
+    public final Notes notes;
 
 	CardLayout c;
 	
@@ -38,7 +44,7 @@ public class Screen extends JFrame {
 		contentPane.setLayout(new CardLayout(0, 0));
 		setContentPane(contentPane);
 
-		//Add login-screen
+		//Add Login-screen
 		login = new Login();
 		contentPane.add(login, LOGIN);
 		
@@ -54,6 +60,18 @@ public class Screen extends JFrame {
         addUser = new AddUser();
         contentPane.add(addUser, ADDUSER);
 
+        //Add Calendar-screen
+        calendar = new Calendar();
+        contentPane.add(calendar, CALENDAR);
+
+        //Add Events-screen
+        events = new Events();
+        contentPane.add(events, EVENTS);
+
+        //Add Notes-screen
+        notes = new Notes();
+        contentPane.add(notes, NOTES);
+
 		//Get Layout for contentpane
 		c = (CardLayout) getContentPane().getLayout();
 
@@ -63,10 +81,6 @@ public class Screen extends JFrame {
 
 	public void show(String card) {
 		c.show(getContentPane(), card);
-	}
-	
-	public Login getLogin() {
-		return login;
 	}
 
 }
