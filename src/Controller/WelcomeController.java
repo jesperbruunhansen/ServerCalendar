@@ -28,12 +28,6 @@ public class WelcomeController extends Controller implements ActionListener {
 
         //If User list button is clicked
         if (e.getSource() == screen.welcome.getBtnUserList()) {
-
-            //Nyt objekt af model-klasse
-            //kalder model metode (Som sætter data)
-            //Setter data i GUI
-
-
             screen.show(Screen.USERLIST);
         }
 
