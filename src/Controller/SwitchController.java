@@ -38,12 +38,6 @@ public class SwitchController extends ServerRequestHandler{
                 case "setAllEvents" :
                     setHTTPResponseCode(HTTP.OK);
                     setJsonResponse("Alle data er blevet smidt i db");
-                    try {
-                        //calendarData.setCalendarEventsToDb();
-                    }
-                    catch (Exception e){
-
-                    }
                     break;
                 case "getAllUsers" :
                     setHTTPResponseCode(HTTP.OK);
@@ -52,7 +46,6 @@ public class SwitchController extends ServerRequestHandler{
                 case "joinTest" :
                     setHTTPResponseCode(HTTP.OK);
                     setJsonResponse("OK");
-                    calendarData.joinTest();
                     break;
                 default:
                     setHTTPResponseCode(HTTP.BAD_REQUEST);

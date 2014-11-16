@@ -17,7 +17,6 @@ public class Execute extends Model {
     private final String VALUES = " VALUES ";
 
     private QueryBuilder queryBuilder;
-    private ResultSetMetaData resultSetMetaData;
     private Where where;
     private Values values;
     private boolean getAll = false;

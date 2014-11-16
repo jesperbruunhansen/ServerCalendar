@@ -15,7 +15,14 @@ import java.util.Map;
 /**
  * Created by jesperbruun on 09/11/14.
  */
-public class Server {
+public class Server implements Runnable {
+
+    @Override
+    public void run() {
+
+        runServer();
+
+    }
 
     /**
      * Definition of API calls
@@ -37,16 +44,25 @@ public class Server {
 
 
     private SwitchController switchController = new SwitchController();
+    private int portNr;
+
+    public void setPortNr(int port){
+        this.portNr = port;
+    }
+
+    private int getPortNr(){
+        return portNr;
+    }
 
     /**
      * WebServer constructor.
      */
-    public void runServer(int port) {
+    public void runServer() {
         ServerSocket s;
         System.out.println("(press ctrl-c to exit)");
         try {
             // create the main server socket
-            s = new ServerSocket(port);
+            s = new ServerSocket(getPortNr());
             System.out.println("Opening socket on port " + s.getLocalPort());
         } catch (Exception e) {
             System.out.println("Error: " + e);
