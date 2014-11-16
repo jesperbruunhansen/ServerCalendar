@@ -111,22 +111,6 @@ public class GetCalendarData extends Model{
 
         }
 
-
-//        try {
-//            getConnection();
-//            getConn();
-//            ps = doQuery("SELECT * FROM events INNER JOIN notes ON events.event_id = notes.eventid");
-//            rs = ps.executeQuery();
-//            while (rs.next()){
-//                System.out.println("EventID: " + rs.getString("events.event_id"));
-//                System.out.println("Note: " + rs.getString("notes.text"));
-//            }
-//
-//        }
-//        catch (SQLException e){
-//            e.printStackTrace();
-//        }
-
     }
 
     public String getAllEvents(){
