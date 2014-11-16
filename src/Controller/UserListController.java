@@ -1,27 +1,27 @@
 package Controller;
 
-import Model.Calendar.Event;
-import Model.QueryBuild.QueryBuilder;
 import View.Screen;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.google.gson.Gson;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 /**
  * Created by Casper on 15/11/14.
  */
-public class UserListController extends Controller implements ActionListener {
+public class UserListController extends Controller implements ActionListener, MouseListener {
 
     private Screen screen;
+    private JTable table;
 
     public UserListController(Screen screen){
         this.screen = screen;
-        screen.userList.addListeners(this);
+            screen.userList.addListeners(this, this);
+        table = screen.userList.getTable();
     }
+
 
     //ActionListener
     public void actionPerformed(ActionEvent e) {
@@ -58,15 +58,45 @@ public class UserListController extends Controller implements ActionListener {
         if (e.getSource() == screen.userList.getBtnNotes()) {
             screen.show(Screen.NOTES);
         }
-      //If Delete user button is clicked
+
+        //If Delete user button is clicked
         if (e.getSource() == screen.userList.getBtnDeleteUser()) {
-            
-        
+
         }
-        
-    
     }
-    
-    
-    
+
+    public void mouseClicked(MouseEvent e) {
+
+            System.out.println(e.getSource());
+
+            int row = table.getSelectedRow();
+            int column = table.getSelectedColumn();
+            //int row = target.getSelectedRow();
+            //int column = target.getSelectedColumn();
+
+            System.out.println("ROW: " + row);
+            System.out.println("COLUMN: " +  column);
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e){
+        System.out.print("mouse clicked");
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        System.out.print("mouse clicked");
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        System.out.print("mouse clicked");
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        System.out.print("mouse clicked");
+    }
 }
