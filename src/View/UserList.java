@@ -9,6 +9,7 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 import javax.swing.JTextPane;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 @SuppressWarnings("serial")
 public class UserList extends JPanel {
@@ -34,6 +35,7 @@ public class UserList extends JPanel {
     public JScrollPane scrollPane;
     public JButton btnDeleteUser2;
     public JLabel lblUserList;
+    private JTable table;
 
     public UserList() {
 
@@ -235,5 +237,10 @@ public class UserList extends JPanel {
         btnCalendars.addActionListener(l);
         btnEvents.addActionListener(l);
         btnNotes.addActionListener(l);
+    }
+
+    public void setTable(Vector data, Vector columns){
+        table = new JTable(data, columns);
+        scrollPane.setViewportView(table);
     }
 }
