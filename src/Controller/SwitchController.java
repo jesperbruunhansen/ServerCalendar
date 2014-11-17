@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Calendar.GetCalendarData;
+import Model.Forecast.Forecast;
 import Model.QueryBuild.QueryBuilder;
 import Server.ServerRequestHandler;
 
@@ -24,6 +25,7 @@ public class SwitchController extends ServerRequestHandler{
         value = value.trim();
 
         GetCalendarData calendarData = new GetCalendarData();
+        Forecast forecast = new Forecast();
 
         if(!value.isEmpty()){
             switch (value){
@@ -38,6 +40,7 @@ public class SwitchController extends ServerRequestHandler{
                 case "setAllEvents" :
                     setHTTPResponseCode(HTTP.OK);
                     setJsonResponse("Alle data er blevet smidt i db");
+                    calendarData.setCalendarEventsToDb();
                     break;
                 case "getAllUsers" :
                     setHTTPResponseCode(HTTP.OK);
@@ -46,6 +49,11 @@ public class SwitchController extends ServerRequestHandler{
                 case "joinTest" :
                     setHTTPResponseCode(HTTP.OK);
                     setJsonResponse("OK");
+                    break;
+                case "forecast" :
+                    setHTTPResponseCode(HTTP.OK);
+                    setJsonResponse("Forecast!");
+                    forecast.setForecastToDb();
                     break;
                 default:
                     setHTTPResponseCode(HTTP.BAD_REQUEST);

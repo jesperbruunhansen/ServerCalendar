@@ -1,6 +1,8 @@
 package Model.Calendar;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by jesperbruun on 10/10/14.
@@ -101,8 +103,7 @@ public class Event {
     public void setStart(ArrayList<String> start){
         this.start = start;
     }
-    public ArrayList<String> getStart(){
-        return start;
+    public ArrayList<String> getStart(){return start;
     }
 
     public void setStringStart(String start){this.stringStart = start;}
