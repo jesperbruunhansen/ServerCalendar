@@ -25,11 +25,12 @@ public class Login extends JPanel {
 	public JButton btnLogin;
 	public JPasswordField textPass;
 	public JTextField textUser;
+    //public JLabel lblBox;
 
 	public Login() {
 		setLayout(null);
 		setBounds(150, 150, 1024, 768);
-		
+
 		panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 255, 100));
 		panel.setBounds(358, 131, 300, 450);
@@ -76,6 +77,14 @@ public class Login extends JPanel {
 		lbIcon.setBounds(0, 15, 300, 257);
 		panel.add(lbIcon);
 
+        /*lblBox = new JLabel("Box");
+        lblBox.setForeground(Color.RED);
+        lblBox.setHorizontalAlignment(SwingConstants.CENTER);
+        lblBox.setFont(new Font("Dialog", Font.BOLD, 13));
+        lblBox.setBounds(36, 423, 225, 16);
+        lblBox.setVisible(false);
+        panel.add(lblBox);*/
+
 	}
 
     //Return login button
@@ -112,6 +121,12 @@ public class Login extends JPanel {
     public void setPassword(String s){
         textPass.setText(s);
     }
+
+/*    //Set errormessage
+    public void setErrorMessage(String s){
+        lblBox.setVisible(true);
+        lblBox.setText(s);
+    }*/
 
     //Add action, key and focuslisteners
     public void addListeners(ActionListener l, KeyListener kl, FocusListener fl){

@@ -1,5 +1,4 @@
 package Model;
-
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -13,8 +12,7 @@ import Model.QueryBuild.QueryBuilder;
 public class ViewModel {
 
 	private ResultSet rs;
-
-    protected QueryBuilder queryBuilder = new QueryBuilder();
+    private QueryBuilder queryBuilder = new QueryBuilder();
 
 	public Vector<Vector<Object>> userData(){
 		
@@ -75,12 +73,14 @@ public class ViewModel {
 		return columnNames;
 	}
 
-	public void addUser(String email, String password) {
-	
+	public void addUser(String email, String password, String role) {
+
+        String active = "1";
+
 		try {
 			queryBuilder
-			.insertInto("users", new String[]{"email", "password"})
-			.values(new String[]{email, password})
+			.insertInto("users", new String[]{"email", "password", "active", "role"})
+			.values(new String[]{email, password, active, role})
 			.Execute();
 		} catch (SQLException e) {
 		

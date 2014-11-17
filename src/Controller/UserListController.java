@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.ViewModel;
 import View.Screen;
 
 import javax.swing.*;
@@ -14,11 +15,12 @@ import java.awt.event.MouseListener;
 public class UserListController extends Controller implements ActionListener, MouseListener {
 
     private Screen screen;
+    private ViewModel viewmodel = new ViewModel();
     private JTable table;
 
     public UserListController(Screen screen){
         this.screen = screen;
-            screen.userList.addListeners(this, this);
+        screen.userList.addListeners(this, this);
         table = screen.userList.getTable();
     }
 
@@ -35,10 +37,10 @@ public class UserListController extends Controller implements ActionListener, Mo
 
         //If User list button is clicked
         if (e.getSource() == screen.userList.getBtnUserList()) {
+            screen.userList.setTable(viewmodel.userData(),viewmodel.columnNames());
             screen.show(Screen.USERLIST);
         }
-        
-   
+
         //If Add user button is clicked
         if (e.getSource() == screen.userList.getBtnAddUser()) {
             screen.show(Screen.ADDUSER);

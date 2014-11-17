@@ -8,6 +8,7 @@ import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.SQLException;
+import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
  * Created by Casper on 15/11/14.
@@ -111,9 +112,8 @@ public class LoginController extends Controller implements ActionListener, KeyLi
         }
         else {
             //Log in failed
-            System.out.print("Login failed");
-            //screen.welcome.setErrorMessage().setVisible(true);
-            //screen.welcome.setErrorMessage("Input mismatch!");
+            //screen.login.setErrorMessage("Input mismatch!");
+            showMessageDialog(null, "Input mismatch!");
 
         }
     }
