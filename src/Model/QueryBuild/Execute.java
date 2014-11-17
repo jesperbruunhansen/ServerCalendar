@@ -78,7 +78,6 @@ public class Execute extends Model {
                                 FROM + getQueryBuilder().getTableName() +
                                 " INNER JOIN " + getWhere().getJoinTableName() +
                                 " ON " + getOn().getLeftTableName() + " " + getOn().getOperator() + " " + getOn().getRightTableName() + " ;";
-                //System.out.println(sql);
                 try{
                     getConnection();
                     sqlStatement = getConn().prepareStatement(sql);

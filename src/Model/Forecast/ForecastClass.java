@@ -1,5 +1,9 @@
 package Model.Forecast;
 
+import org.joda.time.DateTime;
+
+import java.util.Date;
+
 /**
  * Created by danielfranch on 16/10/14.
  * Constructor til ForecastModel Arraylist
@@ -9,6 +13,7 @@ public class ForecastClass {
     private String date;
     private String celsius;
     private String desc;
+    private Date dateDate;
 
     // Funktion som setter dato, grader og beskrivelse til Forecast objektet
     public ForecastClass (String date, String celsius, String desc) {
@@ -16,7 +21,15 @@ public class ForecastClass {
         this.celsius = celsius;
         this.desc = desc;
     }
-    
+
+    public ForecastClass(){};
+
+
+    public Date getDateDate() {
+        return dateDate;
+    }
+
+    public void setDateDate(Date dateDate) {this.dateDate = dateDate;}
     // Settere og gettere for Forecast klassen
     public String getDate() {
         return date;

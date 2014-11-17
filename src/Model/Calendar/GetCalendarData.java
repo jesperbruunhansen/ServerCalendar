@@ -1,5 +1,6 @@
 package Model.Calendar;
 
+import Model.Forecast.ForecastClass;
 import Model.Model;
 import Model.QueryBuild.QueryBuilder;
 import com.google.gson.Gson;
@@ -8,12 +9,14 @@ import com.sun.rowset.CachedRowSetImpl;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeComparator;
+import org.joda.time.LocalDate;
 
 
 /**
@@ -23,9 +26,7 @@ public class GetCalendarData extends Model {
 
     private Gson gson;
     private QueryBuilder queryBuilder;
-    //  private ResultSet rs;
 
-    //henter data fra URL og l??er ind til en string
     private static String readUrl(String urlString) throws Exception {
         BufferedReader reader = null;
         try {
@@ -72,57 +73,107 @@ public class GetCalendarData extends Model {
 
     }
 
-//    public void joinTest() {
-//        queryBuilder = new QueryBuilder();
-//        try {
-//            rs = queryBuilder
-//                    .selectFrom(new String[]{"events.event_id", "notes.text"}, "events")
-//                    .innerJoin("notes")
-//                    .on("events.event_id", "=", "notes.eventid")
-//                    .ExecuteQuery();
-//
-//            while (rs.next()) {
-//                System.out.println("EventID: " + rs.getString("events.event_id"));
-//                System.out.println("Note: " + rs.getString("notes.text"));
-//            }
-//        } catch (SQLException ex) {
-//            ex.printStackTrace();
-//        } finally {
-//            try {
-//                rs.close();
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//
-//        }
-//
-//    }
+    public void joinTest() {
+        queryBuilder = new QueryBuilder();
+        QueryBuilder queryBuilder1 = new QueryBuilder();
+
+        try {
+            CachedRowSetImpl cachedRowSet = queryBuilder.selectFrom("events").all().ExecuteQuery();
+            CachedRowSetImpl cachedRowSet1 = queryBuilder1.selectFrom("forecast").all().ExecuteQuery();
+
+            List<Date> forecastDays = new ArrayList<>();
+            List<Date> eventDays = new ArrayList<>();
+
+            while (cachedRowSet1.next()){
+                Date forecastDay = cachedRowSet1.getDate("date");
+                forecastDays.add(forecastDay);
+            }
+            cachedRowSet1.close();
+
+            while (cachedRowSet.next()) {
+
+                Date start = cachedRowSet.getDate("start");
+                eventDays.add(start);
+            }
+            cachedRowSet.close();
+
+            for(Date forecastDate : forecastDays){
+
+                DateTime jodaForecast = new DateTime(forecastDate);
+
+                for(Date date : eventDays){
+
+                    DateTime jodaDate = new DateTime(date);
+
+                    int result = DateTimeComparator.getInstance().getDateOnlyInstance().compare(jodaForecast, jodaDate);
+
+                    if(result == 0){
+                        System.out.println(jodaForecast.toString() + " is equal than " + jodaDate.toString());
+                    }
+                }
+
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+    }
 
 
     public String getAllEvents() {
         try {
-            CachedRowSetImpl cachedRowSet, cachedRowSetNote;
+            CachedRowSetImpl cachedRowSet, cachedRowSetNote, cachedRowSetForecast;
             queryBuilder = new QueryBuilder();
             QueryBuilder queryBuilderNote = new QueryBuilder();
+            QueryBuilder queryBuilderForecast = new QueryBuilder();
             gson = new Gson();
 
             cachedRowSet = queryBuilder.selectFrom("events").all().ExecuteQuery();
+            cachedRowSetForecast = queryBuilderForecast.selectFrom("forecast").all().ExecuteQuery();
 
-            List<Event> eventList = new ArrayList<>();
+
+            //Create arraylist of forecast data
+            List<ForecastClass> forecastDays = new ArrayList<>();
+            while (cachedRowSetForecast.next()){
+                ForecastClass fc = new ForecastClass();
+                fc.setDateDate(cachedRowSetForecast.getDate("date"));
+                fc.setCelsius(cachedRowSetForecast.getString("celsius"));
+                fc.setDesc(cachedRowSetForecast.getString("description"));
+                forecastDays.add(fc);
+            }
+
+           List<Event> eventList = new ArrayList<>();
 
             while (cachedRowSet.next()) {
+
+                //Map db data to event-model
                 Event event = new Event();
                 event.setActivityid(cachedRowSet.getString("activity_id"));
                 event.setEventid(cachedRowSet.getString("event_id"));
                 event.setLocation(cachedRowSet.getString("location"));
                 event.setCreatedby(cachedRowSet.getInt("createdby"));
-                event.setStringStart(cachedRowSet.getString("start"));
-                event.setStringEnd(cachedRowSet.getString("end"));
+                event.setDateStart(cachedRowSet.getDate("start"));
+                event.setDateEnd(cachedRowSet.getDate("end"));
+                event.setStrDateStart(cachedRowSet.getString("start"));
+                event.setStrDateEnd(cachedRowSet.getString("end"));
                 event.setTitle(cachedRowSet.getString("title"));
                 event.setText(cachedRowSet.getString("text"));
                 event.setCustomevent(cachedRowSet.getBoolean("customevent"));
                 event.setCalendarid(cachedRowSet.getInt("CalenderID"));
 
+
+                //Map forecast-data to events
+                LocalDate eventDay = new DateTime(event.getDateStart()).toLocalDate();
+                for (int i = 0; i < forecastDays.size(); i++) {
+                    LocalDate forecastDate = new DateTime(forecastDays.get(i).getDateDate()).toLocalDate();
+                    if (eventDay.equals(forecastDate)) {
+                        event.setForecastClass(forecastDays.get(i));
+                        break;
+                    }
+                }
+
+                //Merge notes to events
                 ArrayList<Note> noteList = new ArrayList<>();
                 cachedRowSetNote = queryBuilderNote.selectFrom("notes").where("eventid", "=", cachedRowSet.getString("event_id")).ExecuteQuery();
                 while (cachedRowSetNote.next()) {
@@ -132,10 +183,14 @@ public class GetCalendarData extends Model {
                     note.setCreatedon(cachedRowSetNote.getTimestamp("created").toString());
                     noteList.add(note);
                 }
+                cachedRowSetNote.close();
                 event.setNoter(noteList);
 
                 eventList.add(event);
             }
+            cachedRowSet.close();
+            cachedRowSetForecast.close();
+
             return gson.toJson(eventList);
         } catch (Exception e) {
             e.printStackTrace();
@@ -165,7 +220,8 @@ public class GetCalendarData extends Model {
                                 events.getEvents().get(i).getStart().get(0) + " " +
                                 events.getEvents().get(i).getStart().get(3) + ":" +
                                 events.getEvents().get(i).getStart().get(4);
-                Date startDate = new SimpleDateFormat("dd-m-yyyy hh:mm").parse(start);
+
+                Date startDate = new SimpleDateFormat("dd-MM-yyyy hh:mm").parse(start);
                 String strStartDate = sdf.format(startDate);
 
                 int monthEnd = Integer.parseInt(events.getEvents().get(i).getEnd().get(1)) + 1;
@@ -175,7 +231,7 @@ public class GetCalendarData extends Model {
                                 events.getEvents().get(i).getEnd().get(0) + " " +
                                 events.getEvents().get(i).getEnd().get(3) + ":" +
                                 events.getEvents().get(i).getEnd().get(4);
-                Date endDate = new SimpleDateFormat("dd-m-yyyy hh:mm").parse(end);
+                Date endDate = new SimpleDateFormat("dd-MM-yyyy hh:mm").parse(end);
                 String strEndDate = sdf.format(endDate);
 
 

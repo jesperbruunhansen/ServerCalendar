@@ -1,5 +1,9 @@
 package Model.Calendar;
 
+import Model.Forecast.ForecastClass;
+import com.google.gson.annotations.Expose;
+import org.joda.time.DateTime;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,12 +22,42 @@ public class Event {
     private int createdby;
     private ArrayList<String> start;
     private ArrayList<String> end;
+    private ForecastClass forecast;
 
-    private String stringStart;
-    private String stringEnd;
+    private transient Date dateStart;
+    private transient Date dateEnd;
+
+    private String strDateStart;
+    private String strDateEnd;
+
     private String text;
     private ArrayList<Note> noter;
     private boolean customevent;
+
+
+    public ForecastClass getForecastClass() {
+        return forecast;
+    }
+
+    public void setForecastClass(ForecastClass forecastClass) {
+        this.forecast = forecastClass;
+    }
+
+    public String getStrDateStart() {
+        return strDateStart;
+    }
+
+    public void setStrDateStart(String strDateStart) {
+        this.strDateStart = strDateStart;
+    }
+
+    public String getStrDateEnd() {
+        return strDateEnd;
+    }
+
+    public void setStrDateEnd(String strDateEnd) {
+        this.strDateEnd = strDateEnd;
+    }
 
 
     public int getCalendarid() {
@@ -106,11 +140,11 @@ public class Event {
     public ArrayList<String> getStart(){return start;
     }
 
-    public void setStringStart(String start){this.stringStart = start;}
-    public String getStringStart(){return stringStart;}
+    public void setDateStart(Date start){this.dateStart = start;}
+    public Date getDateStart(){return dateStart;}
 
-    public void setStringEnd(String end){this.stringEnd = end;}
-    public String getStringEnd(){return stringEnd;}
+    public void setDateEnd(Date end){this.dateEnd = end;}
+    public Date getDateEnd(){return dateEnd;}
 
     public void setText(String text){this.text = text;}
     public String getText(){return text;}

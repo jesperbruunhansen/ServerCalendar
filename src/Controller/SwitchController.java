@@ -49,6 +49,7 @@ public class SwitchController extends ServerRequestHandler{
                 case "joinTest" :
                     setHTTPResponseCode(HTTP.OK);
                     setJsonResponse("OK");
+                    calendarData.joinTest();
                     break;
                 case "forecast" :
                     setHTTPResponseCode(HTTP.OK);
