@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JTextPane;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
+import javax.swing.ButtonGroup;
 
 @SuppressWarnings("serial")
 public class AddUser extends JPanel {
@@ -32,15 +33,17 @@ public class AddUser extends JPanel {
 	public JPanel panelVer;
 	// PANELS //
 	public JLabel lblAddUser;
-	public JTextPane txtpnHeader;
-	public JTextPane txtpnEmail;
-	public JTextPane txtpnPassword;
+	public JLabel lblHeader;
+	public JLabel lblEmail;
+	public JLabel lblPassword;
 	public JTextField textEmail;
 	public JTextField textPassword;
-	public JRadioButton rdbtnUser;
-	public JRadioButton rdbtnAdmin;
-	public JTextPane txtpnCreateRegularUser;
+	public JRadioButton radioUser;
+	public JRadioButton radioAdmin;
+    public ButtonGroup buttonGroup;
+	public JLabel lblCreateRegularUser;
 	public JButton btnCreateUser;
+    public JLabel lblBox;
 
 	public AddUser() {
 		
@@ -84,7 +87,7 @@ public class AddUser extends JPanel {
 		txtLabel.setBackground(new Color(230, 230, 230));
 		txtLabel.setFont(new Font("Dialog", Font.PLAIN, 12));
 		txtLabel.setText("HA-IT Calendar Admin");
-		txtLabel.setBounds(855, 30, 152, 15);
+        txtLabel.setBounds(855, 30, 152, 20);
 		panelTop.add(txtLabel);
 		
 		panelSide = new JPanel();
@@ -178,23 +181,23 @@ public class AddUser extends JPanel {
 		lblAddUser.setBounds(27, 15, 71, 15);
 		panelContent.add(lblAddUser);
 		
-		txtpnHeader = new JTextPane();
-		txtpnHeader.setFont(new Font("Dialog", Font.PLAIN, 12));
-		txtpnHeader.setText("Please input the following information to create a user");
-		txtpnHeader.setBounds(27, 70, 374, 17);
-		panelContent.add(txtpnHeader);
+		lblHeader = new JLabel();
+        lblHeader.setFont(new Font("Dialog", Font.PLAIN, 12));
+        lblHeader.setText("Please input the following information to create a user");
+        lblHeader.setBounds(27, 70, 374, 17);
+		panelContent.add(lblHeader);
 		
-		txtpnEmail = new JTextPane();
-		txtpnEmail.setText("E-mail");
-		txtpnEmail.setFont(new Font("Dialog", Font.PLAIN, 12));
-		txtpnEmail.setBounds(27, 104, 100, 17);
-		panelContent.add(txtpnEmail);
+		lblEmail = new JLabel();
+        lblEmail.setText("E-mail");
+        lblEmail.setFont(new Font("Dialog", Font.PLAIN, 12));
+        lblEmail.setBounds(27, 104, 100, 17);
+		panelContent.add(lblEmail);
 		
-		txtpnPassword = new JTextPane();
-		txtpnPassword.setText("Password");
-		txtpnPassword.setFont(new Font("Dialog", Font.PLAIN, 12));
-		txtpnPassword.setBounds(27, 139, 100, 17);
-		panelContent.add(txtpnPassword);
+		lblPassword = new JLabel();
+        lblPassword.setText("Password");
+        lblPassword.setFont(new Font("Dialog", Font.PLAIN, 12));
+        lblPassword.setBounds(27, 139, 100, 17);
+        panelContent.add(lblPassword);
 		
 		textEmail = new JTextField();
 		textEmail.setBounds(130, 99, 300, 28);
@@ -206,21 +209,27 @@ public class AddUser extends JPanel {
 		textPassword.setBounds(130, 133, 300, 28);
 		panelContent.add(textPassword);
 		
-		rdbtnUser = new JRadioButton("User");
-		rdbtnUser.setFont(new Font("Dialog", Font.PLAIN, 12));
-		rdbtnUser.setBounds(27, 215, 100, 23);
-		panelContent.add(rdbtnUser);
-		
-		rdbtnAdmin = new JRadioButton("Admin");
-		rdbtnAdmin.setFont(new Font("Dialog", Font.PLAIN, 12));
-		rdbtnAdmin.setBounds(130, 215, 100, 23);
-		panelContent.add(rdbtnAdmin);
-		
-		txtpnCreateRegularUser = new JTextPane();
-		txtpnCreateRegularUser.setText("Create regular user or admin");
-		txtpnCreateRegularUser.setFont(new Font("Dialog", Font.PLAIN, 12));
-		txtpnCreateRegularUser.setBounds(27, 193, 374, 17);
-		panelContent.add(txtpnCreateRegularUser);
+		radioUser = new JRadioButton("User");
+        radioUser.setBackground(Color.WHITE);
+        radioUser.setFont(new Font("Dialog", Font.PLAIN, 12));
+        radioUser.setBounds(27, 215, 100, 23);
+		panelContent.add(radioUser);
+
+        radioAdmin = new JRadioButton("Admin");
+        radioAdmin.setBackground(Color.WHITE);
+        radioAdmin.setFont(new Font("Dialog", Font.PLAIN, 12));
+        radioAdmin.setBounds(130, 215, 100, 23);
+		panelContent.add(radioAdmin);
+
+        buttonGroup = new ButtonGroup();
+        buttonGroup.add(radioUser);
+        buttonGroup.add(radioAdmin);
+
+        lblCreateRegularUser = new JLabel();
+        lblCreateRegularUser.setText("Create regular user or admin");
+        lblCreateRegularUser.setFont(new Font("Dialog", Font.PLAIN, 12));
+        lblCreateRegularUser.setBounds(27, 193, 374, 17);
+		panelContent.add(lblCreateRegularUser);
 		
 		btnCreateUser = new JButton("Create User");
 		btnCreateUser.setOpaque(true);
@@ -231,6 +240,13 @@ public class AddUser extends JPanel {
 		btnCreateUser.setBackground(new Color(102, 204, 153));
 		btnCreateUser.setBounds(27, 271, 146, 32);
 		panelContent.add(btnCreateUser);
+
+        lblBox = new JLabel("InfoBox");
+        lblBox.setForeground(Color.GRAY);
+        lblBox.setFont(new Font("Dialog", Font.PLAIN, 12));
+        lblBox.setBounds(27, 327, 403, 16);
+        lblBox.setVisible(false);
+        panelContent.add(lblBox);
 			
 	}
 
@@ -257,8 +273,9 @@ public class AddUser extends JPanel {
     public JButton getBtnNotes() {
         return btnNotes;
     }
+
     public JButton getBtnCreateUser() {
-    	return btnCreateUser;
+        return btnCreateUser;
     }
     
     public String getTextEmail(){
@@ -270,6 +287,20 @@ public class AddUser extends JPanel {
     	String password = textPassword.getText();
     	return password;
     }
+
+    public JRadioButton getRadioUser() {
+        return radioUser;
+    }
+
+    public JRadioButton getRadioAdmin() {
+        return radioAdmin;
+    }
+
+    //Set error message
+    public void setErrorMessage(String s){
+        lblBox.setVisible(true);
+        lblBox.setText(s);
+    }
     
     public void addListeners(ActionListener l){
         btnLogout.addActionListener(l);
@@ -279,5 +310,7 @@ public class AddUser extends JPanel {
         btnEvents.addActionListener(l);
         btnNotes.addActionListener(l);
         btnCreateUser.addActionListener(l);
+        radioUser.addActionListener(l);
+        radioAdmin.addActionListener(l);
     }
 }

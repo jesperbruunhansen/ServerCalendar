@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.ViewModel;
 import View.Screen;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +11,7 @@ import java.awt.event.ActionListener;
 public class NotesController extends Controller implements ActionListener {
 
     private Screen screen;
+    private ViewModel viewmodel = new ViewModel();
 
     public NotesController(Screen screen){
         this.screen = screen;
@@ -28,6 +30,7 @@ public class NotesController extends Controller implements ActionListener {
 
         //If User list button is clicked
         if (e.getSource() == screen.notes.getBtnUserList()) {
+            screen.userList.setTable(viewmodel.userData(),viewmodel.columnNames());
             screen.show(Screen.USERLIST);
         }
 

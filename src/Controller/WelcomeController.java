@@ -10,8 +10,7 @@ import java.awt.event.ActionListener;
 public class WelcomeController extends Controller implements ActionListener {
 
     private Screen screen;
-    
-    ViewModel viewmodel = new ViewModel();
+    private ViewModel viewmodel = new ViewModel();
 
     public WelcomeController(Screen screen){
         this.screen = screen;

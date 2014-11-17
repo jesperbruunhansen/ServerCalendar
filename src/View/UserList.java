@@ -7,6 +7,7 @@ import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import java.util.Vector;
 import javax.swing.JTextPane;
 import javax.swing.JScrollPane;
@@ -35,7 +36,7 @@ public class UserList extends JPanel {
     public JScrollPane scrollPane;
     public JButton btnDeleteUser;
     public JLabel lblUserList;
-    private JTable table;
+    private JTable table = new JTable();
 
     public UserList() {
 
@@ -79,7 +80,7 @@ public class UserList extends JPanel {
         txtLabel.setBackground(new Color(230, 230, 230));
         txtLabel.setFont(new Font("Dialog", Font.PLAIN, 12));
         txtLabel.setText("HA-IT Calendar Admin");
-        txtLabel.setBounds(855, 30, 152, 15);
+        txtLabel.setBounds(855, 30, 152, 20);
         panelTop.add(txtLabel);
 
         panelSide = new JPanel();
@@ -219,18 +220,27 @@ public class UserList extends JPanel {
         return btnNotes;
     }
 
-    public void addListeners(ActionListener l){
+    public void addListeners(ActionListener l, MouseListener ml){
         btnLogout.addActionListener(l);
         btnUserList.addActionListener(l);
         btnAddUser.addActionListener(l);
         btnCalendars.addActionListener(l);
         btnEvents.addActionListener(l);
         btnNotes.addActionListener(l);
-        btnDeleteUser.addActionListener(l);
+        table.addMouseListener(ml);
     }
 
     public void setTable(Vector data, Vector columns){
+
         table = new JTable(data, columns);
         scrollPane.setViewportView(table);
     }
+
+    public JTable getTable() {
+        return table;
+    }
+
+    //public void addMouseListener(MouseListener ml){
+    //    table.addMouseListener(ml);
+    //}
 }

@@ -158,7 +158,8 @@ public class Execute extends Model {
                 e.printStackTrace();
             }
             finally {
-               // sqlStatement.close();
+                //sqlStatement.close();
+
                // getConn().close();
             }
         }

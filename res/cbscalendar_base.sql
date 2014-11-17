@@ -255,6 +255,7 @@ CREATE TABLE `userevents` (
 # Dump of table users
 # ------------------------------------------------------------
 
+USE cbscalendar;
 DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
@@ -263,16 +264,17 @@ CREATE TABLE `users` (
   `active` tinyint(1) DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   `password` varchar(200) NOT NULL,
+  `role` int(1) NOT NULL,
   PRIMARY KEY (`userid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 
-INSERT INTO `users` (`userid`, `email`, `active`, `created`, `password`)
+INSERT INTO `users` (`userid`, `email`, `active`, `created`, `password`, `role`)
 VALUES
-	(1,'jeha13ad@student.cbs.dk',1,NULL,'lol123'),
-	(2,'caha13ag@student.cbs.dk',1,NULL,'abc123');
+	(1,'jeha13ad@student.cbs.dk',1,NULL,'lol123',1),
+	(2,'caha13ag@student.cbs.dk',1,NULL,'abc123',1);
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;

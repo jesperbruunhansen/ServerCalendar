@@ -74,7 +74,7 @@ public class Notes extends JPanel {
         txtLabel.setBackground(new Color(230, 230, 230));
         txtLabel.setFont(new Font("Dialog", Font.PLAIN, 12));
         txtLabel.setText("HA-IT Calendar Admin");
-        txtLabel.setBounds(855, 30, 152, 15);
+        txtLabel.setBounds(855, 30, 152, 20);
         panelTop.add(txtLabel);
 
         panelSide = new JPanel();

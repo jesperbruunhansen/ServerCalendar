@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.ViewModel;
 import View.Screen;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +11,7 @@ import java.awt.event.ActionListener;
 public class CalendarController extends Controller implements ActionListener {
 
     private Screen screen;
+    private ViewModel viewmodel = new ViewModel();
 
     public CalendarController(Screen screen){
         this.screen = screen;
@@ -28,6 +30,7 @@ public class CalendarController extends Controller implements ActionListener {
 
         //If User list button is clicked
         if (e.getSource() == screen.calendar.getBtnUserList()) {
+            screen.userList.setTable(viewmodel.userData(),viewmodel.columnNames());
             screen.show(Screen.USERLIST);
         }
 
@@ -35,7 +38,6 @@ public class CalendarController extends Controller implements ActionListener {
         if (e.getSource() == screen.calendar.getBtnAddUser()) {
             screen.show(Screen.ADDUSER);
         }
-
 
         //If Calendar button is clicked
         if (e.getSource() == screen.calendar.getBtnCalendars()) {
