@@ -1,13 +1,7 @@
 package View;
 
-import javax.swing.BorderFactory;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.*;
 import java.awt.event.ActionListener;
-import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.Font;
@@ -21,10 +15,12 @@ public class UserList extends JPanel {
     public JPanel panel;
     public JButton btnDelete;
     public JLabel lblHead;
-    public JLabel lblDelete;
+    public JLabel lblConfirm;
     public JScrollPane scrollPane;
     public JTable table;
     public ListSelectionModel listSelectionModel;
+
+    private int row;
 
     public UserList() {
 
@@ -58,12 +54,12 @@ public class UserList extends JPanel {
         lblHead.setBounds(23, 15, 132, 15);
         panel.add(lblHead);
 
-        lblDelete = new JLabel("Confirm");
-        lblDelete.setForeground(Color.GRAY);
-        lblDelete.setFont(new Font("Dialog", Font.PLAIN, 12));
-        lblDelete.setBounds(513, 639, 138, 15);
-        lblDelete.setVisible(false);
-        panel.add(lblDelete);
+        lblConfirm = new JLabel("Confirm");
+        lblConfirm.setForeground(Color.GRAY);
+        lblConfirm.setFont(new Font("Dialog", Font.PLAIN, 12));
+        lblConfirm.setBounds(513, 639, 138, 15);
+        lblConfirm.setVisible(false);
+        panel.add(lblConfirm);
 
     }
 
@@ -71,12 +67,9 @@ public class UserList extends JPanel {
         return btnDelete;
     }
 
-    public String getLblDelete() {
-        return lblDelete.getText();
-    }
-
-    public JTable getTable() {
-        return table;
+    public int getUserID(){
+        int userID = row;
+        return userID;
     }
 
     public void addListeners(ActionListener l){
@@ -102,6 +95,18 @@ public class UserList extends JPanel {
 
         @Override
         public void valueChanged(ListSelectionEvent e) {
+            row = table.getSelectedRow();
+            ++row;
+            lblConfirm.setText("Delete user with ID " + row);
+            lblConfirm.setVisible(true);
+        }
+
+    };
+
+    /*class MyListSelectionListener implements ListSelectionListener{
+
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
             //System.out.println("valueChanged: " + e.toString());
             int row = table.getSelectedRow();
             int col = table.getSelectedColumn();
@@ -111,6 +116,6 @@ public class UserList extends JPanel {
             lblDelete.setVisible(true);
         }
 
-    };
+    };*/
 
 }

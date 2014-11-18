@@ -26,7 +26,7 @@ public class AddUser extends JPanel {
     public ButtonGroup buttonGroup;
     public JLabel lblCreateRegularUser;
     public JButton btnCreateUser;
-    public JLabel lblBox;
+    public JLabel lblMessage;
 
     public AddUser() {
 
@@ -105,12 +105,12 @@ public class AddUser extends JPanel {
         btnCreateUser.setBounds(27, 271, 146, 32);
         panel.add(btnCreateUser);
 
-        lblBox = new JLabel("InfoBox");
-        lblBox.setForeground(Color.GRAY);
-        lblBox.setFont(new Font("Dialog", Font.PLAIN, 12));
-        lblBox.setBounds(27, 327, 403, 16);
-        lblBox.setVisible(false);
-        panel.add(lblBox);
+        lblMessage = new JLabel("InfoBox");
+        lblMessage.setForeground(Color.GRAY);
+        lblMessage.setFont(new Font("Dialog", Font.PLAIN, 12));
+        lblMessage.setBounds(27, 327, 403, 16);
+        lblMessage.setVisible(false);
+        panel.add(lblMessage);
 
     }
 
@@ -136,10 +136,17 @@ public class AddUser extends JPanel {
         return radioAdmin;
     }
 
-    //Set error message
     public void setErrorMessage(String s){
-        lblBox.setVisible(true);
-        lblBox.setText(s);
+        lblMessage.setVisible(true);
+        lblMessage.setText(s);
+    }
+
+    public void clearAddUser(){
+        textEmail.setText("");
+        textPassword.setText("");
+        lblMessage.setText("");
+        radioUser.setSelected(false);
+        radioAdmin.setSelected(false);
     }
     
     public void addListeners(ActionListener l){

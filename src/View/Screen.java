@@ -54,6 +54,7 @@ public class Screen extends JFrame {
         //Add Login-screen
         login = new Login();
         contentPane.add(login, LOGIN);
+        login.setVisible(false);
 
         menuTop = new MenuTop();
         contentPane.add(menuTop, MENUTOP);
@@ -93,7 +94,6 @@ public class Screen extends JFrame {
         //Get Layout for contentpane
         c = (CardLayout) content.getLayout();
 
-        //show(Screen.WELCOME);
         setVisible(true);
     }
 

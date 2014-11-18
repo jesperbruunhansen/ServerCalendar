@@ -2,6 +2,7 @@ package View;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -16,6 +17,9 @@ public class MenuTop extends JPanel {
     public JButton btnBack;
     public JButton btnFor;
     public JTextPane txtLabel;
+
+    private String back;
+    private String forward;
 
     public MenuTop () {
 
@@ -60,6 +64,19 @@ public class MenuTop extends JPanel {
         txtLabel.setText("HA-IT Calendar Admin");
         txtLabel.setBounds(855, 30, 152, 20);
         panel.add(txtLabel);
+    }
+
+    public JButton getBtnBack() {
+        return btnBack;
+    }
+
+    public JButton getBtnFor() {
+        return btnFor;
+    }
+
+    public void addListeners(ActionListener l){
+        btnBack.addActionListener(l);
+        btnFor.addActionListener(l);
     }
 
 }

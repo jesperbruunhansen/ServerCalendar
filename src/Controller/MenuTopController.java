@@ -2,10 +2,6 @@ package Controller;
 
 import Model.ViewModel;
 import View.Screen;
-import View.UserList;
-
-import javax.jws.soap.SOAPBinding;
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -19,13 +15,20 @@ public class MenuTopController extends Controller implements ActionListener {
 
     public MenuTopController(Screen screen){
         this.screen = screen;
-        //screen.menuTop.addListeners(this);
+        screen.menuTop.addListeners(this);
     }
 
 
     //ActionListener
     public void actionPerformed(ActionEvent e) {
 
+        if (e.getSource() == screen.menuTop.getBtnBack()) {
+
+        }
+
+        if (e.getSource() == screen.menuTop.getBtnFor()) {
+
+        }
     }
 
 }

@@ -24,7 +24,7 @@ public class Login extends JPanel {
 	public JLabel lbIcon;
 	public JButton btnLogin;
 	public JPasswordField textPass;
-	public JTextField textUser;
+	public JTextField textMail;
     //public JLabel lblBox;
 
 	public Login() {
@@ -44,15 +44,15 @@ public class Login extends JPanel {
 		
 		image = new ImageIcon(getClass().getResource("images/hait.png"));
 		
-		textUser = new JTextField();
-		textUser.setHorizontalAlignment(SwingConstants.CENTER);
-		textUser.setFont(new Font("HelveticaNeueLT Pro 55 Roman", Font.PLAIN, 13));
-		textUser.setBounds(36, 283, 225, 30);
-		textUser.setText("E-mail");
-		textUser.setColumns(10);
-		textUser.setBorder(null);
-		textUser.setColumns(10);
-		panel.add(textUser);
+		textMail = new JTextField();
+        textMail.setHorizontalAlignment(SwingConstants.CENTER);
+        textMail.setFont(new Font("HelveticaNeueLT Pro 55 Roman", Font.PLAIN, 13));
+        textMail.setBounds(36, 283, 225, 30);
+        textMail.setText("E-mail");
+        textMail.setColumns(10);
+        textMail.setBorder(null);
+        textMail.setColumns(10);
+		panel.add(textMail);
 		
 		textPass = new JPasswordField();
 		textPass.setHorizontalAlignment(SwingConstants.CENTER);
@@ -93,8 +93,8 @@ public class Login extends JPanel {
 	}
 
     //Return username TextField
-    public JTextField getFieldUsername(){
-        return textUser;
+    public JTextField getFieldMail(){
+        return textMail;
     }
 
     //Returns password-field
@@ -103,13 +103,13 @@ public class Login extends JPanel {
     }
 
     //Returns contents of username as a string
-    public String getUsername(){
-        return textUser.getText();
+    public String getMail(){
+        return textMail.getText();
     }
 
     //Set username textfield
-    public void setUsername(String s){
-        textUser.setText(s);
+    public void setMail(String s){
+        textMail.setText(s);
     }
 
     //Returns contents of password as a string
@@ -131,9 +131,9 @@ public class Login extends JPanel {
     //Add action, key and focuslisteners
     public void addListeners(ActionListener l, KeyListener kl, FocusListener fl){
         btnLogin.addActionListener(l);
-        textUser.addKeyListener(kl);
+        textMail.addKeyListener(kl);
         textPass.addKeyListener(kl);
-        textUser.addFocusListener(fl);
+        textMail.addFocusListener(fl);
         textPass.addFocusListener(fl);
     }
 

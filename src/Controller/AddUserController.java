@@ -34,12 +34,12 @@ public class AddUserController extends Controller implements ActionListener {
 				if(email.isEmpty()){
 					throw new IllegalArgumentException("Email required");
 				}
-//				else if(dca.emailCheck(email)){
-//					throw new Exception("Email already exist!");
-//				}
-//				else if(cbsMail != true || email.indexOf("@") != 8){
-//					throw new Exception("CBS email required");
-//				}
+				else if(viewModel.emailCheck(email)){
+					throw new Exception("Email already exist!");
+				}
+				else if(!email.contains("@")){
+					throw new Exception("You need to type a mail with @");
+				}
 				//Validating password
 				else if(password.isEmpty()){
 					throw new IllegalArgumentException("Password required");
@@ -56,6 +56,7 @@ public class AddUserController extends Controller implements ActionListener {
 		
 				else{
 					screen.addUser.setErrorMessage(email+" has been successfully added to the system");
+                    screen.addUser.clearAddUser();
 				    viewmodel.addUser(email, password, selectedRole);
 				
 				}
@@ -78,6 +79,5 @@ public class AddUserController extends Controller implements ActionListener {
         }
     
     }
-    
 
 }

@@ -20,7 +20,20 @@ public class EventsController extends Controller implements ActionListener {
 
     //ActionListener
     public void actionPerformed(ActionEvent e) {
+        //If Delete user button is clicked
+        if (e.getSource() == screen.events.getBtnDelete()) {
 
+            //Receive the number of row the user clicked
+            int userID = screen.events.getUserID();
+
+            //Receive the number of row the user clicked
+            String userString = Integer.toString(userID);
+
+            //Delete the user from the database
+            System.out.print("You wanted to delete event " + userString);
+            //viewmodel.deleteUser(userString);
+
+        }
     }
 
 }

@@ -14,7 +14,7 @@ public class ViewModel {
 	private ResultSet resultSet;
     private QueryBuilder queryBuilder = new QueryBuilder();
 
-    private String user;
+    private String mail;
     private String pw;
     private String role;
 
@@ -22,16 +22,16 @@ public class ViewModel {
      * LOGIN
      */
     //Admin authenticator - Check if username and password are correct
-    public boolean auth(String username, String password) {
+    public boolean auth(String email, String password) {
 
         try {
             resultSet = queryBuilder.selectFrom("users").all().ExecuteQuery();
             while (resultSet.next()) {
-                user = resultSet.getString("email");
+                mail = resultSet.getString("email");
                 pw = resultSet.getString("password");
                 role = resultSet.getString("role");
 
-                if(user.equals(username) && pw.equals(password)){
+                if(mail.equals(email) && pw.equals(password)){
                     return true;
                 }
 
@@ -57,17 +57,18 @@ public class ViewModel {
     }
 
     /**
-     * Create list of users
+     * Create list of a table from the database
+     * SELECT FROM ALL
      */
     //Creating an object to contain user list
-    public Vector<Vector<Object>> userData(){
+    public Vector<Vector<Object>> userData(String table){
 		
 		//Create new Vector Object which contains Vector-objects
         Vector<Vector<Object>> data = new Vector<Vector<Object>>();
 
 		try{
 
-            resultSet = queryBuilder.selectFrom("users").all().ExecuteQuery();
+            resultSet = queryBuilder.selectFrom(table).all().ExecuteQuery();
 
 			//Get Metadata from ResultSet
 			ResultSetMetaData metaData = resultSet.getMetaData();
@@ -100,12 +101,12 @@ public class ViewModel {
 	}
 
     //Creating the headers for the columns to user list
-	public Vector<String> columnNames(){
+	public Vector<String> columnNames(String table){
 
 		//Create Vector object for columns
 		Vector<String> columnNames = new Vector<String>();
 		try{
-            resultSet = queryBuilder.selectFrom("users").all().ExecuteQuery();
+            resultSet = queryBuilder.selectFrom(table).all().ExecuteQuery();
 
 			//Get Meta Data from table
 			ResultSetMetaData metaData = resultSet.getMetaData();
@@ -130,14 +131,52 @@ public class ViewModel {
 
 		try {
 			queryBuilder
-			.insertInto("users", new String[]{"email", "password", "active", "role"})
-			.values(new String[]{email, password, active, role})
-			.Execute();
+			    .insertInto("users", new String[]{"email", "password", "active", "role"})
+			    .values(new String[]{email, password, active, role})
+			    .Execute();
 		} catch (SQLException e) {
 		
 		    e.printStackTrace();
 		}
 	}
+
+    public boolean emailCheck(String email) {
+
+        try {
+            resultSet = queryBuilder.selectFrom("users").all().ExecuteQuery();
+            while (resultSet.next()) {
+                mail = resultSet.getString("email");
+
+                if (mail.equals(email)) {
+                    return true;
+                }
+
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return false;
+    }
+
+    /**
+     * Delete user in database
+     */
+    public void deleteUser(String userID){
+
+        try {
+            queryBuilder.
+                deleteFrom("users").
+                where("userid", "=", userID)
+                .Execute();
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        }
+
+    }
 
 /*    //HELENA RODER
     private ResultSet rs1;

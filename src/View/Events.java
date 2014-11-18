@@ -1,25 +1,26 @@
 package View;
 
-import javax.swing.BorderFactory;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 
 
 @SuppressWarnings("serial")
 public class Events extends JPanel {
 
     public JPanel panel;
-    public JButton btnDeleteUser;
+    public JButton btnDelete;
     public JLabel lblHead;
     public JLabel lblConfirm;
     public JScrollPane scrollPane;
     public JTable table;
+    public ListSelectionModel listSelectionModel;
+
+    private int row;
 
     public Events() {
 
@@ -37,15 +38,15 @@ public class Events extends JPanel {
         scrollPane.setBorder(BorderFactory.createLineBorder(new Color(183, 183, 183)));
         panel.add(scrollPane);
 
-        btnDeleteUser = new JButton("Delete");
-        btnDeleteUser.setOpaque(true);
-        btnDeleteUser.setForeground(Color.WHITE);
-        btnDeleteUser.setFont(new Font("Dialog", Font.BOLD, 12));
-        btnDeleteUser.setFocusPainted(false);
-        btnDeleteUser.setBorder(BorderFactory.createLineBorder(new Color(183, 183, 183)));
-        btnDeleteUser.setBackground(new Color(204, 51, 51));
-        btnDeleteUser.setBounds(661, 630, 146, 32);
-        panel.add(btnDeleteUser);
+        btnDelete = new JButton("Delete");
+        btnDelete.setOpaque(true);
+        btnDelete.setForeground(Color.WHITE);
+        btnDelete.setFont(new Font("Dialog", Font.BOLD, 12));
+        btnDelete.setFocusPainted(false);
+        btnDelete.setBorder(BorderFactory.createLineBorder(new Color(183, 183, 183)));
+        btnDelete.setBackground(new Color(204, 51, 51));
+        btnDelete.setBounds(661, 630, 146, 32);
+        panel.add(btnDelete);
 
         lblHead = new JLabel("Events");
         lblHead.setForeground(Color.GRAY);
@@ -62,7 +63,43 @@ public class Events extends JPanel {
 
     }
 
-    public void addListeners(ActionListener l){
-        btnDeleteUser.addActionListener(l);
+    public JButton getBtnDelete() {
+        return btnDelete;
     }
+
+    public int getUserID(){
+        int userID = row;
+        return userID;
+    }
+
+    public void addListeners(ActionListener l){
+        btnDelete.addActionListener(l);
+    }
+
+    public void setTable(Vector data, Vector columns){
+
+        //Add date to a table
+        table = new JTable(data, columns);
+
+        //Add selection listeners
+        listSelectionModel = table.getSelectionModel();
+        listSelectionModel.addListSelectionListener(new MyListSelectionListener());
+
+        //Put table with data into a scroll panel to show the user
+        scrollPane.setViewportView(table);
+
+    }
+
+    //Implement the selection listener
+    class MyListSelectionListener implements ListSelectionListener {
+
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            row = table.getSelectedRow();
+            ++row;
+            lblConfirm.setText("Delete event with ID " + row);
+            lblConfirm.setVisible(true);
+        }
+
+    };
 }

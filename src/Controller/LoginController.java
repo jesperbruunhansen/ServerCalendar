@@ -17,6 +17,7 @@ public class LoginController extends Controller implements ActionListener, KeyLi
 
     private Screen screen;
     private ViewModel viewmodel = new ViewModel();
+
     private final static String email = "E-mail";
     private final static String password = "Password";
 
@@ -60,10 +61,10 @@ public class LoginController extends Controller implements ActionListener, KeyLi
     public void focusGained(FocusEvent e) {
 
         //Username
-        if(e.getSource() == screen.login.getFieldUsername()){
+        if(e.getSource() == screen.login.getFieldMail()){
             //If username field equals "Email", then set to nothing
-            if(screen.login.getUsername().equals(email)){
-            		screen.login.setUsername("");
+            if(screen.login.getMail().equals(email)){
+            		screen.login.setMail("");
             }
         }
 
@@ -81,11 +82,11 @@ public class LoginController extends Controller implements ActionListener, KeyLi
     //Focus lost
     public void focusLost(FocusEvent e) {
 
-        if(e.getSource() == screen.login.getFieldUsername()){
+        if(e.getSource() == screen.login.getFieldMail()){
 
             //If email field equals nothing, set text to "Email"
-            if(screen.login.getUsername().equals("")){
-                screen.login.setUsername(email);
+            if(screen.login.getMail().equals("")){
+                screen.login.setMail(email);
             }
         }
 
@@ -102,7 +103,7 @@ public class LoginController extends Controller implements ActionListener, KeyLi
     //Login method
     public void login(){
 
-        String user = screen.login.getUsername();
+        String user = screen.login.getMail();
         String pass = screen.login.getPassword();
 
         if(viewmodel.auth(user, pass)){
