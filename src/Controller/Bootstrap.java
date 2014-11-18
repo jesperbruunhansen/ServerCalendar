@@ -7,21 +7,26 @@ import Model.DatabaseInit;
 /**
  * Created by jesperbruun on 15/11/14.
  */
-public class Bootstrap {
+public class Bootstrap implements Runnable {
 
     public Bootstrap(){
-
         /**
          * Initialize database environment
          * If env. does not exist, create new based on SQL file in res/createDBscript.sql
          */
         //DatabaseInit.init();
 
+    }
+
+    @Override
+    public void run() {
+
+
         /**
          * Create new screen object
          */
-        Controller controller = new Controller();
-        controller.init();
+       // Controller controller = new Controller();
+       // controller.init();
 
 
         /**
@@ -29,7 +34,9 @@ public class Bootstrap {
          */
         Server server = new Server();
         server.setPortNr(Config.getServerPort());
-        server.run();
+        server.runServer();
     }
+
+
 
 }

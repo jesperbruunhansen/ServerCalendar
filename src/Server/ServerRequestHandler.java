@@ -1,6 +1,8 @@
 package Server;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -12,29 +14,25 @@ public class ServerRequestHandler {
         OK(200, "OK"),
         BAD_REQUEST(400, "Bad Request"),
         SERVER_ERROR(500, "Internal Server Error");
-
         private int statusCode;
         private String statusMessage;
-
         private HTTP(int statusCode, String  statusMessage){
             this.statusCode = statusCode;
             this.statusMessage = statusMessage;
         }
-
         public int getStatusCode(){
             return statusCode;
         }
         public String getStatusMessage(){
             return statusMessage;
         }
-
         public String toString(){
             return "HTTP/1.1 " + getStatusCode() + " " + getStatusMessage();
         }
-
     }
 
     private static Map<String, String> paramValue;
+    private static List<Map<String, String>> keyParam;
     private static String HTTPHeader;
 
     private static final String MIME_TYPE       = "Content-Type: application/json";
@@ -42,16 +40,45 @@ public class ServerRequestHandler {
     private static final String CALL_PARAMETER  = "call?";
 
 
-    /**
-     * Read response from client and set key and values from GET parameters
-     * @param response
-     */
-    public static void parseGetParameters(String response) {
-        if(!response.toLowerCase().contains("favicon")) {
+
+    public static void parseHeader(String header){
+
+        paramValue = null;
+        keyParam = null;
+        paramValue = new HashMap<>();
+        keyParam = new ArrayList<>();
+
+        //Split header string by newlines
+        String[] headerArray = header.split("\\r?\\n");
+
+        //Grap first 4 characters from header string (GET or POST)
+        String httpMethod = headerArray[0].substring(0,4).trim();
+
+        //System.out.println(headerArray[0]);
+        System.out.println("HTTP method: " + httpMethod);
+
+        switch (httpMethod){
+            case "GET" :
+                parseGetParams(headerArray);
+                break;
+            case "POST" :
+                parsePostParams(headerArray);
+                break;
+            default:
+                System.out.println("No HTTP method was found");
+        }
+
+    }
+    private static void parseGetParams(String[] params){
+
+        //Browsers creates an extra GET request from their favicon
+        //and we dont want to that extra call.
+        if(!params[0].contains("favicon")){
+
             final String GET_CALL = "GET /" + CALL_PARAMETER;
 
             //Split string, and get clean GET result
-            String get[] = response.split("HTTP/1.1");
+            String get[] = params[0].split("HTTP/1.1");
 
             //Only grab the piece of string that contains our call parameter
             if (get[0].toLowerCase().contains(CALL_PARAMETER)) {
@@ -67,15 +94,57 @@ public class ServerRequestHandler {
                     //Create new object of Hashmap and insert array in key/value
                     paramValue = new HashMap<>();
                     paramValue.put(pair[0], pair[1]);
-                    setHTTPResponseCode(HTTP.OK);
+
+                    keyParam.add(paramValue);
+                }
+
+                setHTTPResponseCode(HTTP.OK);
+
+                //Console print key -> value
+                for(Map<String, String> map : keyParam){
+                    for (String key : map.keySet()){
+                        System.out.println("\tKey: " + key + " -> " + map.get(key));
+                    }
                 }
 
             }
+            else {
+                setHTTPResponseCode(HTTP.BAD_REQUEST);
+                paramValue = null;
+            }
+
         }
-        else {
-            setHTTPResponseCode(HTTP.BAD_REQUEST);
-            paramValue = null;
+
+    }
+
+    private static void parsePostParams(String[] params){
+
+        int length = params.length;
+        String lastIndex = params[length - 1];
+
+        String[] values = lastIndex.split("&");
+
+        for(String param : values){
+
+            //Split key and value
+            String[] pair = param.split("=");
+
+            //Create new object of Hashmap and insert array in key/value
+            paramValue = new HashMap<>();
+            paramValue.put(pair[0], pair[1]);
+            setHTTPResponseCode(HTTP.OK);
+
+            keyParam.add(paramValue);
+
         }
+
+        //Console print key -> value
+        for(Map<String, String> map : keyParam){
+            for (String key : map.keySet()){
+                System.out.println("\tKey: " + key + " -> " + map.get(key));
+            }
+        }
+
     }
 
 

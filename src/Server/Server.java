@@ -8,21 +8,12 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.HashMap;
-import java.util.Map;
 
 
 /**
  * Created by jesperbruun on 09/11/14.
  */
-public class Server implements Runnable {
-
-    @Override
-    public void run() {
-
-        runServer();
-
-    }
+public class Server {
 
     /**
      * Definition of API calls
@@ -30,29 +21,25 @@ public class Server implements Runnable {
     private enum API {
         ID("id");
 
-        private API(String key){
+        private API(String key) {
             this.apiKey = key;
         }
 
         private String apiKey;
 
-        public String toString(){
+        public String toString() {
             return apiKey;
         }
 
     }
 
-
     private SwitchController switchController = new SwitchController();
     private int portNr;
-
-    public void setPortNr(int port){
-        this.portNr = port;
-    }
-
-    private int getPortNr(){
-        return portNr;
-    }
+    private BufferedReader in;
+    private PrintWriter out;
+    private String header = "";
+    private char[] inputChars;
+    private int charsRead = 0;
 
     /**
      * WebServer constructor.
@@ -74,38 +61,50 @@ public class Server implements Runnable {
             try {
                 // wait for a connection
                 Socket remote = s.accept();
-                // remote is now the connected socket
-                //System.out.println("Connection!");
-                BufferedReader in = new BufferedReader(new InputStreamReader(remote.getInputStream()));
-                PrintWriter out = new PrintWriter(remote.getOutputStream());
+                inputChars = null;
 
-                String header = "";
-                // read the data sent.
-                for (String line; (line = in.readLine()) != null; ) {
-                    if (line.isEmpty()) break;
-                    header += line + "\n";
+                in = new BufferedReader(new InputStreamReader(remote.getInputStream()));
+                out = new PrintWriter(remote.getOutputStream());
+
+
+                int charsRead;
+                inputChars = new char[2048];
+                if ((charsRead = in.read(inputChars)) != -1)
+                {
+                    System.out.println("Chars read from stream: " + charsRead);
                 }
+                header = new String(inputChars);
 
-                ServerRequestHandler.parseGetParameters(header.substring(0, header.indexOf("\n")));
+                //System.out.println(header);
 
-                if(ServerRequestHandler.getHeaderParams() != null){
-                    switchController.keyValuePair(ServerRequestHandler.getHeaderParams().get(API.ID.toString()));
-                    System.out.println("Connection!");
-                    // Send the response
-                    // Send the headers
-                    out.println(ServerRequestHandler.getHTTPResponseCode());
-                    out.println(ServerRequestHandler.getJSONMIMEType());
-                    out.println(ServerRequestHandler.getHTTPServerInfo());
-                    // this blank line signals the end of the headers
-                    out.println("");
-                    // Send the HTML page
+                ServerRequestHandler.parseHeader(header);
 
-                    /*
-                    *  SEND JSON CONTENT TO CLIENT
-                    */
+                out.println("HTTP/1.1 200 OK");
+                out.println(ServerRequestHandler.getJSONMIMEType());
+                out.println(ServerRequestHandler.getHTTPServerInfo());
+                out.println("");
 
-                    out.println(switchController.getJsonResponse());
-                }
+//                    out.println(ServerRequestHandler.getHTTPServerInfo());'
+//                ServerRequestHandler.parseGetParameters(header.substring(0, header.indexOf("\n")));
+//
+//                if(ServerRequestHandler.getHeaderParams() != null){
+//                    switchController.keyValuePair(ServerRequestHandler.getHeaderParams().get(API.ID.toString()));
+//                    System.out.println("Connection!");
+//                    // Send the response
+//                    // Send the headers
+//                    out.println(ServerRequestHandler.getHTTPResponseCode());
+//                    out.println(ServerRequestHandler.getJSONMIMEType());
+//                    out.println(ServerRequestHandler.getHTTPServerInfo());
+//                    // this blank line signals the end of the headers
+//                    out.println("");
+//                    // Send the HTML page
+//
+//                    /*
+//                    *  SEND JSON CONTENT TO CLIENT
+//                    */
+//
+//                    out.println(switchController.getJsonResponse());
+//                }
 
                 out.flush();
                 remote.close();
@@ -115,6 +114,14 @@ public class Server implements Runnable {
 
         }
 
+    }
+
+    public void setPortNr(int port) {
+        this.portNr = port;
+    }
+
+    private int getPortNr() {
+        return portNr;
     }
 
 

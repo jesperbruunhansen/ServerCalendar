@@ -7,7 +7,7 @@ public class Main {
 
     public static void main(String[] args){
 
-        new Bootstrap();
+        new Bootstrap().run();
 
     }
 
