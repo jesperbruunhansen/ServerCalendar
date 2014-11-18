@@ -26,18 +26,19 @@ public class LoginController extends Controller implements ActionListener, KeyLi
         screen.login.addListeners(this, this, this);
     }
 
-    //ActionListener
+    //IF ACTIONLISTENER IS TRIGGERED
     public void actionPerformed(ActionEvent e){
 
-        //If login button is clicked
+        //LOGIN BUTTON IS CLICKED
         if(e.getSource() == screen.login.getBtnLogin()){
+            //Run method
             login();
 
         }
     }
 
-    //KeyListener
-    //If keypressed
+    //IF KEYLISTENER IS TRIGGERED
+    //KEYPRESSED
     public void keyPressed(KeyEvent e) {
 
         //If enter key pressed
@@ -46,22 +47,23 @@ public class LoginController extends Controller implements ActionListener, KeyLi
         }
     }
 
-    @Override
+    //KEYTYPED
     public void keyTyped(KeyEvent e) {
 
     }
 
-    @Override
+    //KEYRELEASE
     public void keyReleased(KeyEvent e) {
 
     }
 
-    //FocusListeners
-    //FocusGanied
+    //IF KEYLISTENER IS TRIGGERED
+    //FOCUSGAINED
     public void focusGained(FocusEvent e) {
 
         //Username
         if(e.getSource() == screen.login.getFieldMail()){
+
             //If username field equals "Email", then set to nothing
             if(screen.login.getMail().equals(email)){
             		screen.login.setMail("");
@@ -79,7 +81,7 @@ public class LoginController extends Controller implements ActionListener, KeyLi
 
     }
 
-    //Focus lost
+    //FOCUSLOST
     public void focusLost(FocusEvent e) {
 
         if(e.getSource() == screen.login.getFieldMail()){
@@ -100,19 +102,23 @@ public class LoginController extends Controller implements ActionListener, KeyLi
         }
     }
 
-    //Login method
+    //LOGIN METHOD
     public void login(){
 
         String user = screen.login.getMail();
         String pass = screen.login.getPassword();
 
+        //AUTHENTICATE USER
         if(viewmodel.auth(user, pass)){
 
+            //Check if user has ADMIN privileges
             if(viewmodel.authAdm()){
+
                 //Send user to Welcome-Screen.
                 screen.LoginVisible(false);
                 screen.MenuVisible(true);
             } else {
+                //Show error message
                 showMessageDialog(null, "You do not have admin privileges");
             }
 

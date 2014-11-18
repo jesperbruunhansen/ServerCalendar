@@ -8,8 +8,9 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.util.Vector;
 
-
-@SuppressWarnings("serial")
+/**
+ * Created by Casper on 14/11/14.
+ */
 public class Events extends JPanel {
 
     public JPanel panel;
@@ -24,6 +25,7 @@ public class Events extends JPanel {
 
     public Events() {
 
+        //OVERALL PANEL SETTINGS
         setLayout(null);
         setBounds(0, 0, 850, 711);
 
@@ -33,6 +35,7 @@ public class Events extends JPanel {
         add(panel);
         panel.setLayout(null);
 
+        //CONTENT ON PANEL
         scrollPane = new JScrollPane();
         scrollPane.setBounds(23, 36, 784, 570);
         scrollPane.setBorder(BorderFactory.createLineBorder(new Color(183, 183, 183)));
@@ -63,19 +66,23 @@ public class Events extends JPanel {
 
     }
 
+    //RETURN DELETE BUTTON
     public JButton getBtnDelete() {
         return btnDelete;
     }
 
-    public int getUserID(){
-        int userID = row;
-        return userID;
+    //RETURN THE CHOSEN ID
+    public int getSelectedID(){
+        int selectedID = row;
+        return selectedID;
     }
 
+    //ADD ACTIONLISTENER
     public void addListeners(ActionListener l){
         btnDelete.addActionListener(l);
     }
 
+    //SET TABLE WITH DATA AND ADD TO SCROLLPANE
     public void setTable(Vector data, Vector columns){
 
         //Add date to a table
@@ -90,7 +97,7 @@ public class Events extends JPanel {
 
     }
 
-    //Implement the selection listener
+    //IMPLEMENT SELECTIONLISTENER ON TABLE
     class MyListSelectionListener implements ListSelectionListener {
 
         @Override

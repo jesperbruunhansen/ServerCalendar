@@ -3,13 +3,14 @@ package View;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionListener;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 
-@SuppressWarnings("serial")
+/**
+ * Created by Casper on 14/11/14.
+ */
 public class MenuTop extends JPanel {
 
     public JPanel panel;
@@ -18,11 +19,9 @@ public class MenuTop extends JPanel {
     public JButton btnFor;
     public JTextPane txtLabel;
 
-    private String back;
-    private String forward;
-
     public MenuTop () {
 
+        //OVERALL PANEL SETTINGS
         setLayout(null);
         setBounds(0, 0, 1024, 57);
 
@@ -32,6 +31,7 @@ public class MenuTop extends JPanel {
         add(panel);
         panel.setLayout(null);
 
+        //CONTENT ON PANEL
         border = new JPanel();
         border.setBackground(new Color(183, 183, 183));
         border.setBounds(0, 55, 1024, 2);
@@ -66,14 +66,17 @@ public class MenuTop extends JPanel {
         panel.add(txtLabel);
     }
 
+    //RETURN BACK BUTTON
     public JButton getBtnBack() {
         return btnBack;
     }
 
+    //RETURN FORWARD BUTTON
     public JButton getBtnFor() {
         return btnFor;
     }
 
+    //ADD ACTIONLISTENERS
     public void addListeners(ActionListener l){
         btnBack.addActionListener(l);
         btnFor.addActionListener(l);

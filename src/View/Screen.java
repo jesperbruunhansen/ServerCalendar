@@ -2,14 +2,12 @@ package View;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
 import java.awt.CardLayout;
 import java.awt.Color;
 
 /**
  * Created by Casper on 14/11/14.
  */
-@SuppressWarnings("serial")
 public class Screen extends JFrame {
 
     //Final representation of screens
@@ -40,71 +38,72 @@ public class Screen extends JFrame {
 
     public Screen() {
 
+        //FRAME SETTINGS
         setTitle("HAIT Calendar");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(150, 150, 1024, 768);
         setResizable(false);
 
-        //Create new contentpane
+        //CREATING NEW CONTENTPANE
         contentPane = new JPanel();
         contentPane.setBackground(new Color(0, 153, 204));
         contentPane.setLayout(null);
         setContentPane(contentPane);
 
-        //Add Login-screen
+        //ADDING SCREENS
         login = new Login();
         contentPane.add(login, LOGIN);
         login.setVisible(false);
 
+        //MENU SCREENS
         menuTop = new MenuTop();
         contentPane.add(menuTop, MENUTOP);
 
         menuLeft = new MenuLeft();
         contentPane.add(menuLeft, MENULEFT);
 
+        //CONTENT SCREENS
         content = new JPanel();
         content.setBounds(190, 57, 834, 711);
         content.setLayout(new CardLayout(0, 0));
         contentPane.add(content, CONTENT);
 
-        //Add Welcome-screen
         welcome = new Welcome();
         content.add(welcome, WELCOME);
 
-        //Add User List-screen
         userList = new UserList();
         content.add(userList, USERLIST);
 
-        //Add Add-User-screen
         addUser = new AddUser();
         content.add(addUser, ADDUSER);
 
-        //Add Calendar-screen
         calendar = new Calendar();
         content.add(calendar, CALENDAR);
 
-        //Add Events-screen
         events = new Events();
         content.add(events, EVENTS);
 
-        //Add Notes-screen
         notes = new Notes();
         content.add(notes, NOTES);
 
-        //Get Layout for contentpane
+        //GET LAYOUT FOR CONTENT SCREENS
         c = (CardLayout) content.getLayout();
 
+        //SET FRAME VISIBLE
         setVisible(true);
     }
 
+    //SHOW SCREEN METHOD
     public void show(String card) {
         c.show(content, card);
     }
 
+    //SET LOGIN SCREEN VISIBLE TRUE/FALSE
     public void LoginVisible(boolean set) {
         login.setVisible(set);
     }
 
+    //SET MENU PANEL VISIBLE TRUE/FALSE
     public void MenuVisible(boolean set) {
         menuLeft.setVisible(set);
     }

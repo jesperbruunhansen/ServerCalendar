@@ -23,44 +23,56 @@ public class MenuLeftController extends Controller implements ActionListener {
     }
 
 
-    //ActionListener
+    //IF ACTIONLISTENER IS TRIGGERED
     public void actionPerformed(ActionEvent e) {
 
-        //If login button is clicked
+        //IF LOGOUT BUTTON IS CLICKED
         if (e.getSource() == screen.menuLeft.getBtnLogout()) {
+
+            //SHOW & HIDE SCREENS
             screen.LoginVisible(true);
             screen.MenuVisible(false);
+
+            //CLEAR SCREENS FOR INFORMATION
             screen.login.setMail("E-mail");
             screen.login.setPassword("Password");
             screen.addUser.clearAddUser();
         }
 
-        //If User list button is clicked
+        //IF USER LIST BUTTON IS CLICKED
         if (e.getSource() == screen.menuLeft.getBtnUserList()) {
-            screen.userList.setTable(viewmodel.userData("users"),viewmodel.columnNames("users"));
+
+            //POPULATE USERLIST TABLE WITH DATA
+            screen.userList.setTable(viewmodel.tableData("users"),viewmodel.columnNames("users"));
             screen.show(Screen.USERLIST);
         }
 
-        //If Add user button is clicked
+        //IF ADD USER BUTTON IS CLICKED
         if (e.getSource() == screen.menuLeft.getBtnAddUser()) {
             screen.show(Screen.ADDUSER);
         }
 
-        //If Calendar button is clicked
+        //IF CALENDAR BUTTON IS CLICKED
         if (e.getSource() == screen.menuLeft.getBtnCalendars()) {
-            screen.calendar.setTable(viewmodel.userData("calender"),viewmodel.columnNames("calender"));
+
+            //POPULATE CALANDAR TABLE WITH DATA
+            screen.calendar.setTable(viewmodel.tableData("calender"),viewmodel.columnNames("calender"));
             screen.show(Screen.CALENDAR);
         }
 
-        //If Events button is clicked
+        //IF EVENTS BUTTON IS CLICKED
         if (e.getSource() == screen.menuLeft.getBtnEvents()) {
-            screen.events.setTable(viewmodel.userData("events"),viewmodel.columnNames("events"));
+
+            //POPULATE CALANDAR TABLE WITH DATA
+            screen.events.setTable(viewmodel.tableData("events"),viewmodel.columnNames("events"));
             screen.show(Screen.EVENTS);
         }
 
-        //If Notes button is clicked
+        //IF NOTES BUTTON IS CLICKED
         if (e.getSource() == screen.menuLeft.getBtnNotes()) {
-            screen.events.setTable(viewmodel.userData("notes"),viewmodel.columnNames("notes"));
+
+            //POPULATE CALANDAR TABLE WITH DATA
+            screen.notes.setTable(viewmodel.tableData("notes"),viewmodel.columnNames("notes"));
             screen.show(Screen.NOTES);
         }
     }

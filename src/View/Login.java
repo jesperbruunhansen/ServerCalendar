@@ -25,10 +25,11 @@ public class Login extends JPanel {
 	public JButton btnLogin;
 	public JPasswordField textPass;
 	public JTextField textMail;
-    //public JLabel lblBox;
 
 	public Login() {
-		setLayout(null);
+
+		//OVERALL PANEL SETTINGS
+        setLayout(null);
         setBounds(0, 0, 1024, 768);
 
 		panel = new JPanel();
@@ -36,7 +37,8 @@ public class Login extends JPanel {
 		panel.setBounds(358, 131, 300, 450);
 		add(panel);
 		panel.setLayout(null);
-		
+
+        //CONTENT ON PANEL
 		image = new ImageIcon(getClass().getResource("images/login.jpg"));
 		lbWall = new JLabel(image);
 		lbWall.setBounds(0, 0, 1024, 768);
@@ -77,58 +79,44 @@ public class Login extends JPanel {
 		lbIcon.setBounds(0, 15, 300, 257);
 		panel.add(lbIcon);
 
-        /*lblBox = new JLabel("Box");
-        lblBox.setForeground(Color.RED);
-        lblBox.setHorizontalAlignment(SwingConstants.CENTER);
-        lblBox.setFont(new Font("Dialog", Font.BOLD, 13));
-        lblBox.setBounds(36, 423, 225, 16);
-        lblBox.setVisible(false);
-        panel.add(lblBox);*/
-
 	}
 
-    //Return login button
+    //RETURN LOGIN BUTTON
 	public JButton getBtnLogin() {
     		return btnLogin;
 	}
 
-    //Return username TextField
+    //RETURN EMAIL FIELD
     public JTextField getFieldMail(){
         return textMail;
     }
 
-    //Returns password-field
+    //RETURN PASSWORD FIELD
     public JTextField getFieldPassword(){
         return textPass;
     }
 
-    //Returns contents of username as a string
+    //RETURN CONTENT OF EMAIL FIELD
     public String getMail(){
         return textMail.getText();
     }
 
-    //Set username textfield
-    public void setMail(String s){
-        textMail.setText(s);
-    }
-
-    //Returns contents of password as a string
+    //RETURN CONTENT OF PASSWORD FIELD
     public String getPassword(){
         return textPass.getText();
     }
 
-    //Set set password field
+    //RESET TEXT ON PASSWORD FIELD
+    public void setMail(String s){
+        textMail.setText(s);
+    }
+
+    //RESET TEXT ON PASSWORD FIELD
     public void setPassword(String s){
         textPass.setText(s);
     }
 
-    /*//Set errormessage
-    public void setErrorMessage(String s){
-        lblBox.setVisible(true);
-        lblBox.setText(s);
-    }*/
-
-    //Add action, key and focuslisteners
+    //ADD ACTION; KEY; FOCUSLISTENERS
     public void addListeners(ActionListener l, KeyListener kl, FocusListener fl){
         btnLogin.addActionListener(l);
         textMail.addKeyListener(kl);

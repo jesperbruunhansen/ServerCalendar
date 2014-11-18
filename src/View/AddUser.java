@@ -11,7 +11,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 
-@SuppressWarnings("serial")
+/**
+ * Created by Casper on 14/11/14.
+ */
 public class AddUser extends JPanel {
 
     public JPanel panel;
@@ -30,6 +32,7 @@ public class AddUser extends JPanel {
 
     public AddUser() {
 
+        //OVERALL PANEL SETTINGS
         setLayout(null);
         setBounds(0, 0, 850, 711);
 
@@ -39,6 +42,7 @@ public class AddUser extends JPanel {
         add(panel);
         panel.setLayout(null);
 
+        //CONTENT ON PANEL
         lblAddUser = new JLabel("Add User");
         lblAddUser.setForeground(Color.GRAY);
         lblAddUser.setFont(new Font("Dialog", Font.PLAIN, 12));
@@ -114,33 +118,40 @@ public class AddUser extends JPanel {
 
     }
 
+    //RETURN CREATE USER BUTTON
     public JButton getBtnCreateUser() {
         return btnCreateUser;
     }
-    
+
+    //RETURN CONTENT OF EMAIL FIELD
     public String getTextEmail(){
     	String email = textEmail.getText();
     	return email;
     }
-    
+
+    //RETURN CONTENT OF PASSWORD FIELD
     public String getTextPassword() {
     	String password = textPassword.getText();
     	return password;
     }
 
+    //RETURN RADIO BUTTON USER
     public JRadioButton getRadioUser() {
         return radioUser;
     }
 
+    //RETURN RADIO BUTTON ADMIN
     public JRadioButton getRadioAdmin() {
         return radioAdmin;
     }
 
+    //SET THE ERROR MESSAGE
     public void setErrorMessage(String s){
         lblMessage.setVisible(true);
         lblMessage.setText(s);
     }
 
+    //CLEAR ALL FIELDS SET ON THE PANEL
     public void clearAddUser(){
         textEmail.setText("");
         textPassword.setText("");
@@ -148,7 +159,8 @@ public class AddUser extends JPanel {
         radioUser.setSelected(false);
         radioAdmin.setSelected(false);
     }
-    
+
+    // ADD ACTIONLISTENER
     public void addListeners(ActionListener l){
         btnCreateUser.addActionListener(l);
         radioUser.addActionListener(l);

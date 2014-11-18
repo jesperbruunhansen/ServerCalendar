@@ -10,7 +10,6 @@ import java.awt.Font;
 /**
  * Created by Casper on 14/11/14.
  */
-@SuppressWarnings("serial")
 public class Welcome extends JPanel {
 
     public JPanel panelContent;
@@ -20,6 +19,7 @@ public class Welcome extends JPanel {
 
     public Welcome() {
 
+        //OVERALL PANEL SETTINGS
         setLayout(null);
         setBounds(0, 0, 850, 711);
 
@@ -29,6 +29,7 @@ public class Welcome extends JPanel {
         add(panelContent);
         panelContent.setLayout(null);
 
+        //CONTENT ON PANEL
         txtWelcome = new JTextPane();
         txtWelcome.setForeground(Color.DARK_GRAY);
         txtWelcome.setBounds(273, 17, 270, 19);

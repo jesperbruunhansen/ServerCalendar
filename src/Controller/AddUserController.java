@@ -2,7 +2,6 @@ package Controller;
 
 import Model.ViewModel;
 import View.Screen;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -20,17 +19,19 @@ public class AddUserController extends Controller implements ActionListener {
         screen.addUser.addListeners(this);
     }
 
-    //ActionListener
+    //IF ACTIONLISTENER IS TRIGGERED
     public void actionPerformed(ActionEvent e) {
 
-        //If Create user is clicked
+        //CREATE USER BUTTON IS CLICKED
         if (e.getSource() == screen.addUser.getBtnCreateUser()) {
-            
+
+            //Save email & password into variables
         	String email = screen.addUser.getTextEmail();
             String password = screen.addUser.getTextPassword();
 
+            //VALIDATE EMAIL AND PASSWORD
             try{
-				//Validating email
+				//VALIDATE EMAIL
 				if(email.isEmpty()){
 					throw new IllegalArgumentException("Email required");
 				}
@@ -40,7 +41,7 @@ public class AddUserController extends Controller implements ActionListener {
 				else if(!email.contains("@")){
 					throw new Exception("You need to type a mail with @");
 				}
-				//Validating password
+				//VALIDATE PASSWORD
 				else if(password.isEmpty()){
 					throw new IllegalArgumentException("Password required");
 				}
@@ -50,18 +51,21 @@ public class AddUserController extends Controller implements ActionListener {
 				else if(password.length() > 22){
 					throw new Exception("Password is too long");
 				}
+                //VALIDATE SELECTED ROLE
                 if(selectedRole == "empty"){
                     throw new IllegalArgumentException("Choose a role");
                 }
-		
-				else{
-					screen.addUser.setErrorMessage(email+" has been successfully added to the system");
-                    screen.addUser.clearAddUser();
-				    viewmodel.addUser(email, password, selectedRole);
-				
-				}
 
+                //IF NO ERRORS ADD NEW USER TO DATABASE
+				else{
+                    viewmodel.addUser(email, password, selectedRole);
+                    screen.addUser.setErrorMessage(email+" has been successfully added to the system");
+
+                    //CLEAR INPUT IN ALL FIELDS
+                    screen.addUser.clearAddUser();
+				}
 			}
+            //CATCH ERROR MESSAGE
 			catch(Exception exc){
 				screen.addUser.setErrorMessage(exc.getMessage());
 
@@ -69,15 +73,12 @@ public class AddUserController extends Controller implements ActionListener {
             
         }
 
-        //Checks if user or admin radiobutton is pressed and store value into variable
+        //SAVE RADIO BUTTON PRESS INTO VARIABLE
         if (e.getSource() == screen.addUser.getRadioUser()) {
             selectedRole = "0";
         }
-
         if (e.getSource() == screen.addUser.getRadioAdmin()) {
             selectedRole = "1";
         }
-    
     }
-
 }

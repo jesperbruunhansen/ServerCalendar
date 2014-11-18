@@ -5,6 +5,8 @@ import View.Screen;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import static javax.swing.JOptionPane.showMessageDialog;
+
 /**
  * Created by Casper on 16/11/14.
  */
@@ -18,21 +20,21 @@ public class NotesController extends Controller implements ActionListener {
         screen.notes.addListeners(this);
     }
 
-    //ActionListener
+    //IF ACTIONLISTENER IS TRIGGERED
     public void actionPerformed(ActionEvent e) {
-        //If Delete user button is clicked
+
+        //If DELETE BUTTON IS CLICKED
         if (e.getSource() == screen.notes.getBtnDelete()) {
 
-            //Receive the number of row the user clicked
-            int userID = screen.notes.getUserID();
+            //RECEIVE THE NUMBER OF ROW THE USER CLICKED
+            int noteID = screen.notes.getSelectedID();
 
-            //Receive the number of row the user clicked
-            String userString = Integer.toString(userID);
+            //CONVERT THE ID FROM INT TO STRING
+            String userString = Integer.toString(noteID);
 
-            //Delete the user from the database
-            System.out.print("You wanted to delete event " + userString);
+            //DELETE THE NOTE FROM DATABASE
             //viewmodel.deleteUser(userString);
-
+            showMessageDialog(null, "You wanted to delete note " + userString);
         }
     }
 

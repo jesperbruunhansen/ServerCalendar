@@ -5,6 +5,8 @@ import View.Screen;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import static javax.swing.JOptionPane.showMessageDialog;
+
 /**
  * Created by Casper on 16/11/14.
  */
@@ -18,21 +20,21 @@ public class EventsController extends Controller implements ActionListener {
         screen.events.addListeners(this);
     }
 
-    //ActionListener
+    //IF ACTIONLISTENER IS TRIGGERED
     public void actionPerformed(ActionEvent e) {
-        //If Delete user button is clicked
+
+        //If DELETE BUTTON IS CLICKED
         if (e.getSource() == screen.events.getBtnDelete()) {
 
-            //Receive the number of row the user clicked
-            int userID = screen.events.getUserID();
+            //RECEIVE THE NUMBER OF ROW THE USER CLICKED
+            int calendarID = screen.events.getSelectedID();
 
-            //Receive the number of row the user clicked
-            String userString = Integer.toString(userID);
+            //CONVERT THE ID FROM INT TO STRING
+            String userString = Integer.toString(calendarID);
 
-            //Delete the user from the database
-            System.out.print("You wanted to delete event " + userString);
+            //DELETE THE EVENT FROM DATABASE
             //viewmodel.deleteUser(userString);
-
+            showMessageDialog(null, "You wanted to delete event " + userString);
         }
     }
 

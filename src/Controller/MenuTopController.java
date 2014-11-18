@@ -19,15 +19,13 @@ public class MenuTopController extends Controller implements ActionListener {
     }
 
 
-    //ActionListener
+    //IF ACTIONLISTENER IS TRIGGERED
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == screen.menuTop.getBtnBack()) {
-
         }
 
         if (e.getSource() == screen.menuTop.getBtnFor()) {
-
         }
     }
 

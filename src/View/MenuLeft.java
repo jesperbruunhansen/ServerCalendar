@@ -3,13 +3,14 @@ package View;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionListener;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-@SuppressWarnings("serial")
+/**
+ * Created by Casper on 14/11/14.
+ */
 public class MenuLeft extends JPanel {
 
     public JPanel panel;
@@ -24,6 +25,7 @@ public class MenuLeft extends JPanel {
 
     public MenuLeft() {
 
+        //OVERALL PANEL SETTINGS
         setLayout(null);
         setBounds(0, 0, 190, 768);
         setBackground(new Color(0, 0, 0, 0));
@@ -34,6 +36,7 @@ public class MenuLeft extends JPanel {
         add(panel);
         panel.setLayout(null);
 
+        //CONTENT ON PANEL
         lblMenu = new JLabel("Menu");
         lblMenu.setForeground(Color.GRAY);
         lblMenu.setFont(new Font("Dialog", Font.PLAIN, 12));
@@ -107,30 +110,37 @@ public class MenuLeft extends JPanel {
 
     }
 
+    //RETURN USERLIST BUTTON
     public JButton getBtnUserList() {
         return btnUserList;
     }
 
+    //RETURN ADD USER BUTTON
     public JButton getBtnAddUser() {
         return btnAddUser;
     }
 
+    //RETURN CALENDAR BUTTON
     public JButton getBtnCalendars() {
         return btnCalendars;
     }
 
+    //RETURN EVENTS BUTTON
     public JButton getBtnEvents() {
         return btnEvents;
     }
 
+    //RETURN NOTES BUTTON
     public JButton getBtnNotes() {
         return btnNotes;
     }
 
+    //RETURN LOGOUT BUTTON
     public JButton getBtnLogout() {
         return btnLogout;
     }
 
+    // ADD ACTIONLISTENER
     public void addListeners(ActionListener l){
         btnUserList.addActionListener(l);
         btnAddUser.addActionListener(l);
