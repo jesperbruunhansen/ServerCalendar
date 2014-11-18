@@ -22,7 +22,8 @@ public class Controller{
         Screen screen = new Screen();
 
         new LoginController(screen);
-        new WelcomeController(screen);
+        new MenuLeftController(screen);
+        new MenuTopController(screen);
         new UserListController(screen);
         new AddUserController(screen);
         new CalendarController(screen);

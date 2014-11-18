@@ -29,7 +29,7 @@ public class Login extends JPanel {
 
 	public Login() {
 		setLayout(null);
-		setBounds(150, 150, 1024, 768);
+        setBounds(0, 0, 1024, 768);
 
 		panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 255, 100));
@@ -122,7 +122,7 @@ public class Login extends JPanel {
         textPass.setText(s);
     }
 
-/*    //Set errormessage
+    /*//Set errormessage
     public void setErrorMessage(String s){
         lblBox.setVisible(true);
         lblBox.setText(s);

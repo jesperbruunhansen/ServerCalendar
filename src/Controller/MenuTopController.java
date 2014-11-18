@@ -2,21 +2,26 @@ package Controller;
 
 import Model.ViewModel;
 import View.Screen;
+import View.UserList;
+
+import javax.jws.soap.SOAPBinding;
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Created by Casper on 16/11/14.
+ * Created by Casper on 15/11/14.
  */
-public class EventsController extends Controller implements ActionListener {
+public class MenuTopController extends Controller implements ActionListener {
 
     private Screen screen;
     private ViewModel viewmodel = new ViewModel();
 
-    public EventsController(Screen screen){
+    public MenuTopController(Screen screen){
         this.screen = screen;
-        screen.events.addListeners(this);
+        //screen.menuTop.addListeners(this);
     }
+
 
     //ActionListener
     public void actionPerformed(ActionEvent e) {
@@ -24,4 +29,3 @@ public class EventsController extends Controller implements ActionListener {
     }
 
 }
-

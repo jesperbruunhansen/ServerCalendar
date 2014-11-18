@@ -109,7 +109,8 @@ public class LoginController extends Controller implements ActionListener, KeyLi
 
             if(viewmodel.authAdm()){
                 //Send user to Welcome-Screen.
-                screen.show(Screen.WELCOME);
+                screen.LoginVisible(false);
+                screen.MenuVisible(true);
             } else {
                 showMessageDialog(null, "You do not have admin privileges");
             }
