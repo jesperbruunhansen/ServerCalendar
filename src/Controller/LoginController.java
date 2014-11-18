@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.ViewModel;
 import View.Screen;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,7 +8,6 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.sql.SQLException;
 import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
@@ -16,6 +16,7 @@ import static javax.swing.JOptionPane.showMessageDialog;
 public class LoginController extends Controller implements ActionListener, KeyListener, FocusListener {
 
     private Screen screen;
+    private ViewModel viewmodel = new ViewModel();
     private final static String email = "E-mail";
     private final static String password = "Password";
 
@@ -104,42 +105,21 @@ public class LoginController extends Controller implements ActionListener, KeyLi
         String user = screen.login.getUsername();
         String pass = screen.login.getPassword();
 
-        if(auth(user, pass)){
+        if(viewmodel.auth(user, pass)){
 
-        //Send user to Welcome-Screen.
-        screen.show(Screen.WELCOME);
+            if(viewmodel.authAdm()){
+                //Send user to Welcome-Screen.
+                screen.show(Screen.WELCOME);
+            } else {
+                showMessageDialog(null, "You do not have admin privileges");
+            }
 
         }
         else {
             //Log in failed
-            //screen.login.setErrorMessage("Input mismatch!");
             showMessageDialog(null, "Input mismatch!");
 
         }
-    }
-
-
-    //Admin authenticator
-    public boolean auth(String username, String password) {
-
-        try {
-            resultSet = queryBuilder.selectFrom("users").all().ExecuteQuery();
-            while (resultSet.next()) {
-                String user = resultSet.getString("email");
-                String pw = resultSet.getString("password");
-
-                if(user.equals(username) && pw.equals(password)){
-                    return true;
-                }
-
-            }
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-
-        return false;
-
     }
 
 }

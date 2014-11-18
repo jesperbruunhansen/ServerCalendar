@@ -2,17 +2,17 @@ package Controller;
 
 import Model.ViewModel;
 import View.Screen;
+import View.UserList;
 
+import javax.jws.soap.SOAPBinding;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 /**
  * Created by Casper on 15/11/14.
  */
-public class UserListController extends Controller implements ActionListener, MouseListener {
+public class UserListController extends Controller implements ActionListener {
 
     private Screen screen;
     private ViewModel viewmodel = new ViewModel();
@@ -20,7 +20,7 @@ public class UserListController extends Controller implements ActionListener, Mo
 
     public UserListController(Screen screen){
         this.screen = screen;
-        screen.userList.addListeners(this, this);
+        screen.userList.addListeners(this);
         table = screen.userList.getTable();
     }
 
@@ -63,42 +63,8 @@ public class UserListController extends Controller implements ActionListener, Mo
 
         //If Delete user button is clicked
         if (e.getSource() == screen.userList.getBtnDeleteUser()) {
-
+            System.out.print(screen.userList.getLblDelete());
         }
     }
 
-    public void mouseClicked(MouseEvent e) {
-
-            System.out.println(e.getSource());
-
-            int row = table.getSelectedRow();
-            int column = table.getSelectedColumn();
-            //int row = target.getSelectedRow();
-            //int column = target.getSelectedColumn();
-
-            System.out.println("ROW: " + row);
-            System.out.println("COLUMN: " +  column);
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e){
-        System.out.print("mouse clicked");
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        System.out.print("mouse clicked");
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        System.out.print("mouse clicked");
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-        System.out.print("mouse clicked");
-    }
 }

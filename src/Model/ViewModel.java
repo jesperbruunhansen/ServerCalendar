@@ -11,25 +11,71 @@ import Model.QueryBuild.QueryBuilder;
  */
 public class ViewModel {
 
-	private ResultSet rs;
+	private ResultSet resultSet;
     private QueryBuilder queryBuilder = new QueryBuilder();
 
-	public Vector<Vector<Object>> userData(){
+    private String user;
+    private String pw;
+    private String role;
+
+    /**
+     * LOGIN
+     */
+    //Admin authenticator - Check if username and password are correct
+    public boolean auth(String username, String password) {
+
+        try {
+            resultSet = queryBuilder.selectFrom("users").all().ExecuteQuery();
+            while (resultSet.next()) {
+                user = resultSet.getString("email");
+                pw = resultSet.getString("password");
+                role = resultSet.getString("role");
+
+                if(user.equals(username) && pw.equals(password)){
+                    return true;
+                }
+
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return false;
+
+    }
+
+    //Admin authenticator - Check if user has admin role
+    public boolean authAdm(){
+
+        if(role.equals("1")){
+            return true;
+        }
+
+        return false;
+
+    }
+
+    /**
+     * Create list of users
+     */
+    //Creating an object to contain user list
+    public Vector<Vector<Object>> userData(){
 		
 		//Create new Vector Object which contains Vector-objects
         Vector<Vector<Object>> data = new Vector<Vector<Object>>();
 
 		try{
 
-			rs = queryBuilder.selectFrom("users").all().ExecuteQuery();
+            resultSet = queryBuilder.selectFrom("users").all().ExecuteQuery();
 
 			//Get Metadata from ResultSet
-			ResultSetMetaData metaData = rs.getMetaData();
+			ResultSetMetaData metaData = resultSet.getMetaData();
 
 			//Get number of columns from ResultSet
 			int columns = metaData.getColumnCount();
 
-			while (rs.next()) {
+			while (resultSet.next()) {
 
 				//Create a new Vector-object to store data from each column
 				Vector<Object> row = new Vector<Object>(columns);
@@ -38,7 +84,7 @@ public class ViewModel {
 				for (int i = 1; i <= columns; i++) {
 
 					//Add an object to the row-Vector
-					row.addElement(rs.getObject(i));
+					row.addElement(resultSet.getObject(i));
 				}
 
 				//Add the row-Vector to the data-Vector object
@@ -52,27 +98,32 @@ public class ViewModel {
 		
 		return data;
 	}
+
+    //Creating the headers for the columns to user list
 	public Vector<String> columnNames(){
 
 		//Create Vector object for columns
 		Vector<String> columnNames = new Vector<String>();
 		try{
-			rs = queryBuilder.selectFrom("users").all().ExecuteQuery();
+            resultSet = queryBuilder.selectFrom("users").all().ExecuteQuery();
 
 			//Get Meta Data from table
-			ResultSetMetaData metaData = rs.getMetaData();
+			ResultSetMetaData metaData = resultSet.getMetaData();
 			int columns = metaData.getColumnCount();
 			for (int i = 1; i <= columns; i++) {
 				columnNames.addElement(metaData.getColumnName(i));
 			}
 		}
 		catch(Exception e){
-			System.err.println("Transfers - Columns: "+e.getMessage());
+			System.err.println("Users - Columns: "+e.getMessage());
 		}
 		
 		return columnNames;
 	}
 
+    /**
+     * Creates new user in database
+     */
 	public void addUser(String email, String password, String role) {
 
         String active = "1";
@@ -88,82 +139,80 @@ public class ViewModel {
 		}
 	}
 
-	//HELENA RODER
-	private ResultSet rs1; 
+/*    //HELENA RODER
+    private ResultSet rs1;
 
-protected QueryBuilder queryBuilder1 = new QueryBuilder();
+    public Vector<Vector<Object>> eventData(){
 
-public Vector<Vector<Object>> eventData(){
-	
-	//Create new Vector Object which contains Vector-objects
-    Vector<Vector<Object>> data = new Vector<Vector<Object>>();
+        //Create new Vector Object which contains Vector-objects
+        Vector<Vector<Object>> data = new Vector<Vector<Object>>();
 
-	try{
+        try{
 
-		rs1 = queryBuilder1.selectFrom("events").all().ExecuteQuery();
+            rs1 = queryBuilder1.selectFrom("events").all().ExecuteQuery();
 
-		//Get Metadata from ResultSet
-		ResultSetMetaData metaData = rs1.getMetaData();
+            //Get Metadata from ResultSet
+            ResultSetMetaData metaData = rs1.getMetaData();
 
-		//Get number of columns from ResultSet
-		int columns = metaData.getColumnCount();
+            //Get number of columns from ResultSet
+            int columns = metaData.getColumnCount();
 
-		while (rs1.next()) {
+            while (rs1.next()) {
 
-			//Create a new Vector-object to store data from each column
-			Vector<Object> row = new Vector<Object>(columns);
+                //Create a new Vector-object to store data from each column
+                Vector<Object> row = new Vector<Object>(columns);
 
-			//Run a for-loop for every column
-			for (int i = 1; i <= columns; i++) {
+                //Run a for-loop for every column
+                for (int i = 1; i <= columns; i++) {
 
-				//Add an object to the row-Vector
-				row.addElement(rs1.getObject(i));
-			}
+                    //Add an object to the row-Vector
+                    row.addElement(rs1.getObject(i));
+                }
 
-			//Add the row-Vector to the data-Vector object
-			data.addElement(row);
-		}
-	}
-	
-	catch (Exception e){
-		e.printStackTrace();
-	}
-	
-	return data;
-}
-public Vector<String> columnNames1(){
+                //Add the row-Vector to the data-Vector object
+                data.addElement(row);
+            }
+        }
 
-	//Create Vector object for columns
-	Vector<String> columnNames = new Vector<String>();
-	try{
-		rs1 = queryBuilder1.selectFrom("events").all().ExecuteQuery();
+        catch (Exception e){
+            e.printStackTrace();
+        }
 
-		//Get Meta Data from table
-		ResultSetMetaData metaData = rs1.getMetaData();
-		int columns = metaData.getColumnCount();
-		for (int i = 1; i <= columns; i++) {
-			columnNames.addElement(metaData.getColumnName(i));
-		}
-	}
-	catch(Exception e){
-		System.err.println("Transfers - Columns: "+e.getMessage());
-	}
-	
-	return columnNames;
-}
+        return data;
+    }
+    public Vector<String> columnNames1(){
 
-public void addEvents(String id, String activity_id, String event_id , String location , String start) {
+        //Create Vector object for columns
+        Vector<String> columnNames = new Vector<String>();
+        try{
+            rs1 = queryBuilder1.selectFrom("events").all().ExecuteQuery();
 
-	try {
-		queryBuilder1
-		.insertInto("events", new String[]{"id", "activity_id" , "event_id" , "location" , "start"})
-		.values(new String[]{id, activity_id , event_id , location , start})
-		.Execute();
-	} catch (SQLException e) {
-	
-	e.printStackTrace();
-	}
-}
+            //Get Meta Data from table
+            ResultSetMetaData metaData = rs1.getMetaData();
+            int columns = metaData.getColumnCount();
+            for (int i = 1; i <= columns; i++) {
+                columnNames.addElement(metaData.getColumnName(i));
+            }
+        }
+        catch(Exception e){
+            System.err.println("Transfers - Columns: "+e.getMessage());
+        }
+
+        return columnNames;
+    }
+
+    public void addEvents(String id, String activity_id, String event_id , String location , String start) {
+
+        try {
+            queryBuilder1
+                    .insertInto("events", new String[]{"id", "activity_id" , "event_id" , "location" , "start"})
+                    .values(new String[]{id, activity_id , event_id , location , start})
+                    .Execute();
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        }
+    }*/
 }
 
 

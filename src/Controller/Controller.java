@@ -1,17 +1,18 @@
 package Controller;
 
-import Model.QueryBuild.QueryBuilder;
 import View.Screen;
-
+import Model.QueryBuild.QueryBuilder;
 import java.sql.ResultSet;
+import Model.ViewModel;
 
 /**
  * Created by jesperbruun on 09/11/14.
  */
 public class Controller{
 
-    protected QueryBuilder queryBuilder = new QueryBuilder();
-    protected ResultSet resultSet;
+    protected ViewModel viewModel = new ViewModel();
+    //protected QueryBuilder queryBuilder = new QueryBuilder();
+    //protected ResultSet resultSet;
 
     public void init(){
 

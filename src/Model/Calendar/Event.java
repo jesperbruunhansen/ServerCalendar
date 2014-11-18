@@ -137,7 +137,5 @@ public class Event {
 		this.end = end;
 	}
     public Event(){}
-    
-    
 
 }

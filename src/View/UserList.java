@@ -7,11 +7,13 @@ import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseListener;
 import java.util.Vector;
 import javax.swing.JTextPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 @SuppressWarnings("serial")
 public class UserList extends JPanel {
@@ -33,10 +35,14 @@ public class UserList extends JPanel {
     public JButton btnLogout;
     public JPanel panelVer;
     // PANELS //
-    public JScrollPane scrollPane;
     public JButton btnDeleteUser;
     public JLabel lblUserList;
-    private JTable table = new JTable();
+    public JLabel lblDelete;
+    public JScrollPane scrollPane;
+    public JTable table;
+    public ListSelectionModel listSelectionModel;
+
+    public int selection;
 
     public UserList() {
 
@@ -189,6 +195,13 @@ public class UserList extends JPanel {
         lblUserList.setBounds(23, 15, 132, 15);
         panelContent.add(lblUserList);
 
+        lblDelete = new JLabel("User List");
+        lblDelete.setForeground(Color.GRAY);
+        lblDelete.setFont(new Font("Dialog", Font.PLAIN, 12));
+        lblDelete.setBounds(513, 639, 138, 15);
+        lblDelete.setVisible(false);
+        panelContent.add(lblDelete);
+
 
     }
 
@@ -220,27 +233,51 @@ public class UserList extends JPanel {
         return btnNotes;
     }
 
-    public void addListeners(ActionListener l, MouseListener ml){
+    public JTable getTable() {
+        return table;
+    }
+
+    public String getLblDelete() {
+        return lblDelete.getText();
+    }
+
+    public void addListeners(ActionListener l){
         btnLogout.addActionListener(l);
         btnUserList.addActionListener(l);
         btnAddUser.addActionListener(l);
         btnCalendars.addActionListener(l);
         btnEvents.addActionListener(l);
         btnNotes.addActionListener(l);
-        table.addMouseListener(ml);
     }
 
     public void setTable(Vector data, Vector columns){
 
+        //Add date to a table
         table = new JTable(data, columns);
+
+        //Add selection listeners
+        listSelectionModel = table.getSelectionModel();
+        listSelectionModel.addListSelectionListener(new MyListSelectionListener());
+
+        //Put table with data into a scroll panel to show the user
         scrollPane.setViewportView(table);
+
     }
 
-    public JTable getTable() {
-        return table;
-    }
+    //Implement the selection listener
+    class MyListSelectionListener implements ListSelectionListener{
 
-    //public void addMouseListener(MouseListener ml){
-    //    table.addMouseListener(ml);
-    //}
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            //System.out.println("valueChanged: " + e.toString());
+            int row = table.getSelectedRow();
+            int col = table.getSelectedColumn();
+            int selectedItem = (int)table.getValueAt(row, col);
+            System.out.println(row + " : " + col + " = " + selectedItem);
+            lblDelete.setText("Delete user with ID " + selectedItem);
+            lblDelete.setVisible(true);
+        }
+
+    };
+
 }

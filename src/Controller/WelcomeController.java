@@ -32,7 +32,6 @@ public class WelcomeController extends Controller implements ActionListener {
 
             screen.userList.setTable(viewmodel.userData(),viewmodel.columnNames());
             screen.show(Screen.USERLIST);
-            
         }
 
         //If Add user button is clicked
