@@ -15,6 +15,10 @@ public class NotesController extends Controller implements ActionListener {
     private Screen screen;
     private ViewModel viewmodel = new ViewModel();
 
+    private String calendarID;
+    private String eventID;
+    private String noteID;
+
     public NotesController(Screen screen){
         this.screen = screen;
         screen.notes.addListeners(this);
@@ -23,18 +27,95 @@ public class NotesController extends Controller implements ActionListener {
     //IF ACTIONLISTENER IS TRIGGERED
     public void actionPerformed(ActionEvent e) {
 
+        /**
+         * CALENDARS
+         */
+        //If DELETE CALENDAR BUTTON IS CLICKED
+        if (e.getSource() == screen.notes.getBtnChooseCal()) {
+
+            //RECEIVE THE NUMBER OF ROW THE USER CLICKED
+            int calid = screen.notes.getSelectedID();
+
+            //CONVERT THE ID FROM INT TO STRING
+            calendarID = Integer.toString(calid);
+
+            //VALIDATING THE USER INPUT
+            if(calendarID.equals("0")){
+                //User failed to select an item
+                showMessageDialog(null, "Please select a calendar on the list");
+            }
+
+            else{
+                //RETRIEVE EVENT LIST FROM DATABASE BASED ON CHOSEN CALENDAR
+                screen.notes.setTable(viewmodel.tableEvent("events", "CalenderID", calendarID),viewmodel.columnNames("events"));
+
+                //HIDE SHOW BUTTONS & UPDATE LABELS
+                screen.notes.btnChooseCal.setVisible(false);
+                screen.notes.btnChooseEvent.setVisible(true);
+                screen.notes.lblConfirm.setVisible(false);
+                screen.notes.lblHead.setText("Notes: Please choose an event to delete");
+            }
+
+        }
+
+        /**
+         * EVENTS
+         */
+
+        //If CHOOSE EVENT BUTTON IS CLICKED
+        if (e.getSource() == screen.notes.getBtnChooseEvent()) {
+
+            //RECEIVE THE NUMBER OF ROW THE USER CLICKED
+            int evid = screen.notes.getSelectedID();
+
+            //CONVERT THE ID FROM INT TO STRING
+            eventID = Integer.toString(evid);
+
+            //VALIDATING THE USER INPUT
+            if(eventID.equals("0")){
+                //User failed to select an item
+                showMessageDialog(null, "Please select an event on the list");
+            }
+
+            else{
+                //RETRIEVE EVENT LIST FROM DATABASE BASED ON CHOSEN CALENDAR
+                screen.notes.setTable(viewmodel.tableEvent("notes", "eventid", eventID),viewmodel.columnNames("notes"));
+
+                //HIDE SHOW BUTTONS & UPDATE LABELS
+                screen.notes.btnChooseEvent.setVisible(false);
+                screen.notes.btnDelete.setVisible(true);
+                screen.notes.lblConfirm.setVisible(false);
+                screen.notes.lblHead.setText("Notes: Please choose a note to delete");
+            }
+
+        }
+
+        /**
+         * NOTES
+         */
         //If DELETE BUTTON IS CLICKED
         if (e.getSource() == screen.notes.getBtnDelete()) {
 
             //RECEIVE THE NUMBER OF ROW THE USER CLICKED
-            int noteID = screen.notes.getSelectedID();
+            int notid = screen.notes.getSelectedID();
 
             //CONVERT THE ID FROM INT TO STRING
-            String userString = Integer.toString(noteID);
+            noteID = Integer.toString(notid);
 
-            //DELETE THE NOTE FROM DATABASE
-            //viewmodel.deleteUser(userString);
-            showMessageDialog(null, "You wanted to delete note " + userString);
+            //VALIDATING THE USER INPUT
+            if(noteID.equals("0")){
+                //User failed to select an item
+                showMessageDialog(null, "Please select note on the list");
+            }
+
+            else{
+                //DELETE THE EVENT FROM DATABASE
+                //viewmodel.delete("notes", "noteid", noteID);
+                showMessageDialog(null, "You wanted to delete note " + noteID);
+
+                //UPDATE TABLE WITH NEW DATA
+                screen.notes.setTable(viewmodel.tableEvent("notes", "eventid", eventID),viewmodel.columnNames("notes"));
+            }
         }
     }
 

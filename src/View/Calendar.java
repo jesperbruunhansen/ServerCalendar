@@ -51,10 +51,10 @@ public class Calendar extends JPanel {
         btnDelete.setBounds(661, 630, 146, 32);
         panel.add(btnDelete);
 
-        lblHead = new JLabel("Calendars");
+        lblHead = new JLabel("Calendar: Please choose a calendar on the list");
         lblHead.setForeground(Color.GRAY);
         lblHead.setFont(new Font("Dialog", Font.PLAIN, 12));
-        lblHead.setBounds(23, 15, 132, 15);
+        lblHead.setBounds(23, 15, 400, 15);
         panel.add(lblHead);
 
         lblConfirm = new JLabel("Confirm");

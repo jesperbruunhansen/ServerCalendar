@@ -156,8 +156,7 @@ public class AddUser extends JPanel {
         textEmail.setText("");
         textPassword.setText("");
         lblMessage.setText("");
-        radioUser.setSelected(false);
-        radioAdmin.setSelected(false);
+        buttonGroup.clearSelection();
     }
 
     // ADD ACTIONLISTENER

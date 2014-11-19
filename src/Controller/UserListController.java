@@ -30,22 +30,26 @@ public class UserListController extends Controller implements ActionListener {
         //DELETE BUTTON CLICKED
         if (e.getSource() == screen.userList.getBtnDelete()) {
 
-            //Receive the number of row the user clicked
-            int userID = screen.userList.getUserID();
+
+            //RECIEVE THE NUMBER OF ROW THE USER CLICKED
+            int userid = screen.userList.getUserID();
 
             //CONVERT THE ID FROM INT TO STRING
-            String userString = Integer.toString(userID);
+            String UserID = Integer.toString(userid);
 
-                //Validating the user input
-                if(userString.equals("0")){
+            //VALIDATING THE USER INPUT
+                if(UserID.equals("0")){
                     //User failed to select an item
                     showMessageDialog(null, "Please select a user on the list");
                 }
 
                 else{
                     //DELETE THE USER FROM DATABASE
-                    //viewmodel.deleteUser(userString);
-                    showMessageDialog(null, "User with ID " + userString + " is now deleted");
+                    //viewmodel.delete("users", "userid", UserID);
+                    showMessageDialog(null, "User with ID " + UserID + " is now deleted");
+
+                    //UPDATE TABLE WITH NEW DATA
+                    screen.userList.setTable(viewmodel.tableData("users"),viewmodel.columnNames("users"));
                 }
 
         }

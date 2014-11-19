@@ -75,8 +75,7 @@ public class UserList extends JPanel {
 
     //RETURN THE CHOSEN ID
     public int getUserID(){
-        int userID = row;
-        return userID;
+        return row;
     }
 
     //ADD ACTIONLISTENER

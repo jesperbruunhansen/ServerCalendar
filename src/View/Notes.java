@@ -8,7 +8,6 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.util.Vector;
 
-
 /**
  * Created by Casper on 14/11/14.
  */
@@ -16,6 +15,8 @@ public class Notes extends JPanel {
 
     public JPanel panel;
     public JButton btnDelete;
+    public JButton btnChooseCal;
+    public JButton btnChooseEvent;
     public JLabel lblHead;
     public JLabel lblConfirm;
     public JScrollPane scrollPane;
@@ -42,6 +43,26 @@ public class Notes extends JPanel {
         scrollPane.setBorder(BorderFactory.createLineBorder(new Color(183, 183, 183)));
         panel.add(scrollPane);
 
+        btnChooseCal = new JButton("Choose Calendar");
+        btnChooseCal.setOpaque(true);
+        btnChooseCal.setForeground(Color.WHITE);
+        btnChooseCal.setFont(new Font("Dialog", Font.BOLD, 12));
+        btnChooseCal.setFocusPainted(false);
+        btnChooseCal.setBorder(BorderFactory.createLineBorder(new Color(183, 183, 183)));
+        btnChooseCal.setBackground(new Color(102, 204, 153));
+        btnChooseCal.setBounds(661, 630, 146, 32);
+        panel.add(btnChooseCal);
+
+        btnChooseEvent = new JButton("Choose Event");
+        btnChooseEvent.setOpaque(true);
+        btnChooseEvent.setForeground(Color.WHITE);
+        btnChooseEvent.setFont(new Font("Dialog", Font.BOLD, 12));
+        btnChooseEvent.setFocusPainted(false);
+        btnChooseEvent.setBorder(BorderFactory.createLineBorder(new Color(183, 183, 183)));
+        btnChooseEvent.setBackground(new Color(102, 204, 153));
+        btnChooseEvent.setBounds(661, 630, 146, 32);
+        panel.add(btnChooseEvent);
+
         btnDelete = new JButton("Delete");
         btnDelete.setOpaque(true);
         btnDelete.setForeground(Color.WHITE);
@@ -50,21 +71,32 @@ public class Notes extends JPanel {
         btnDelete.setBorder(BorderFactory.createLineBorder(new Color(183, 183, 183)));
         btnDelete.setBackground(new Color(204, 51, 51));
         btnDelete.setBounds(661, 630, 146, 32);
+        btnDelete.setVisible(false);
         panel.add(btnDelete);
 
-        lblHead = new JLabel("Notes");
+        lblHead = new JLabel("Notes: Please choose a calendar from the list");
         lblHead.setForeground(Color.GRAY);
         lblHead.setFont(new Font("Dialog", Font.PLAIN, 12));
-        lblHead.setBounds(23, 15, 132, 15);
+        lblHead.setBounds(23, 15, 400, 15);
         panel.add(lblHead);
 
-        lblConfirm = new JLabel("Confirm");
+        lblConfirm = new JLabel("Choose Calendar");
         lblConfirm.setForeground(Color.GRAY);
         lblConfirm.setFont(new Font("Dialog", Font.PLAIN, 12));
         lblConfirm.setBounds(513, 639, 138, 15);
         lblConfirm.setVisible(false);
         panel.add(lblConfirm);
 
+    }
+
+    //GET CHOOSE CALENDAR BUTTON
+    public JButton getBtnChooseCal() {
+        return btnChooseCal;
+    }
+
+    //GET CHOOSE EVENT BUTTON
+    public JButton getBtnChooseEvent() {
+        return btnChooseEvent;
     }
 
     //RETURN DELETE BUTTON
@@ -80,6 +112,8 @@ public class Notes extends JPanel {
 
     //ADD ACTIONLISTENER
     public void addListeners(ActionListener l){
+        btnChooseCal.addActionListener(l);
+        btnChooseEvent.addActionListener(l);
         btnDelete.addActionListener(l);
     }
 
@@ -105,7 +139,9 @@ public class Notes extends JPanel {
         public void valueChanged(ListSelectionEvent e) {
             row = table.getSelectedRow();
             ++row;
-            lblConfirm.setText("Delete note with ID " + row);
+
+            //Set label with information
+            lblConfirm.setText("Choose event with ID " + row);
             lblConfirm.setVisible(true);
         }
 

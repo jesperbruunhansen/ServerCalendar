@@ -15,6 +15,9 @@ public class EventsController extends Controller implements ActionListener {
     private Screen screen;
     private ViewModel viewmodel = new ViewModel();
 
+    private String calendarID;
+    private String eventID;
+
     public EventsController(Screen screen){
         this.screen = screen;
         screen.events.addListeners(this);
@@ -23,18 +26,57 @@ public class EventsController extends Controller implements ActionListener {
     //IF ACTIONLISTENER IS TRIGGERED
     public void actionPerformed(ActionEvent e) {
 
+        //If CHOOSE BUTTON IS CLICKED
+        if (e.getSource() == screen.events.getBtnChoose()) {
+
+            //RECEIVE THE NUMBER OF ROW THE USER CLICKED
+            int calid = screen.events.getSelectedID();
+
+            //CONVERT THE ID FROM INT TO STRING
+            calendarID = Integer.toString(calid);
+
+            //VALIDATING THE USER INPUT
+            if(calendarID.equals("0")){
+                //User failed to select an item
+                showMessageDialog(null, "Please select a calendar on the list");
+            }
+
+            else{
+                //RETRIEVE EVENT LIST FROM DATABASE BASED ON CHOSEN CALENDAR
+                screen.events.setTable(viewmodel.tableEvent("events", "CalenderID", calendarID),viewmodel.columnNames("events"));
+
+                //HIDE SHOW BUTTONS & UPDATE LABELS
+                screen.events.btnChoose.setVisible(false);
+                screen.events.btnDelete.setVisible(true);
+                screen.events.lblConfirm.setVisible(false);
+                screen.events.lblHead.setText("Events: Please choose an event to delete");
+            }
+
+        }
+
         //If DELETE BUTTON IS CLICKED
         if (e.getSource() == screen.events.getBtnDelete()) {
 
             //RECEIVE THE NUMBER OF ROW THE USER CLICKED
-            int calendarID = screen.events.getSelectedID();
+            int evid = screen.events.getSelectedID();
 
             //CONVERT THE ID FROM INT TO STRING
-            String userString = Integer.toString(calendarID);
+            eventID = Integer.toString(evid);
 
-            //DELETE THE EVENT FROM DATABASE
-            //viewmodel.deleteUser(userString);
-            showMessageDialog(null, "You wanted to delete event " + userString);
+            //VALIDATING THE USER INPUT
+            if(eventID.equals("0")){
+                //User failed to select an item
+                showMessageDialog(null, "Please select an event on the list");
+            }
+
+            else{
+                //DELETE THE EVENT FROM DATABASE
+                //viewmodel.delete("events", "id", eventID);
+                showMessageDialog(null, "You wanted to delete event " + eventID);
+
+                //UPDATE TABLE WITH NEW DATA
+                screen.events.setTable(viewmodel.tableEvent("events", "CalenderID", calendarID),viewmodel.columnNames("events"));
+            }
         }
     }
 

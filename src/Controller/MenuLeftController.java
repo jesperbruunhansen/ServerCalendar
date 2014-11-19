@@ -32,6 +32,7 @@ public class MenuLeftController extends Controller implements ActionListener {
             //SHOW & HIDE SCREENS
             screen.LoginVisible(true);
             screen.MenuVisible(false);
+            screen.show(Screen.WELCOME);
 
             //CLEAR SCREENS FOR INFORMATION
             screen.login.setMail("E-mail");
@@ -45,35 +46,59 @@ public class MenuLeftController extends Controller implements ActionListener {
             //POPULATE USERLIST TABLE WITH DATA
             screen.userList.setTable(viewmodel.tableData("users"),viewmodel.columnNames("users"));
             screen.show(Screen.USERLIST);
+
+            //CLEAR SCREEN FOR INFORMATION
+            screen.userList.lblConfirm.setVisible(false);
         }
 
         //IF ADD USER BUTTON IS CLICKED
         if (e.getSource() == screen.menuLeft.getBtnAddUser()) {
             screen.show(Screen.ADDUSER);
+
+            //CLEAR SCREEN FOR INFORMATION
+            screen.addUser.clearAddUser();
+
         }
 
         //IF CALENDAR BUTTON IS CLICKED
         if (e.getSource() == screen.menuLeft.getBtnCalendars()) {
 
-            //POPULATE CALANDAR TABLE WITH DATA
+            //POPULATE CALENDAR TABLE WITH DATA
             screen.calendar.setTable(viewmodel.tableData("calender"),viewmodel.columnNames("calender"));
             screen.show(Screen.CALENDAR);
+
+            //CLEAR SCREEN FOR INFORMATION
+            screen.calendar.lblConfirm.setVisible(false);
         }
 
         //IF EVENTS BUTTON IS CLICKED
         if (e.getSource() == screen.menuLeft.getBtnEvents()) {
 
-            //POPULATE CALANDAR TABLE WITH DATA
-            screen.events.setTable(viewmodel.tableData("events"),viewmodel.columnNames("events"));
+            //POPULATE CALENDAR TABLE WITH DATA
+            screen.events.setTable(viewmodel.tableData("calender"),viewmodel.columnNames("calender"));
             screen.show(Screen.EVENTS);
+
+            //CLEAR SCREEN FOR INFORMATION
+            screen.events.btnChoose.setVisible(true);
+            screen.events.btnDelete.setVisible(false);
+            screen.events.lblConfirm.setVisible(false);
+            screen.events.lblHead.setText("Events: Please choose a calendar from the list");
         }
 
         //IF NOTES BUTTON IS CLICKED
         if (e.getSource() == screen.menuLeft.getBtnNotes()) {
 
-            //POPULATE CALANDAR TABLE WITH DATA
-            screen.notes.setTable(viewmodel.tableData("notes"),viewmodel.columnNames("notes"));
+            //POPULATE CALENDAR TABLE WITH DATA
+            screen.notes.setTable(viewmodel.tableData("calender"),viewmodel.columnNames("calender"));
             screen.show(Screen.NOTES);
+
+            //CLEAR SCREEN FOR INFORMATION
+            screen.notes.btnChooseCal.setVisible(true);
+            screen.notes.btnChooseEvent.setVisible(false);
+            screen.notes.btnDelete.setVisible(false);
+            screen.notes.lblConfirm.setVisible(false);
+            screen.notes.lblHead.setText("Notes: Please choose a calendar from the list");
+
         }
     }
 

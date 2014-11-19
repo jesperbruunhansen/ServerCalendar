@@ -15,6 +15,7 @@ public class Events extends JPanel {
 
     public JPanel panel;
     public JButton btnDelete;
+    public JButton btnChoose;
     public JLabel lblHead;
     public JLabel lblConfirm;
     public JScrollPane scrollPane;
@@ -41,6 +42,16 @@ public class Events extends JPanel {
         scrollPane.setBorder(BorderFactory.createLineBorder(new Color(183, 183, 183)));
         panel.add(scrollPane);
 
+        btnChoose = new JButton("Choose Calendar");
+        btnChoose.setOpaque(true);
+        btnChoose.setForeground(Color.WHITE);
+        btnChoose.setFont(new Font("Dialog", Font.BOLD, 12));
+        btnChoose.setFocusPainted(false);
+        btnChoose.setBorder(BorderFactory.createLineBorder(new Color(183, 183, 183)));
+        btnChoose.setBackground(new Color(102, 204, 153));
+        btnChoose.setBounds(661, 630, 146, 32);
+        panel.add(btnChoose);
+
         btnDelete = new JButton("Delete");
         btnDelete.setOpaque(true);
         btnDelete.setForeground(Color.WHITE);
@@ -49,21 +60,27 @@ public class Events extends JPanel {
         btnDelete.setBorder(BorderFactory.createLineBorder(new Color(183, 183, 183)));
         btnDelete.setBackground(new Color(204, 51, 51));
         btnDelete.setBounds(661, 630, 146, 32);
+        btnDelete.setVisible(false);
         panel.add(btnDelete);
 
-        lblHead = new JLabel("Events");
+        lblHead = new JLabel("Events: Please choose a calendar from the list");
         lblHead.setForeground(Color.GRAY);
         lblHead.setFont(new Font("Dialog", Font.PLAIN, 12));
-        lblHead.setBounds(23, 15, 132, 15);
+        lblHead.setBounds(23, 15, 400, 15);
         panel.add(lblHead);
 
-        lblConfirm = new JLabel("Confirm");
+        lblConfirm = new JLabel("Choose Calendar");
         lblConfirm.setForeground(Color.GRAY);
         lblConfirm.setFont(new Font("Dialog", Font.PLAIN, 12));
         lblConfirm.setBounds(513, 639, 138, 15);
         lblConfirm.setVisible(false);
         panel.add(lblConfirm);
 
+    }
+
+    //GET CHOOSE BUTTON
+    public JButton getBtnChoose() {
+        return btnChoose;
     }
 
     //RETURN DELETE BUTTON
@@ -79,6 +96,7 @@ public class Events extends JPanel {
 
     //ADD ACTIONLISTENER
     public void addListeners(ActionListener l){
+        btnChoose.addActionListener(l);
         btnDelete.addActionListener(l);
     }
 
@@ -104,7 +122,9 @@ public class Events extends JPanel {
         public void valueChanged(ListSelectionEvent e) {
             row = table.getSelectedRow();
             ++row;
-            lblConfirm.setText("Delete event with ID " + row);
+
+            //Set label with information
+            lblConfirm.setText("Choose event with ID " + row);
             lblConfirm.setVisible(true);
         }
 
