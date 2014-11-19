@@ -12,7 +12,7 @@ public class AddUserController extends Controller implements ActionListener {
 
     private Screen screen;
     private ViewModel viewmodel = new ViewModel();
-    private String selectedRole = "empty";
+    private String selectedRole;
 
     public AddUserController(Screen screen){
         this.screen = screen;
@@ -52,7 +52,7 @@ public class AddUserController extends Controller implements ActionListener {
 					throw new Exception("Password is too long");
 				}
                 //VALIDATE SELECTED ROLE
-                if(selectedRole == "empty"){
+                if(selectedRole == null){
                     throw new IllegalArgumentException("Choose a role");
                 }
 
@@ -63,6 +63,7 @@ public class AddUserController extends Controller implements ActionListener {
 
                     //CLEAR INPUT IN ALL FIELDS
                     screen.addUser.clearAddUser();
+                    selectedRole = null;
 				}
 			}
             //CATCH ERROR MESSAGE
@@ -75,10 +76,10 @@ public class AddUserController extends Controller implements ActionListener {
 
         //SAVE RADIO BUTTON PRESS INTO VARIABLE
         if (e.getSource() == screen.addUser.getRadioUser()) {
-            selectedRole = "0";
+            selectedRole = "user";
         }
         if (e.getSource() == screen.addUser.getRadioAdmin()) {
-            selectedRole = "1";
+            selectedRole = "admin";
         }
     }
 }

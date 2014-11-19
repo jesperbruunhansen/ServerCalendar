@@ -271,10 +271,10 @@ CREATE TABLE `users` (
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 
-INSERT INTO `users` (`userid`, `email`, `active`, `created`, `password`, `role`)
+INSERT INTO `users` (`userid`, `email`, `active`, `created`, `password`)
 VALUES
-	(1,'jeha13ad@student.cbs.dk',1,NULL,'lol123',1),
-	(2,'caha13ag@student.cbs.dk',1,NULL,'abc123',1);
+	(1,'jeha13ad@student.cbs.dk',1,NULL,'lol123'),
+	(2,'caha13ag@student.cbs.dk',1,NULL,'abc123');
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;

@@ -14,9 +14,13 @@ public class ViewModel {
 	private ResultSet resultSet;
     private QueryBuilder queryBuilder = new QueryBuilder();
 
+    //LOG IN
+    private String userid;
     private String mail;
     private String pw;
-    private String role;
+    private String roleid;
+    private String type;
+
 
     /**
      * LOGIN
@@ -29,9 +33,29 @@ public class ViewModel {
             while (resultSet.next()) {
                 mail = resultSet.getString("email");
                 pw = resultSet.getString("password");
-                role = resultSet.getString("role");
+                userid = resultSet.getString("userid");
 
                 if(mail.equals(email) && pw.equals(password)){
+                    return true;
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return false;
+    }
+
+     //ADMIN AUTHENTICATOR - Check if user has admin role
+    public boolean authAdm(){
+
+        try {
+            resultSet = queryBuilder.selectFrom("roles").all().ExecuteQuery();
+            while (resultSet.next()) {
+                roleid = resultSet.getString("userid");
+                type = resultSet.getString("type");
+
+                if(userid.equals(roleid) && type.equals("admin")){
                     return true;
                 }
             }
@@ -41,14 +65,13 @@ public class ViewModel {
         return false;
     }
 
-    //ADMIN AUTHENTICATOR - Check if user has admin role
-    public boolean authAdm(){
+    /*public boolean authAdm(){
 
-        if(role.equals("1")){
+      if(role.equals("1")){
             return true;
         }
         return false;
-    }
+    }*/
 
     //CHECK EMAIL FOR EXISTENCE
     public boolean emailCheck(String email) {
@@ -79,6 +102,41 @@ public class ViewModel {
 
         try {
             queryBuilder
+                    .insertInto("users", new String[]{"email", "password", "active"})
+                    .values(new String[]{email, password, active})
+                    .Execute();
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        }
+
+        try {
+            resultSet = queryBuilder.selectFrom("users").where("email", "=", email).ExecuteQuery();
+            while (resultSet.next()) {
+                userid = resultSet.getString("userid");
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            queryBuilder
+                    .insertInto("roles", new String[]{"userid", "type"})
+                    .values(new String[]{userid, role})
+                    .Execute();
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        }
+    }
+
+    /*public void addUser(String email, String password, String role) {
+
+        String active = "1";
+
+        try {
+            queryBuilder
                     .insertInto("users", new String[]{"email", "password", "active", "role"})
                     .values(new String[]{email, password, active, role})
                     .Execute();
@@ -86,7 +144,7 @@ public class ViewModel {
 
             e.printStackTrace();
         }
-    }
+    }*/
 
     /**
      * Delete from database

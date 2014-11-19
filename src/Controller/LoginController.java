@@ -112,6 +112,7 @@ public class LoginController extends Controller implements ActionListener, KeyLi
         if(viewmodel.auth(user, pass)){
 
             //Check if user has ADMIN privileges
+
             if(viewmodel.authAdm()){
 
                 //Send user to Welcome-Screen.
