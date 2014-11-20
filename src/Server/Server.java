@@ -15,24 +15,6 @@ import java.net.Socket;
  */
 public class Server {
 
-    /**
-     * Definition of API calls
-     */
-    private enum API {
-        ID("id");
-
-        private API(String key) {
-            this.apiKey = key;
-        }
-
-        private String apiKey;
-
-        public String toString() {
-            return apiKey;
-        }
-
-    }
-
     private SwitchController switchController = new SwitchController();
     private int portNr;
     private BufferedReader in;
@@ -75,36 +57,32 @@ public class Server {
                 }
                 header = new String(inputChars);
 
-                //System.out.println(header);
-
+                //Send header from client and parse parameters
                 ServerRequestHandler.parseHeader(header);
 
-                out.println("HTTP/1.1 200 OK");
-                out.println(ServerRequestHandler.getJSONMIMEType());
-                out.println(ServerRequestHandler.getHTTPServerInfo());
-                out.println("");
+                //Get rid of anything else but GET/POST parameters
+                if(!ServerRequestHandler.isFavicon){
 
-//                    out.println(ServerRequestHandler.getHTTPServerInfo());'
-//                ServerRequestHandler.parseGetParameters(header.substring(0, header.indexOf("\n")));
-//
-//                if(ServerRequestHandler.getHeaderParams() != null){
-//                    switchController.keyValuePair(ServerRequestHandler.getHeaderParams().get(API.ID.toString()));
-//                    System.out.println("Connection!");
-//                    // Send the response
-//                    // Send the headers
-//                    out.println(ServerRequestHandler.getHTTPResponseCode());
-//                    out.println(ServerRequestHandler.getJSONMIMEType());
-//                    out.println(ServerRequestHandler.getHTTPServerInfo());
-//                    // this blank line signals the end of the headers
-//                    out.println("");
-//                    // Send the HTML page
-//
-//                    /*
-//                    *  SEND JSON CONTENT TO CLIENT
-//                    */
-//
-//                    out.println(switchController.getJsonResponse());
-//                }
+                    //Set header parameters to GiantSwitch
+                    if(ServerRequestHandler.isGet){
+                        switchController.getRequest();
+                    }
+                    else if(ServerRequestHandler.isPost){
+                        switchController.postRequest();
+                    }
+
+                    // Send the response
+                    // Send the headers
+                    out.println(ServerRequestHandler.getHTTPResponseCode());
+                    out.println(ServerRequestHandler.getJSONMIMEType());
+                    out.println(ServerRequestHandler.getHTTPServerInfo());
+
+                    // this blank line signals the end of the headers
+                    out.println("");
+
+                    // Send JSON to the page
+                    out.println(switchController.getJsonResponse());
+                }
 
                 out.flush();
                 remote.close();

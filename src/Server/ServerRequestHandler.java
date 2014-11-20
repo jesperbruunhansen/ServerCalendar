@@ -1,25 +1,26 @@
 package Server;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.net.URLDecoder;
 
 /**
  * Created by jesperbruun on 14/11/14.
  */
-public class ServerRequestHandler {
+public abstract class ServerRequestHandler {
 
     protected enum HTTP {
         OK(200, "OK"),
         BAD_REQUEST(400, "Bad Request"),
         SERVER_ERROR(500, "Internal Server Error");
+
         private int statusCode;
         private String statusMessage;
+        private String method;
+
         private HTTP(int statusCode, String  statusMessage){
             this.statusCode = statusCode;
             this.statusMessage = statusMessage;
         }
+
         public int getStatusCode(){
             return statusCode;
         }
@@ -31,22 +32,47 @@ public class ServerRequestHandler {
         }
     }
 
-    private static Map<String, String> paramValue;
-    private static List<Map<String, String>> keyParam;
+    /**
+     * Definition of API calls
+     */
+    protected enum API {
+        ID("id"),
+        JSON("jsonData");
+
+        private API(String key) {
+            this.apiKey = key;
+        }
+
+        private String apiKey;
+
+        public String toString() {
+            return apiKey;
+        }
+
+    }
+
+
     private static String HTTPHeader;
 
     private static final String MIME_TYPE       = "Content-Type: application/json";
     private static final String SERVER_INFO     = "Server: Bot";
-    private static final String CALL_PARAMETER  = "call?";
+    private static String callParameter = "";
+    private static String postId = "";
+    private static String postJsonData = "";
+    public  static boolean isPost;
+    public static boolean isGet;
+    public static boolean isFavicon;
 
 
-
+    /**
+     * Method to handle HTTP request from Client
+     * @param header
+     */
     public static void parseHeader(String header){
 
-        paramValue = null;
-        keyParam = null;
-        paramValue = new HashMap<>();
-        keyParam = new ArrayList<>();
+        isPost = false;
+        isGet = false;
+        isFavicon = false;
 
         //Split header string by newlines
         String[] headerArray = header.split("\\r?\\n");
@@ -69,56 +95,38 @@ public class ServerRequestHandler {
         }
 
     }
+
+    /**
+     * Triggered if a GET requst has been sent from client
+     * @param params
+     */
     private static void parseGetParams(String[] params){
+
+        final String getPart = "GET /";
 
         //Browsers creates an extra GET request from their favicon
         //and we dont want to that extra call.
         if(!params[0].contains("favicon")){
 
-            final String GET_CALL = "GET /" + CALL_PARAMETER;
-
-            //Split string, and get clean GET result
-            String get[] = params[0].split("HTTP/1.1");
-
-            //Only grab the piece of string that contains our call parameter
-            if (get[0].toLowerCase().contains(CALL_PARAMETER)) {
-
-                //Split by &
-                String[] parameters = get[0].substring(GET_CALL.length()).split("&");
-
-                for (String param : parameters) {
-
-                    //Split key and value
-                    String[] pair = param.split("=");
-
-                    //Create new object of Hashmap and insert array in key/value
-                    paramValue = new HashMap<>();
-                    paramValue.put(pair[0], pair[1]);
-
-                    keyParam.add(paramValue);
-                }
-
-                setHTTPResponseCode(HTTP.OK);
-
-                //Console print key -> value
-                for(Map<String, String> map : keyParam){
-                    for (String key : map.keySet()){
-                        System.out.println("\tKey: " + key + " -> " + map.get(key));
-                    }
-                }
-
-            }
-            else {
-                setHTTPResponseCode(HTTP.BAD_REQUEST);
-                paramValue = null;
-            }
-
+            System.out.println(params[0]);
+            callParameter = params[0].substring(params[0].indexOf(getPart) + getPart.length(),params[0].indexOf("HTTP")).trim(); //Create substring from HTTP header
+            isGet = true;
+            setHTTPResponseCode(HTTP.OK);
+        }
+        else {
+            isFavicon = true;
         }
 
     }
 
+
+    /**
+     * Triggered when client sents POST request
+     * @param params
+     */
     private static void parsePostParams(String[] params){
 
+        isPost = true;
         int length = params.length;
         String lastIndex = params[length - 1];
 
@@ -129,32 +137,21 @@ public class ServerRequestHandler {
             //Split key and value
             String[] pair = param.split("=");
 
-            //Create new object of Hashmap and insert array in key/value
-            paramValue = new HashMap<>();
-            paramValue.put(pair[0], pair[1]);
-            setHTTPResponseCode(HTTP.OK);
-
-            keyParam.add(paramValue);
-
-        }
-
-        //Console print key -> value
-        for(Map<String, String> map : keyParam){
-            for (String key : map.keySet()){
-                System.out.println("\tKey: " + key + " -> " + map.get(key));
+            if(pair[0].trim().equals(API.ID.toString())){
+                postId = pair[1];
             }
+            if(pair[0].trim().equals(API.JSON.toString())){
+                postJsonData = URLDecoder.decode(pair[1]);
+            }
+
         }
-
+        setHTTPResponseCode(HTTP.OK);
     }
 
 
-    /**
-     * Get HashMap in key and value pair from GET parameters
-     * @return
-     */
-    public static Map<String, String> getHeaderParams(){
-        return paramValue;
-    }
+    protected static String getGetParameter(){return callParameter;}
+    protected static String getPostId(){return postId;}
+    protected static String getPostJsonData(){return postJsonData;}
 
     public static String getHTTPResponseCode(){
         return ServerRequestHandler.HTTPHeader;
@@ -171,6 +168,8 @@ public class ServerRequestHandler {
     protected static void setHTTPResponseCode(HTTP code){
         ServerRequestHandler.HTTPHeader = code.toString();
     }
+
+
 
 
 }
