@@ -57,13 +57,19 @@ public class Server {
                 }
                 header = new String(inputChars);
 
+                //Send header from client and parse parameters
                 ServerRequestHandler.parseHeader(header);
 
-                if(ServerRequestHandler.getHeaderParams() != null){
-                    System.out.println("API call!");
+                //Get rid of anything else but GET/POST parameters
+                if(!ServerRequestHandler.isFavicon){
 
                     //Set header parameters to GiantSwitch
-                    switchController.keyValuePair(ServerRequestHandler.getHeaderParams());
+                    if(ServerRequestHandler.isGet){
+                        switchController.getRequest();
+                    }
+                    else if(ServerRequestHandler.isPost){
+                        switchController.postRequest();
+                    }
 
                     // Send the response
                     // Send the headers

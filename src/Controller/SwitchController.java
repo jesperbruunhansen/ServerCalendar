@@ -2,14 +2,7 @@ package Controller;
 
 import Model.Calendar.GetCalendarData;
 import Model.Forecast.Forecast;
-import Model.QueryBuild.QueryBuilder;
 import Server.ServerRequestHandler;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by jesperbruun on 13/11/14.
@@ -19,26 +12,18 @@ public class SwitchController extends ServerRequestHandler{
     private String jsonResponse;
 
     /**
-     * Server calls this method, every time a client is requesting
-     * @param mapList String from GET headers
+     * When a GET request from a client has been registered.
+     * The parameter value is set in ServerRequestHandler and passed back
+     * to Server-class, which eventually calls this method
      */
-    public void keyValuePair(List<Map<String, String>> mapList){
+    public void getRequest(){
 
-        String value = null;
-
-        for(Map<String, String> valueMap : mapList){
-            for(String key : valueMap.keySet()){
-                if(key.equals(API.ID.toString())){
-                   value = valueMap.get(key).trim();
-                }
-            }
-        }
-
+        String parameterValue = getGetParameter();
         GetCalendarData calendarData = new GetCalendarData();
         Forecast forecast = new Forecast();
 
-        if(!value.isEmpty()){
-            switch (value){
+        if(!parameterValue.isEmpty()){
+            switch (parameterValue){
                 case "getAllEvents" :
                     setHTTPResponseCode(HTTP.OK);
                     setJsonResponse(calendarData.getAllEvents());
@@ -67,18 +52,44 @@ public class SwitchController extends ServerRequestHandler{
                     forecast.setForecastToDb();
                     break;
                 default:
+                    System.out.println("wrong parameter given");
                     setHTTPResponseCode(HTTP.BAD_REQUEST);
-                    setJsonResponse("Something went wrong!");
+                    setJsonResponse("{wrong parameter given}");
                     break;
             }
         }
         else {
+            System.out.println("value is empty");
             setHTTPResponseCode(HTTP.BAD_REQUEST);
-            setJsonResponse("{failed}");
+            setJsonResponse("{no parameters was given}");
         }
 
+    }
+
+    /**
+     * Triggered when server gets a POST request from Client.
+     * getPostId is inherited from ServerRequestHandler
+     */
+    public void postRequest(){
+
+        switch (getPostId()){
+            case "login" :
+                setJsonResponse("Login method has been requested");
+                setHTTPResponseCode(HTTP.OK);
+                break;
+            case "addNewUser" :
+                setJsonResponse("New user has been requested");
+                setHTTPResponseCode(HTTP.OK);
+                break;
+            default:
+                setJsonResponse("Somethings bad has happened");
+                setHTTPResponseCode(HTTP.BAD_REQUEST);
+                System.out.println("\tError in Post Request");
+                break;
+        }
 
     }
+
 
     private void setJsonResponse(String value) {
         this.jsonResponse = value;
