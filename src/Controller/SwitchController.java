@@ -4,6 +4,8 @@ import Model.Calendar.GetCalendarData;
 import Model.Forecast.Forecast;
 import Server.ServerRequestHandler;
 
+import java.net.URLDecoder;
+
 /**
  * Created by jesperbruun on 13/11/14.
  */
@@ -71,6 +73,8 @@ public class SwitchController extends ServerRequestHandler{
      * getPostId is inherited from ServerRequestHandler
      */
     public void postRequest(){
+
+        System.out.println(getPostJsonData());
 
         switch (getPostId()){
             case "login" :

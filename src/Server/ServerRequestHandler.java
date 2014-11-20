@@ -1,5 +1,7 @@
 package Server;
 
+import java.net.URLDecoder;
+
 /**
  * Created by jesperbruun on 14/11/14.
  */
@@ -135,11 +137,11 @@ public abstract class ServerRequestHandler {
             //Split key and value
             String[] pair = param.split("=");
 
-            if(pair[0].equals(API.ID)){
+            if(pair[0].trim().equals(API.ID.toString())){
                 postId = pair[1];
             }
-            if(pair[0].equals(API.JSON)){
-                postJsonData = pair[1];
+            if(pair[0].trim().equals(API.JSON.toString())){
+                postJsonData = URLDecoder.decode(pair[1]);
             }
 
         }
