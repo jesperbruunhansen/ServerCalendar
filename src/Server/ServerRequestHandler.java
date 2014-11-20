@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Created by jesperbruun on 14/11/14.
  */
-public class ServerRequestHandler {
+public abstract class ServerRequestHandler {
 
     protected enum HTTP {
         OK(200, "OK"),
@@ -30,6 +30,26 @@ public class ServerRequestHandler {
             return "HTTP/1.1 " + getStatusCode() + " " + getStatusMessage();
         }
     }
+
+    /**
+     * Definition of API calls
+     */
+    protected enum API {
+        ID("id"),
+        JSON("json");
+
+        private API(String key) {
+            this.apiKey = key;
+        }
+
+        private String apiKey;
+
+        public String toString() {
+            return apiKey;
+        }
+
+    }
+
 
     private static Map<String, String> paramValue;
     private static List<Map<String, String>> keyParam;
@@ -71,6 +91,8 @@ public class ServerRequestHandler {
     }
     private static void parseGetParams(String[] params){
 
+        System.out.println(params[0]);
+
         //Browsers creates an extra GET request from their favicon
         //and we dont want to that extra call.
         if(!params[0].contains("favicon")){
@@ -108,11 +130,9 @@ public class ServerRequestHandler {
                 }
 
             }
-            else {
-                setHTTPResponseCode(HTTP.BAD_REQUEST);
-                paramValue = null;
-            }
-
+        }
+        else {
+            keyParam = null;
         }
 
     }
@@ -152,7 +172,10 @@ public class ServerRequestHandler {
      * Get HashMap in key and value pair from GET parameters
      * @return
      */
-    public static Map<String, String> getHeaderParams(){
+    public static List<Map<String, String>> getHeaderParams(){
+        return keyParam;
+    }
+    public static Map<String, String> getMapParams(){
         return paramValue;
     }
 

@@ -7,6 +7,8 @@ import Server.ServerRequestHandler;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,11 +20,19 @@ public class SwitchController extends ServerRequestHandler{
 
     /**
      * Server calls this method, every time a client is requesting
-     * @param value String from GET headers
+     * @param mapList String from GET headers
      */
-    public void keyValuePair(String value){
+    public void keyValuePair(List<Map<String, String>> mapList){
 
-        value = value.trim();
+        String value = null;
+
+        for(Map<String, String> valueMap : mapList){
+            for(String key : valueMap.keySet()){
+                if(key.equals(API.ID.toString())){
+                   value = valueMap.get(key).trim();
+                }
+            }
+        }
 
         GetCalendarData calendarData = new GetCalendarData();
         Forecast forecast = new Forecast();
