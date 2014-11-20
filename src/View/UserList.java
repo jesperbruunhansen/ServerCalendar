@@ -104,9 +104,9 @@ public class UserList extends JPanel {
         @Override
         public void valueChanged(ListSelectionEvent e) {
             row = table.getSelectedRow();
-            ++row;
             lblConfirm.setText("Delete user with ID " + row);
             lblConfirm.setVisible(true);
+            System.out.println(table.getValueAt(row, 0));
         }
 
     };

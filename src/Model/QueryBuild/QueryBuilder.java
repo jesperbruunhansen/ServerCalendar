@@ -115,7 +115,7 @@ public class QueryBuilder {
 
     public Where deleteFrom(String tablename){
         QueryBuilder queryBuilder = new QueryBuilder();
-        queryBuilder.setTableName(tableName);
+        queryBuilder.setTableName(tablename);
         queryBuilder.setSoftDelete(true);
         return new Where(queryBuilder);
     }

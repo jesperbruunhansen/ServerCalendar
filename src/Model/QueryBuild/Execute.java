@@ -132,8 +132,14 @@ public class Execute extends Model {
         //setSelectedDatabase("cbscalendar");
 
         if(getQueryBuilder().isSoftDelete()){
-        //    String sql = "UPDATE" + getQueryBuilder().getTableName() + " Set " +
-            }
+
+            String sql =
+                    "UPDATE " + getQueryBuilder().getTableName() +
+                            " SET active = '0' WHERE " +getWhere().getWhereKey() + " " + getWhere().getWhereOperator() + " " +getWhere().getWhereValue() +";";
+            getConnection();
+            sqlStatement = getConn().prepareStatement(sql);
+        }
+
         else{
             String sql = INSERTINTO + getQueryBuilder().getTableName() + " (" + getQueryBuilder().getFields() + ")" + VALUES + "(";
 

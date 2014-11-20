@@ -45,7 +45,7 @@ public class UserListController extends Controller implements ActionListener {
 
                 else{
                     //DELETE THE USER FROM DATABASE
-                    //viewmodel.delete("users", "userid", UserID);
+                    viewmodel.delete("users", "userid", UserID);
                     showMessageDialog(null, "User with ID " + UserID + " is now deleted");
 
                     //UPDATE TABLE WITH NEW DATA

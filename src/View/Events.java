@@ -1,62 +1,28 @@
 package View;
 
-
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.BorderFactory;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-
-import java.awt.Color;
-
-import javax.swing.JButton;
-
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.util.Vector;
-
-
-import javax.swing.JTextPane;
-
 
 /**
  * Created by Casper on 14/11/14.
  */
 public class Events extends JPanel {
 
-
     public JPanel panel;
     public JButton btnDelete;
     public JButton btnChoose;
     public JLabel lblHead;
     public JLabel lblConfirm;
+    public JScrollPane scrollPane;
+    public JTable table;
     public ListSelectionModel listSelectionModel;
 
     private int row;
-    // PANELS //
-    public JPanel panelTop;
-    public JPanel panelSide;
-    public JPanel panelContent;
-    public JPanel panelHor;
-    public JButton btnBack;
-    public JButton btnFor;
-    public JTextPane txtLabel;
-    public JLabel lblMenu;
-    public JButton btnUserList;
-    public JButton btnAddUser;
-    public JButton btnCalendars;
-    public JButton btnEvents;
-    public JButton btnNotes;
-    public JButton btnLogout;
-    public JPanel panelVer;
-    
-    private JTable table;
-    public JScrollPane scrollPane;
-    // PANELS //
 
     public Events() {
 
@@ -163,5 +129,4 @@ public class Events extends JPanel {
         }
 
     };
-//HELENA RODER HER
 }
