@@ -26,10 +26,7 @@ public class CalendarController extends Controller implements ActionListener {
         if (e.getSource() == screen.calendar.getBtnDelete()) {
 
             //RECEIVE THE NUMBER OF ROW THE USER CLICKED
-            int calid = screen.calendar.getSelectedID();
-
-            //CONVERT THE ID FROM INT TO STRING
-            String calendarID = Integer.toString(calid);
+            String calendarID = screen.calendar.getSelectedID();
 
             //VALIDATING THE USER INPUT
             if(calendarID.equals("0")){
@@ -39,11 +36,13 @@ public class CalendarController extends Controller implements ActionListener {
 
             else{
                 //DELETE THE CALENDAR FROM DATABASE
-                //viewmodel.delete("Calender", "CalenderID", calendarID);
+                viewmodel.delete("Calender", "CalenderID", calendarID);
                 showMessageDialog(null, "You wanted to delete calendar " + calendarID);
 
                 //UPDATE TABLE WITH NEW DATA
                 screen.calendar.setTable(viewmodel.tableData("calender"),viewmodel.columnNames("calender"));
+                screen.calendar.lblConfirm.setVisible(false);
+                screen.calendar.setUserID();
 
             }
         }

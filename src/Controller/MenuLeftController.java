@@ -49,6 +49,7 @@ public class MenuLeftController extends Controller implements ActionListener {
 
             //CLEAR SCREEN FOR INFORMATION
             screen.userList.lblConfirm.setVisible(false);
+            screen.userList.setUserID();
         }
 
         //IF ADD USER BUTTON IS CLICKED
@@ -69,6 +70,7 @@ public class MenuLeftController extends Controller implements ActionListener {
 
             //CLEAR SCREEN FOR INFORMATION
             screen.calendar.lblConfirm.setVisible(false);
+            screen.calendar.setUserID();
         }
 
         //IF EVENTS BUTTON IS CLICKED
@@ -83,6 +85,7 @@ public class MenuLeftController extends Controller implements ActionListener {
             screen.events.btnDelete.setVisible(false);
             screen.events.lblConfirm.setVisible(false);
             screen.events.lblHead.setText("Events: Please choose a calendar from the list");
+            screen.events.setUserID();
         }
 
         //IF NOTES BUTTON IS CLICKED
@@ -98,7 +101,7 @@ public class MenuLeftController extends Controller implements ActionListener {
             screen.notes.btnDelete.setVisible(false);
             screen.notes.lblConfirm.setVisible(false);
             screen.notes.lblHead.setText("Notes: Please choose a calendar from the list");
-
+            screen.notes.setUserID();
         }
     }
 

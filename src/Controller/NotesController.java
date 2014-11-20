@@ -34,10 +34,7 @@ public class NotesController extends Controller implements ActionListener {
         if (e.getSource() == screen.notes.getBtnChooseCal()) {
 
             //RECEIVE THE NUMBER OF ROW THE USER CLICKED
-            int calid = screen.notes.getSelectedID();
-
-            //CONVERT THE ID FROM INT TO STRING
-            calendarID = Integer.toString(calid);
+            calendarID = screen.notes.getSelectedID();
 
             //VALIDATING THE USER INPUT
             if(calendarID.equals("0")){
@@ -54,6 +51,7 @@ public class NotesController extends Controller implements ActionListener {
                 screen.notes.btnChooseEvent.setVisible(true);
                 screen.notes.lblConfirm.setVisible(false);
                 screen.notes.lblHead.setText("Notes: Please choose an event to delete");
+                screen.notes.setUserID();
             }
 
         }
@@ -66,10 +64,7 @@ public class NotesController extends Controller implements ActionListener {
         if (e.getSource() == screen.notes.getBtnChooseEvent()) {
 
             //RECEIVE THE NUMBER OF ROW THE USER CLICKED
-            int evid = screen.notes.getSelectedID();
-
-            //CONVERT THE ID FROM INT TO STRING
-            eventID = Integer.toString(evid);
+            eventID = screen.notes.getSelectedID();
 
             //VALIDATING THE USER INPUT
             if(eventID.equals("0")){
@@ -86,6 +81,7 @@ public class NotesController extends Controller implements ActionListener {
                 screen.notes.btnDelete.setVisible(true);
                 screen.notes.lblConfirm.setVisible(false);
                 screen.notes.lblHead.setText("Notes: Please choose a note to delete");
+                screen.notes.setUserID();
             }
 
         }
@@ -97,10 +93,7 @@ public class NotesController extends Controller implements ActionListener {
         if (e.getSource() == screen.notes.getBtnDelete()) {
 
             //RECEIVE THE NUMBER OF ROW THE USER CLICKED
-            int notid = screen.notes.getSelectedID();
-
-            //CONVERT THE ID FROM INT TO STRING
-            noteID = Integer.toString(notid);
+            noteID = screen.notes.getSelectedID();
 
             //VALIDATING THE USER INPUT
             if(noteID.equals("0")){
@@ -115,6 +108,8 @@ public class NotesController extends Controller implements ActionListener {
 
                 //UPDATE TABLE WITH NEW DATA
                 screen.notes.setTable(viewmodel.tableEvent("notes", "eventid", eventID),viewmodel.columnNames("notes"));
+                screen.notes.lblConfirm.setVisible(false);
+                screen.notes.setUserID();
             }
         }
     }

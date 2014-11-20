@@ -30,10 +30,7 @@ public class EventsController extends Controller implements ActionListener {
         if (e.getSource() == screen.events.getBtnChoose()) {
 
             //RECEIVE THE NUMBER OF ROW THE USER CLICKED
-            int calid = screen.events.getSelectedID();
-
-            //CONVERT THE ID FROM INT TO STRING
-            calendarID = Integer.toString(calid);
+            calendarID = screen.events.getSelectedID();
 
             //VALIDATING THE USER INPUT
             if(calendarID.equals("0")){
@@ -50,6 +47,7 @@ public class EventsController extends Controller implements ActionListener {
                 screen.events.btnDelete.setVisible(true);
                 screen.events.lblConfirm.setVisible(false);
                 screen.events.lblHead.setText("Events: Please choose an event to delete");
+                screen.events.setUserID();
             }
 
         }
@@ -58,10 +56,7 @@ public class EventsController extends Controller implements ActionListener {
         if (e.getSource() == screen.events.getBtnDelete()) {
 
             //RECEIVE THE NUMBER OF ROW THE USER CLICKED
-            int evid = screen.events.getSelectedID();
-
-            //CONVERT THE ID FROM INT TO STRING
-            eventID = Integer.toString(evid);
+            eventID = screen.events.getSelectedID();
 
             //VALIDATING THE USER INPUT
             if(eventID.equals("0")){
@@ -71,11 +66,13 @@ public class EventsController extends Controller implements ActionListener {
 
             else{
                 //DELETE THE EVENT FROM DATABASE
-                //viewmodel.delete("events", "id", eventID);
+                viewmodel.delete("events", "id", eventID);
                 showMessageDialog(null, "You wanted to delete event " + eventID);
 
                 //UPDATE TABLE WITH NEW DATA
                 screen.events.setTable(viewmodel.tableEvent("events", "CalenderID", calendarID),viewmodel.columnNames("events"));
+                screen.events.lblConfirm.setVisible(false);
+                screen.events.setUserID();
             }
         }
     }

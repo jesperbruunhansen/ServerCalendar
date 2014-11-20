@@ -23,7 +23,7 @@ public class UserList extends JPanel {
     public JTable table;
     public ListSelectionModel listSelectionModel;
 
-    private int row;
+    private String userID;
 
     public UserList() {
 
@@ -62,7 +62,7 @@ public class UserList extends JPanel {
         lblConfirm = new JLabel("Confirm");
         lblConfirm.setForeground(Color.GRAY);
         lblConfirm.setFont(new Font("Dialog", Font.PLAIN, 12));
-        lblConfirm.setBounds(513, 639, 138, 15);
+        lblConfirm.setBounds(510, 639, 140, 15);
         lblConfirm.setVisible(false);
         panel.add(lblConfirm);
 
@@ -74,8 +74,13 @@ public class UserList extends JPanel {
     }
 
     //RETURN THE CHOSEN ID
-    public int getUserID(){
-        return row;
+    public String getUserID(){
+        return userID;
+    }
+
+    //SET THE CHOSEN ID
+    public void setUserID(){
+        userID = "0";
     }
 
     //ADD ACTIONLISTENER
@@ -103,27 +108,13 @@ public class UserList extends JPanel {
 
         @Override
         public void valueChanged(ListSelectionEvent e) {
-            row = table.getSelectedRow();
-            lblConfirm.setText("Delete user with ID " + row);
+            int row = table.getSelectedRow();
+            userID = (table.getValueAt(row, 0)).toString();
+
+            lblConfirm.setText("Delete user with ID " + userID);
             lblConfirm.setVisible(true);
-            System.out.println(table.getValueAt(row, 0));
         }
 
     };
-
-    /*class MyListSelectionListener implements ListSelectionListener{
-
-        @Override
-        public void valueChanged(ListSelectionEvent e) {
-            //System.out.println("valueChanged: " + e.toString());
-            int row = table.getSelectedRow();
-            int col = table.getSelectedColumn();
-            int selectedItem = (int)table.getValueAt(row, col);
-            System.out.println(row + " : " + col + " = " + selectedItem);
-            lblDelete.setText("Delete user with ID " + selectedItem);
-            lblDelete.setVisible(true);
-        }
-
-    };*/
 
 }

@@ -170,7 +170,9 @@ public class ViewModel {
         Vector<Vector<Object>> data = new Vector<Vector<Object>>();
 
         try{
-            resultSet = queryBuilder.selectFrom(table).all().ExecuteQuery();
+
+            resultSet = queryBuilder.selectFrom(table).where("active", "=", "1").ExecuteQuery();
+            //resultSet = queryBuilder.selectFrom(table).all().ExecuteQuery();
 
             //Get Metadata from ResultSet
             ResultSetMetaData metaData = resultSet.getMetaData();

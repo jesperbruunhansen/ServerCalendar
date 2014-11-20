@@ -5,6 +5,8 @@ import View.Screen;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import static javax.swing.JOptionPane.showMessageDialog;
+
 /**
  * Created by Casper on 15/11/14.
  */
@@ -59,7 +61,7 @@ public class AddUserController extends Controller implements ActionListener {
                 //IF NO ERRORS ADD NEW USER TO DATABASE
 				else{
                     viewmodel.addUser(email, password, selectedRole);
-                    screen.addUser.setErrorMessage(email+" has been successfully added to the system");
+                    showMessageDialog(null, email + " has been successfully added to the system");
 
                     //CLEAR INPUT IN ALL FIELDS
                     screen.addUser.clearAddUser();

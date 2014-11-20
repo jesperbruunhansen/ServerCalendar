@@ -32,10 +32,7 @@ public class UserListController extends Controller implements ActionListener {
 
 
             //RECIEVE THE NUMBER OF ROW THE USER CLICKED
-            int userid = screen.userList.getUserID();
-
-            //CONVERT THE ID FROM INT TO STRING
-            String UserID = Integer.toString(userid);
+            String UserID = screen.userList.getUserID();
 
             //VALIDATING THE USER INPUT
                 if(UserID.equals("0")){
@@ -50,6 +47,8 @@ public class UserListController extends Controller implements ActionListener {
 
                     //UPDATE TABLE WITH NEW DATA
                     screen.userList.setTable(viewmodel.tableData("users"),viewmodel.columnNames("users"));
+                    screen.userList.lblConfirm.setVisible(false);
+                    screen.userList.setUserID();
                 }
 
         }

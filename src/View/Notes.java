@@ -23,7 +23,7 @@ public class Notes extends JPanel {
     public JTable table;
     public ListSelectionModel listSelectionModel;
 
-    private int row;
+    private String userID;
 
     public Notes() {
 
@@ -83,7 +83,7 @@ public class Notes extends JPanel {
         lblConfirm = new JLabel("Choose Calendar");
         lblConfirm.setForeground(Color.GRAY);
         lblConfirm.setFont(new Font("Dialog", Font.PLAIN, 12));
-        lblConfirm.setBounds(513, 639, 138, 15);
+        lblConfirm.setBounds(466, 639, 170, 15);
         lblConfirm.setVisible(false);
         panel.add(lblConfirm);
 
@@ -105,9 +105,13 @@ public class Notes extends JPanel {
     }
 
     //RETURN THE CHOSEN ID
-    public int getSelectedID(){
-        int selectedID = row;
-        return selectedID;
+    public String getSelectedID(){
+        return userID;
+    }
+
+    //SET THE CHOSEN ID
+    public void setUserID(){
+        userID = "0";
     }
 
     //ADD ACTIONLISTENER
@@ -133,15 +137,14 @@ public class Notes extends JPanel {
     }
 
     //IMPLEMENT SELECTIONLISTENER ON TABLE
-    class MyListSelectionListener implements ListSelectionListener {
+    class MyListSelectionListener implements ListSelectionListener{
 
         @Override
         public void valueChanged(ListSelectionEvent e) {
-            row = table.getSelectedRow();
-            ++row;
+            int row = table.getSelectedRow();
+            userID = (table.getValueAt(row, 0)).toString();
 
-            //Set label with information
-            lblConfirm.setText("Choose event with ID " + row);
+            lblConfirm.setText("Choose calendar with ID " + userID);
             lblConfirm.setVisible(true);
         }
 
