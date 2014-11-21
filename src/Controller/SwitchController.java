@@ -4,21 +4,20 @@ import Model.Calendar.GetCalendarData;
 import Model.Forecast.Forecast;
 import Server.ServerRequestHandler;
 
-import java.net.URLDecoder;
 
 /**
  * Created by jesperbruun on 13/11/14.
  */
 public class SwitchController extends ServerRequestHandler{
 
-    private String jsonResponse;
+    private static String jsonResponse;
 
     /**
      * When a GET request from a client has been registered.
      * The parameter value is set in ServerRequestHandler and passed back
      * to Server-class, which eventually calls this method
      */
-    public void getRequest(){
+    public static void getRequest(){
 
         String parameterValue = getGetParameter();
         GetCalendarData calendarData = new GetCalendarData();
@@ -54,14 +53,14 @@ public class SwitchController extends ServerRequestHandler{
                     forecast.setForecastToDb();
                     break;
                 default:
-                    System.out.println("wrong parameter given");
+                    System.out.println("\twrong parameter given");
                     setHTTPResponseCode(HTTP.BAD_REQUEST);
                     setJsonResponse("{wrong parameter given}");
                     break;
             }
         }
         else {
-            System.out.println("value is empty");
+            System.out.println("\tvalue is empty");
             setHTTPResponseCode(HTTP.BAD_REQUEST);
             setJsonResponse("{no parameters was given}");
         }
@@ -72,21 +71,20 @@ public class SwitchController extends ServerRequestHandler{
      * Triggered when server gets a POST request from Client.
      * getPostId is inherited from ServerRequestHandler
      */
-    public void postRequest(){
-
-        System.out.println(getPostJsonData());
+    public static void postRequest(){
 
         switch (getPostId()){
             case "login" :
                 setJsonResponse("Login method has been requested");
                 setHTTPResponseCode(HTTP.OK);
                 break;
-            case "addNewUser" :
-                setJsonResponse("New user has been requested");
+                case "addNewUser" :
+                    System.out.println(getPostJsonData());
+                setJsonResponse("{\"code\": \"New User\"}");
                 setHTTPResponseCode(HTTP.OK);
                 break;
             default:
-                setJsonResponse("Somethings bad has happened");
+                setJsonResponse("{\"response\": \"Error\"}");
                 setHTTPResponseCode(HTTP.BAD_REQUEST);
                 System.out.println("\tError in Post Request");
                 break;
@@ -94,15 +92,11 @@ public class SwitchController extends ServerRequestHandler{
 
     }
 
-
-    private void setJsonResponse(String value) {
-        this.jsonResponse = value;
+    private static void setJsonResponse(String value) {
+        SwitchController.jsonResponse = value;
     }
-
-    public String getJsonResponse(){
-        return this.jsonResponse;
+    public static String getJsonResponse(){
+        return SwitchController.jsonResponse;
     }
-
-
 
 }

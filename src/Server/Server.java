@@ -1,6 +1,5 @@
 package Server;
 
-import Config.Config;
 import Controller.SwitchController;
 
 import java.io.BufferedReader;
@@ -15,9 +14,7 @@ import java.net.Socket;
  */
 public class Server {
 
-    private SwitchController switchController = new SwitchController();
     private int portNr;
-    private BufferedReader in;
     private PrintWriter out;
     private String header = "";
     private char[] inputChars;
@@ -45,7 +42,7 @@ public class Server {
                 Socket remote = s.accept();
                 inputChars = null;
 
-                in = new BufferedReader(new InputStreamReader(remote.getInputStream()));
+                BufferedReader in = new BufferedReader(new InputStreamReader(remote.getInputStream()));
                 out = new PrintWriter(remote.getOutputStream());
 
 
@@ -56,6 +53,7 @@ public class Server {
                     System.out.println("Chars read from stream: " + charsRead);
                 }
                 header = new String(inputChars);
+                System.out.println(header);
 
                 //Send header from client and parse parameters
                 ServerRequestHandler.parseHeader(header);
@@ -65,10 +63,10 @@ public class Server {
 
                     //Set header parameters to GiantSwitch
                     if(ServerRequestHandler.isGet){
-                        switchController.getRequest();
+                        SwitchController.getRequest();
                     }
                     else if(ServerRequestHandler.isPost){
-                        switchController.postRequest();
+                        SwitchController.postRequest();
                     }
 
                     // Send the response
@@ -81,7 +79,7 @@ public class Server {
                     out.println("");
 
                     // Send JSON to the page
-                    out.println(switchController.getJsonResponse());
+                    out.println(SwitchController.getJsonResponse());
                 }
 
                 out.flush();
