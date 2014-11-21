@@ -53,7 +53,8 @@ public class Server {
                     System.out.println("Chars read from stream: " + charsRead);
                 }
                 header = new String(inputChars);
-                System.out.println(header);
+
+                System.out.println(header+"\n");
 
                 //Send header from client and parse parameters
                 ServerRequestHandler.parseHeader(header);

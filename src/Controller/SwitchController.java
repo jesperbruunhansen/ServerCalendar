@@ -2,7 +2,9 @@ package Controller;
 
 import Model.Calendar.GetCalendarData;
 import Model.Forecast.Forecast;
+import Model.Post.Login;
 import Server.ServerRequestHandler;
+import sun.rmi.runtime.Log;
 
 
 /**
@@ -75,11 +77,12 @@ public class SwitchController extends ServerRequestHandler{
 
         switch (getPostId()){
             case "login" :
-                setJsonResponse("Login method has been requested");
+                Login.authenticateUser(getPostJsonData().trim());
+                setJsonResponse(Login.getJsonResponse());
                 setHTTPResponseCode(HTTP.OK);
                 break;
-                case "addNewUser" :
-                    System.out.println(getPostJsonData());
+            case "addNewUser" :
+                System.out.println(getPostJsonData());
                 setJsonResponse("{\"code\": \"New User\"}");
                 setHTTPResponseCode(HTTP.OK);
                 break;
