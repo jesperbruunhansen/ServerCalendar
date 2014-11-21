@@ -14,7 +14,6 @@ public abstract class ServerRequestHandler {
 
         private int statusCode;
         private String statusMessage;
-        private String method;
 
         private HTTP(int statusCode, String  statusMessage){
             this.statusCode = statusCode;
@@ -56,9 +55,9 @@ public abstract class ServerRequestHandler {
 
     private static final String MIME_TYPE       = "Content-Type: application/json";
     private static final String SERVER_INFO     = "Server: Bot";
-    private static String callParameter = "";
+    private static String callParameter;
     private static String postId = "";
-    private static String postJsonData = "";
+    private static String postJsonData;
     public  static boolean isPost;
     public static boolean isGet;
     public static boolean isFavicon;
@@ -81,7 +80,7 @@ public abstract class ServerRequestHandler {
         String httpMethod = headerArray[0].substring(0,4).trim();
 
         //System.out.println(headerArray[0]);
-        System.out.println("HTTP method: " + httpMethod);
+       // System.out.println("HTTP method: " + httpMethod);
 
         switch (httpMethod){
             case "GET" :
@@ -92,6 +91,7 @@ public abstract class ServerRequestHandler {
                 break;
             default:
                 System.out.println("No HTTP method was found");
+                break;
         }
 
     }
@@ -122,8 +122,8 @@ public abstract class ServerRequestHandler {
      * @param params
      */
     private static void parsePostParams(String[] params){
-
         isPost = true;
+
         int length = params.length;
         String lastIndex = params[length - 1];
 
@@ -140,8 +140,9 @@ public abstract class ServerRequestHandler {
             if(pair[0].trim().equals(API.JSON.toString())){
                 postJsonData = URLDecoder.decode(pair[1]);
             }
-
         }
+        System.out.println("ID - " + postId);
+        System.out.println("JsonData - " + postJsonData);
     }
 
 
