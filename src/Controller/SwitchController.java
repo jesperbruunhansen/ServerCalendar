@@ -68,7 +68,7 @@ public class SwitchController extends ServerRequestHandler{
     }
 
     /**
-     * Triggered when server gets a POST request from Client.
+     * Triggered when server gets a Post request from Client.
      * getPostId is inherited from ServerRequestHandler
      */
     public static void postRequest(){

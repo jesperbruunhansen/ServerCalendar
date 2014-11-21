@@ -20,6 +20,7 @@ public class ViewModel {
     private String pw;
     private String roleid;
     private String type;
+    private boolean active;
 
 
     /**
@@ -33,9 +34,11 @@ public class ViewModel {
             while (resultSet.next()) {
                 mail = resultSet.getString("email");
                 pw = resultSet.getString("password");
+                active = resultSet.getBoolean("active");
+
                 userid = resultSet.getString("userid");
 
-                if(mail.equals(email) && pw.equals(password)){
+                if(active && mail.equals(email) && pw.equals(password)){
                     return true;
                 }
             }
@@ -64,14 +67,6 @@ public class ViewModel {
         }
         return false;
     }
-
-    /*public boolean authAdm(){
-
-      if(role.equals("1")){
-            return true;
-        }
-        return false;
-    }*/
 
     //CHECK EMAIL FOR EXISTENCE
     public boolean emailCheck(String email) {
@@ -130,21 +125,6 @@ public class ViewModel {
             e.printStackTrace();
         }
     }
-
-    /*public void addUser(String email, String password, String role) {
-
-        String active = "1";
-
-        try {
-            queryBuilder
-                    .insertInto("users", new String[]{"email", "password", "active", "role"})
-                    .values(new String[]{email, password, active, role})
-                    .Execute();
-        } catch (SQLException e) {
-
-            e.printStackTrace();
-        }
-    }*/
 
     /**
      * Delete from database

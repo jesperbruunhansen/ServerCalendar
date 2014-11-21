@@ -118,6 +118,7 @@ public class LoginController extends Controller implements ActionListener, KeyLi
                 //Send user to Welcome-Screen.
                 screen.LoginVisible(false);
                 screen.MenuVisible(true);
+                screen.MenuTopVisible(true);
             } else {
                 //Show error message
                 showMessageDialog(null, "You do not have admin privileges");

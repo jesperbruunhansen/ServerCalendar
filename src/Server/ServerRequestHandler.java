@@ -77,7 +77,7 @@ public abstract class ServerRequestHandler {
         //Split header string by newlines
         String[] headerArray = header.split("\\r?\\n");
 
-        //Grap first 4 characters from header string (GET or POST)
+        //Grap first 4 characters from header string (GET or Post)
         String httpMethod = headerArray[0].substring(0,4).trim();
 
         //System.out.println(headerArray[0]);
@@ -87,7 +87,7 @@ public abstract class ServerRequestHandler {
             case "GET" :
                 parseGetParams(headerArray);
                 break;
-            case "POST" :
+            case "Post" :
                 parsePostParams(headerArray);
                 break;
             default:
@@ -118,7 +118,7 @@ public abstract class ServerRequestHandler {
 
 
     /**
-     * Triggered when client sents POST request
+     * Triggered when client sents Post request
      * @param params
      */
     private static void parsePostParams(String[] params){

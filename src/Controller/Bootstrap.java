@@ -23,8 +23,8 @@ public class Bootstrap implements Runnable {
         /**
          * Create new screen object
          */
-       //Controller controller = new Controller();
-       //controller.init();
+        //Controller controller = new Controller();
+        //controller.init();
 
         /**
          * Create new server object, to make server run on specified port nr.

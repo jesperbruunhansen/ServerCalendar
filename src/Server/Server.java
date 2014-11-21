@@ -58,7 +58,7 @@ public class Server {
                 //Send header from client and parse parameters
                 ServerRequestHandler.parseHeader(header);
 
-                //Get rid of anything else but GET/POST parameters
+                //Get rid of anything else but GET/Post parameters
                 if(!ServerRequestHandler.isFavicon){
 
                     //Set header parameters to GiantSwitch

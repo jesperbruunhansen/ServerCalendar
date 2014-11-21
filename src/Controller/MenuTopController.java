@@ -11,7 +11,6 @@ import java.awt.event.ActionListener;
 public class MenuTopController extends Controller implements ActionListener {
 
     private Screen screen;
-    private ViewModel viewmodel = new ViewModel();
 
     public MenuTopController(Screen screen){
         this.screen = screen;

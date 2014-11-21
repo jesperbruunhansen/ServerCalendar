@@ -32,6 +32,7 @@ public class MenuLeftController extends Controller implements ActionListener {
             //SHOW & HIDE SCREENS
             screen.LoginVisible(true);
             screen.MenuVisible(false);
+            screen.MenuTopVisible(false);
             screen.show(Screen.WELCOME);
 
             //CLEAR SCREENS FOR INFORMATION

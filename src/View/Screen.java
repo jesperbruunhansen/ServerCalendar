@@ -108,5 +108,10 @@ public class Screen extends JFrame {
         menuLeft.setVisible(set);
     }
 
+    //SET MENU PANEL VISIBLE TRUE/FALSE
+    public void MenuTopVisible(boolean set) {
+        menuTop.setVisible(set);
+    }
+
 
 }
