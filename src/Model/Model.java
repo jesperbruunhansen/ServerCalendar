@@ -19,7 +19,7 @@ public abstract class Model {
     
     private Statement stmt;
     protected static Connection conn = null;
-    protected PreparedStatement sqlStatement;
+    protected static PreparedStatement sqlStatement;
     protected ResultSet resultSet;
 
     /**
@@ -72,7 +72,7 @@ public abstract class Model {
      * @param sql
      * @return PreparedStatement
      */
-    public PreparedStatement doQuery(String sql) {
+    public static PreparedStatement doQuery(String sql) {
         try {
             getConnection();
             getConn();

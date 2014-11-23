@@ -24,8 +24,8 @@ import org.joda.time.LocalDate;
  */
 public class GetCalendarData extends Model {
 
-    private Gson gson;
-    private QueryBuilder queryBuilder;
+    private static Gson gson;
+    private static QueryBuilder queryBuilder;
 
     private static String readUrl(String urlString) throws Exception {
         BufferedReader reader = null;
@@ -121,7 +121,7 @@ public class GetCalendarData extends Model {
     }
 
 
-    public String getAllEvents() {
+    public static String getAllEvents() {
         try {
             CachedRowSetImpl cachedRowSet, cachedRowSetNote, cachedRowSetForecast;
             queryBuilder = new QueryBuilder();
@@ -199,8 +199,8 @@ public class GetCalendarData extends Model {
     }
 
     public void setCalendarEventsToDb() {
-        try {
 
+        try {
             String json = readUrl("http://calendar.cbs.dk/events.php/" + EncryptUserID.getUserId() + "/" + EncryptUserID.getKey() + ".json");
 
             gson = new Gson();
@@ -242,7 +242,7 @@ public class GetCalendarData extends Model {
                         "1",                                        //CreatedBy
                         strStartDate,                       //Start
                         strEndDate,                         //End
-                        events.getEvents().get(i).getTitle(),       //Title
+                        events.getEvents().get(i).getDescription(),       //Title
                         "Text - text",
                         "1",
                         "1",

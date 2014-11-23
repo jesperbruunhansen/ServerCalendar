@@ -51,8 +51,9 @@ public class SwitchController extends ServerRequestHandler{
                     break;
                 case "forecast" :
                     setHTTPResponseCode(HTTP.OK);
-                    setJsonResponse("Forecast!");
                     forecast.setForecastToDb();
+                    setJsonResponse("Forecast!");
+
                     break;
                 default:
                     System.out.println("\twrong parameter given");

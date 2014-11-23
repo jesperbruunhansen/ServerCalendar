@@ -141,8 +141,6 @@ public abstract class ServerRequestHandler {
                 postJsonData = URLDecoder.decode(pair[1]);
             }
         }
-        System.out.println("ID - " + postId);
-        System.out.println("JsonData - " + postJsonData);
     }
 
 
