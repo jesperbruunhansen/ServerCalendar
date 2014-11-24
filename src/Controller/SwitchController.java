@@ -40,6 +40,11 @@ public class SwitchController extends ServerRequestHandler{
                     setJsonResponse("Alle data er blevet smidt i db");
                     calendarData.setCalendarEventsToDb();
                     break;
+                case "forecastTest" :
+                    Forecast.isForecastUpToDate();
+                    setHTTPResponseCode(HTTP.OK);
+                    setJsonResponse("Forecast uptodate kaldt");
+                    break;
                 case "getAllUsers" :
                     setHTTPResponseCode(HTTP.OK);
                     setJsonResponse(calendarData.getAllUsers());
@@ -76,8 +81,10 @@ public class SwitchController extends ServerRequestHandler{
      */
     public static void postRequest(){
 
+
         switch (getPostId()){
             case "login" :
+                System.out.println("Login has been triggerd");
                 Login.authenticateUser(getPostJsonData().trim());
                 setJsonResponse(Login.getJsonResponse());
                 setHTTPResponseCode(HTTP.OK);

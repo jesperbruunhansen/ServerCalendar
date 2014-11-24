@@ -2,6 +2,7 @@ package Model.Post;
 
 import Model.Calendar.Event;
 import Model.Calendar.Note;
+import Model.Forecast.Forecast;
 import Model.Forecast.ForecastClass;
 import Model.Model;
 import Model.QueryBuild.QueryBuilder;
@@ -35,6 +36,7 @@ public class Login extends Model {
         LoginCredentials loginCredentials = gson.fromJson(jsonPostRequest, LoginCredentials.class);
 
         QueryBuilder queryBuilder = new QueryBuilder();
+
 
         try{
             rs = queryBuilder.selectFrom("users").all().ExecuteQuery();
@@ -74,6 +76,16 @@ public class Login extends Model {
                 throw new Exception("No user_id was given");
             }
             else{
+
+
+                //Is forecast NOT up to date, then refresh the data
+                if(!Forecast.isForecastUpToDate()){
+                    System.out.println("\tForecast has to be updated");
+                    Forecast.refreshForecast();
+                    System.out.println("\tForecast has been updated");
+                }
+
+
                 QueryBuilder queryBuilderForecast = new QueryBuilder();
                 QueryBuilder queryBuilderNote = new QueryBuilder();
                 CachedRowSetImpl cachedRowSetForecast = queryBuilderForecast.selectFrom("forecast").all().ExecuteQuery();
@@ -131,7 +143,9 @@ public class Login extends Model {
                         note.setCreatedon(cachedRowSetNote.getTimestamp("created").toString());
                         noteList.add(note);
                     }
+
                     cachedRowSetNote.close();
+
                     event.setNoter(noteList);
 
                     eventList.add(event);

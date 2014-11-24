@@ -86,11 +86,11 @@ public abstract class ServerRequestHandler {
             case "GET" :
                 parseGetParams(headerArray);
                 break;
-            case "Post" :
+            case "POST" :
                 parsePostParams(headerArray);
                 break;
             default:
-                System.out.println("No HTTP method was found");
+                System.err.println("No HTTP method was found");
                 break;
         }
 

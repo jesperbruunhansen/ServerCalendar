@@ -221,7 +221,7 @@ public class GetCalendarData extends Model {
                                 events.getEvents().get(i).getStart().get(3) + ":" +
                                 events.getEvents().get(i).getStart().get(4);
 
-                Date startDate = new SimpleDateFormat("dd-MM-yyyy hh:mm").parse(start);
+                Date startDate = new SimpleDateFormat("dd-MM-yyyy HH:mm").parse(start);
                 String strStartDate = sdf.format(startDate);
 
                 int monthEnd = Integer.parseInt(events.getEvents().get(i).getEnd().get(1)) + 1;
@@ -231,7 +231,7 @@ public class GetCalendarData extends Model {
                                 events.getEvents().get(i).getEnd().get(0) + " " +
                                 events.getEvents().get(i).getEnd().get(3) + ":" +
                                 events.getEvents().get(i).getEnd().get(4);
-                Date endDate = new SimpleDateFormat("dd-MM-yyyy hh:mm").parse(end);
+                Date endDate = new SimpleDateFormat("dd-MM-yyyy HH:mm").parse(end);
                 String strEndDate = sdf.format(endDate);
 
 
