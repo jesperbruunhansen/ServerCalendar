@@ -90,7 +90,7 @@ public abstract class ServerRequestHandler {
                 parsePostParams(headerArray);
                 break;
             default:
-                System.out.println("No HTTP method was found");
+                System.err.println("No HTTP method was found");
                 break;
         }
 
@@ -141,8 +141,6 @@ public abstract class ServerRequestHandler {
                 postJsonData = URLDecoder.decode(pair[1]);
             }
         }
-        System.out.println("ID - " + postId);
-        System.out.println("JsonData - " + postJsonData);
     }
 
 
