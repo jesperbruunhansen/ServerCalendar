@@ -66,7 +66,7 @@ public class MenuLeftController extends Controller implements ActionListener {
         if (e.getSource() == screen.menuLeft.getBtnCalendars()) {
 
             //POPULATE CALENDAR TABLE WITH DATA
-            screen.calendar.setTable(viewmodel.tableData("calender"),viewmodel.columnNames("calender"));
+            screen.calendar.setTable(viewmodel.tableData("calendar"),viewmodel.columnNames("calendar"));
             screen.show(Screen.CALENDAR);
 
             //CLEAR SCREEN FOR INFORMATION
@@ -78,7 +78,7 @@ public class MenuLeftController extends Controller implements ActionListener {
         if (e.getSource() == screen.menuLeft.getBtnEvents()) {
 
             //POPULATE CALENDAR TABLE WITH DATA
-            screen.events.setTable(viewmodel.tableData("calender"),viewmodel.columnNames("calender"));
+            screen.events.setTable(viewmodel.tableData("calendar"),viewmodel.columnNames("calendar"));
             screen.show(Screen.EVENTS);
 
             //CLEAR SCREEN FOR INFORMATION
@@ -93,7 +93,7 @@ public class MenuLeftController extends Controller implements ActionListener {
         if (e.getSource() == screen.menuLeft.getBtnNotes()) {
 
             //POPULATE CALENDAR TABLE WITH DATA
-            screen.notes.setTable(viewmodel.tableData("calender"),viewmodel.columnNames("calender"));
+            screen.notes.setTable(viewmodel.tableData("calendar"),viewmodel.columnNames("calendar"));
             screen.show(Screen.NOTES);
 
             //CLEAR SCREEN FOR INFORMATION

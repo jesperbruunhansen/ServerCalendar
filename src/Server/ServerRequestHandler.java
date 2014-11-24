@@ -86,7 +86,7 @@ public abstract class ServerRequestHandler {
             case "GET" :
                 parseGetParams(headerArray);
                 break;
-            case "Post" :
+            case "POST" :
                 parsePostParams(headerArray);
                 break;
             default:

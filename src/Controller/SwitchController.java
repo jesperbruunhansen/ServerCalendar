@@ -1,10 +1,13 @@
 package Controller;
 
+import Model.Calendar.Event;
 import Model.Calendar.GetCalendarData;
 import Model.Forecast.Forecast;
+import Model.Post.Calendar;
 import Model.Post.Login;
+import Model.Post.Events;
+import Model.Post.Notes;
 import Server.ServerRequestHandler;
-import sun.rmi.runtime.Log;
 
 
 /**
@@ -81,9 +84,54 @@ public class SwitchController extends ServerRequestHandler{
                 setJsonResponse(Login.getJsonResponse());
                 setHTTPResponseCode(HTTP.OK);
                 break;
-            case "addNewUser" :
-                System.out.println(getPostJsonData());
-                setJsonResponse("{\"code\": \"New User\"}");
+            case "addCalendar" :
+                Calendar.createCalendar(getPostJsonData().trim());
+                setJsonResponse(Calendar.getJsonResponse());
+                setHTTPResponseCode(HTTP.OK);
+                break;
+            case "deleteCalendar" :
+                Calendar.deleteCalendar(getPostJsonData().trim());
+                setJsonResponse(Calendar.getJsonResponse());
+                setHTTPResponseCode(HTTP.OK);
+                break;
+            case "updateCalendar" :
+                Calendar.updateCalendar(getPostJsonData().trim());
+                setJsonResponse(Calendar.getJsonResponse());
+                setHTTPResponseCode(HTTP.OK);
+                break;
+            case "shareCalendar" :
+                Calendar.shareCalendar(getPostJsonData().trim());
+                setJsonResponse(Calendar.getJsonResponse());
+                setHTTPResponseCode(HTTP.OK);
+                break;
+            case "addEvent" :
+                Events.createEvent(getPostJsonData().trim());
+                setJsonResponse(Events.getJsonResponse());
+                setHTTPResponseCode(HTTP.OK);
+                break;
+            case "deleteEvent" :
+                Events.deleteEvent(getPostJsonData().trim());
+                setJsonResponse(Events.getJsonResponse());
+                setHTTPResponseCode(HTTP.OK);
+                break;
+            case "updateEvent" :
+                Events.updateEvent(getPostJsonData().trim());
+                setJsonResponse(Events.getJsonResponse());
+                setHTTPResponseCode(HTTP.OK);
+                break;
+            case "addNote" :
+                Notes.createNote(getPostJsonData().trim());
+                setJsonResponse(Notes.getJsonResponse());
+                setHTTPResponseCode(HTTP.OK);
+                break;
+            case "deleteNote" :
+                Notes.deleteNote(getPostJsonData().trim());
+                setJsonResponse(Notes.getJsonResponse());
+                setHTTPResponseCode(HTTP.OK);
+                break;
+            case "updateNote" :
+                Notes.updateNote(getPostJsonData().trim());
+                setJsonResponse(Notes.getJsonResponse());
                 setHTTPResponseCode(HTTP.OK);
                 break;
             default:

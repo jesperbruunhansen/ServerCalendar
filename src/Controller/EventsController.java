@@ -40,7 +40,7 @@ public class EventsController extends Controller implements ActionListener {
 
             else{
                 //RETRIEVE EVENT LIST FROM DATABASE BASED ON CHOSEN CALENDAR
-                screen.events.setTable(viewmodel.tableEvent("events", "CalenderID", calendarID),viewmodel.columnNames("events"));
+                screen.events.setTable(viewmodel.tableEvent("events", "calendarid", calendarID),viewmodel.columnNames("events"));
 
                 //HIDE SHOW BUTTONS & UPDATE LABELS
                 screen.events.btnChoose.setVisible(false);
@@ -67,10 +67,10 @@ public class EventsController extends Controller implements ActionListener {
             else{
                 //DELETE THE EVENT FROM DATABASE
                 viewmodel.delete("events", "id", eventID);
-                showMessageDialog(null, "You wanted to delete event " + eventID);
+                showMessageDialog(null, "You deleted event with ID " + eventID);
 
                 //UPDATE TABLE WITH NEW DATA
-                screen.events.setTable(viewmodel.tableEvent("events", "CalenderID", calendarID),viewmodel.columnNames("events"));
+                screen.events.setTable(viewmodel.tableEvent("events", "calendarid", calendarID),viewmodel.columnNames("events"));
                 screen.events.lblConfirm.setVisible(false);
                 screen.events.setUserID();
             }

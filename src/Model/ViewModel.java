@@ -1,17 +1,17 @@
 package Model;
-import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Vector;
 
 import Model.QueryBuild.QueryBuilder;
+import com.sun.rowset.CachedRowSetImpl;
 
 /**
  * Created by Casper on 16/11/14.
  */
 public class ViewModel {
 
-	private ResultSet resultSet;
+	private CachedRowSetImpl resultSet;
     private QueryBuilder queryBuilder = new QueryBuilder();
 
     //LOG IN
@@ -93,12 +93,10 @@ public class ViewModel {
      */
     public void addUser(String email, String password, String role) {
 
-        String active = "1";
-
         try {
             queryBuilder
-                    .insertInto("users", new String[]{"email", "password", "active"})
-                    .values(new String[]{email, password, active})
+                    .insertInto("users", new String[]{"email", "password"})
+                    .values(new String[]{email, password})
                     .Execute();
         } catch (SQLException e) {
 
@@ -152,7 +150,6 @@ public class ViewModel {
         try{
 
             resultSet = queryBuilder.selectFrom(table).where("active", "=", "1").ExecuteQuery();
-            //resultSet = queryBuilder.selectFrom(table).all().ExecuteQuery();
 
             //Get Metadata from ResultSet
             ResultSetMetaData metaData = resultSet.getMetaData();

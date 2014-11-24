@@ -10,6 +10,7 @@
 # Generation Time: 2014-11-20 13:00:08 +0000
 # ************************************************************
 
+use cbscalendar;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -20,28 +21,28 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
-# Dump of table Calender
+# Dump of table calender
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `Calender`;
+DROP TABLE IF EXISTS `calendar`;
 
-CREATE TABLE `Calender` (
-  `CalenderID` int(11) NOT NULL AUTO_INCREMENT,
-  `Name` varchar(255) NOT NULL,
-  `Active` tinyint(4) DEFAULT NULL,
-  `CreatedBy` varchar(255) NOT NULL,
-  `PrivatePublic` tinyint(4) NOT NULL COMMENT '1 = public 	2 = private',
-  PRIMARY KEY (`CalenderID`)
+CREATE TABLE `calendar` (
+  `calendarid` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `active` tinyint(4) DEFAULT 1,
+  `createdby` varchar(255) NOT NULL,
+  `privatepublic` tinyint(4) NOT NULL COMMENT '1 = public 	2 = private',
+  PRIMARY KEY (`calendarid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-LOCK TABLES `Calender` WRITE;
-/*!40000 ALTER TABLE `Calender` DISABLE KEYS */;
+LOCK TABLES `calendar` WRITE;
+/*!40000 ALTER TABLE `calendar` DISABLE KEYS */;
 
-INSERT INTO `Calender` (`CalenderID`, `Name`, `Active`, `CreatedBy`, `PrivatePublic`)
+INSERT INTO `calendar` (`calendarid`, `name`, `active`, `createdby`, `privatepublic`)
 VALUES
-	(1,'Jesper',1,'jesperbruun',1);
+	(1,'CBS Calendar',1,'CBS',1);
 
-/*!40000 ALTER TABLE `Calender` ENABLE KEYS */;
+/*!40000 ALTER TABLE `calendar` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
@@ -69,28 +70,29 @@ DROP TABLE IF EXISTS `events`;
 
 CREATE TABLE `events` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `activity_id` varchar(255) NOT NULL,
+  `activity_id` varchar(255) NOT NULL DEFAULT '',
   `event_id` varchar(255) NOT NULL,
   `location` varchar(105) NOT NULL DEFAULT '',
   `createdby` int(11) NOT NULL,
   `start` datetime NOT NULL,
   `end` datetime NOT NULL,
   `title` varchar(255) NOT NULL,
-  `text` text NOT NULL,
-  `customevent` tinyint(1) DEFAULT NULL COMMENT 'Decides wether the event is an import-event or user created ',
-  `CalenderID` int(11) NOT NULL,
+  `text` text NOT NULL DEFAULT '',
+  `active` tinyint(4) DEFAULT 1,
+  `customevent` tinyint(1) DEFAULT 1 COMMENT '1 = custom  0 = not custom',
+  `calendarid` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `CalenderID` (`CalenderID`),
+  KEY `calendarid` (`calendarid`),
   KEY `createdby` (`createdby`),
   KEY `event_id` (`event_id`),
-  CONSTRAINT `events_ibfk_1` FOREIGN KEY (`CalenderID`) REFERENCES `Calender` (`CalenderID`) ON UPDATE NO ACTION,
+  CONSTRAINT `events_ibfk_1` FOREIGN KEY (`calendarid`) REFERENCES `calender` (`calendarid`) ON UPDATE NO ACTION,
   CONSTRAINT `events_ibfk_2` FOREIGN KEY (`createdby`) REFERENCES `users` (`userid`) ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOCK TABLES `events` WRITE;
 /*!40000 ALTER TABLE `events` DISABLE KEYS */;
 
-INSERT INTO `events` (`id`, `activity_id`, `event_id`, `location`, `createdby`, `start`, `end`, `title`, `text`, `customevent`, `CalenderID`)
+INSERT INTO `events` (`id`, `activity_id`, `event_id`, `location`, `createdby`, `start`, `end`, `title`, `text`, `customevent`, `calendarid`)
 VALUES
 	(1,'BINTO1067U_LA_E14','BINTO1067U_LA_E14_714ff8c1a1d8f5e918829fef3ff92a0f_23e125dbca8f1d6655b7a40a77481a82','SP213',1,'2014-09-15 08:00:00','2014-09-15 09:40:00','BINTO1067U.LA_E14','Text - text',1,1),
 	(2,'BINTO1067U_LA_E14','BINTO1067U_LA_E14_122f76f124a8f4c9ebf4774703906c3a_d1a34baa1d5e06633bafd83a6459fa70','Falkoner_Bio_Sal_1',1,'2014-09-22 08:00:00','2014-09-22 10:35:00','BINTO1067U.LA_E14','Text - text',1,1),
@@ -250,6 +252,7 @@ CREATE TABLE `notes` (
   `createdby` int(11) NOT NULL,
   `text` text,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `active` tinyint(4) DEFAULT 1,
   PRIMARY KEY (`noteid`),
   KEY `createdby` (`createdby`),
   KEY `event_id` (`eventid`),
@@ -282,6 +285,17 @@ CREATE TABLE `roles` (
   CONSTRAINT `roles_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `users` (`userid`) ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+LOCK TABLES `roles` WRITE;
+/*!40000 ALTER TABLE `roles` DISABLE KEYS */;
+
+INSERT INTO `roles` (`roleid`, `userid`, `type`)
+VALUES
+  (1,1,'admin'),
+  (2,2,'user'),
+  (3,3,'user');
+
+/*!40000 ALTER TABLE `roles` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table userevents
@@ -291,10 +305,10 @@ DROP TABLE IF EXISTS `userevents`;
 
 CREATE TABLE `userevents` (
   `userid` int(11) NOT NULL,
-  `CalenderID` int(11) NOT NULL,
-  KEY `CalenderID` (`CalenderID`),
+  `calendarid` int(11) NOT NULL,
+  KEY `calendarid` (`calendarid`),
   KEY `userid` (`userid`),
-  CONSTRAINT `userevents_ibfk_1` FOREIGN KEY (`CalenderID`) REFERENCES `Calender` (`CalenderID`) ON UPDATE NO ACTION,
+  CONSTRAINT `userevents_ibfk_1` FOREIGN KEY (`calendarid`) REFERENCES `calendar` (`calendarid`) ON UPDATE NO ACTION,
   CONSTRAINT `userevents_ibfk_2` FOREIGN KEY (`userid`) REFERENCES `users` (`userid`) ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -308,7 +322,7 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `userid` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(40) NOT NULL,
-  `active` tinyint(1) DEFAULT NULL,
+  `active` tinyint(4) DEFAULT 1,
   `created` datetime DEFAULT NULL,
   `password` varchar(200) NOT NULL,
   PRIMARY KEY (`userid`)
@@ -319,13 +333,12 @@ LOCK TABLES `users` WRITE;
 
 INSERT INTO `users` (`userid`, `email`, `active`, `created`, `password`)
 VALUES
-	(1,'jeha13ad@student.cbs.dk',1,NULL,'lol123'),
-	(2,'caha13ag@student.cbs.dk',1,NULL,'abc123');
+  (1,'admin@admin.cbs.dk',1,NULL,'admin'),
+	(2,'jeha13ad@student.cbs.dk',1,NULL,'lol123'),
+	(3,'caha13ag@student.cbs.dk',1,NULL,'abc123');
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
-
-
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

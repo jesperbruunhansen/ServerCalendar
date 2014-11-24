@@ -207,7 +207,7 @@ public class GetCalendarData extends Model {
             Events events = gson.fromJson(json, Events.class);
             queryBuilder = new QueryBuilder();
 
-            String[] fields = {"activity_id", "event_id", "location", "createdby", "start", "end", "title", "text", "customevent", "CalenderID"};
+            String[] fields = {"activity_id", "event_id", "location", "createdby", "start", "end", "title", "text", "customevent", "calendarid"};
 
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -244,7 +244,7 @@ public class GetCalendarData extends Model {
                         strEndDate,                         //End
                         events.getEvents().get(i).getTitle(),       //Title
                         "Text - text",
-                        "1",
+                        "0",
                         "1",
                 };
 

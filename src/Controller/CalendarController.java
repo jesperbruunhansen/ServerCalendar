@@ -36,11 +36,11 @@ public class CalendarController extends Controller implements ActionListener {
 
             else{
                 //DELETE THE CALENDAR FROM DATABASE
-                viewmodel.delete("Calender", "CalenderID", calendarID);
-                showMessageDialog(null, "You wanted to delete calendar " + calendarID);
+                viewmodel.delete("calendar", "calendarid", calendarID);
+                showMessageDialog(null, "You deleted calendar with ID " + calendarID);
 
                 //UPDATE TABLE WITH NEW DATA
-                screen.calendar.setTable(viewmodel.tableData("calender"),viewmodel.columnNames("calender"));
+                screen.calendar.setTable(viewmodel.tableData("calendar"),viewmodel.columnNames("calendar"));
                 screen.calendar.lblConfirm.setVisible(false);
                 screen.calendar.setUserID();
 

@@ -53,7 +53,7 @@ public class Screen extends JFrame {
         //ADDING SCREENS
         login = new Login();
         contentPane.add(login, LOGIN);
-        login.setVisible(false);
+        //login.setVisible(false);
 
         //MENU SCREENS
         menuTop = new MenuTop();

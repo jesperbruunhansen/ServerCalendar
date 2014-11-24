@@ -44,7 +44,7 @@ public class NotesController extends Controller implements ActionListener {
 
             else{
                 //RETRIEVE EVENT LIST FROM DATABASE BASED ON CHOSEN CALENDAR
-                screen.notes.setTable(viewmodel.tableEvent("events", "CalenderID", calendarID),viewmodel.columnNames("events"));
+                screen.notes.setTable(viewmodel.tableEvent("events", "calendarid", calendarID),viewmodel.columnNames("events"));
 
                 //HIDE SHOW BUTTONS & UPDATE LABELS
                 screen.notes.btnChooseCal.setVisible(false);
@@ -104,7 +104,7 @@ public class NotesController extends Controller implements ActionListener {
             else{
                 //DELETE THE EVENT FROM DATABASE
                 //viewmodel.delete("notes", "noteid", noteID);
-                showMessageDialog(null, "You wanted to delete note " + noteID);
+                showMessageDialog(null, "You deleted note with ID " + noteID);
 
                 //UPDATE TABLE WITH NEW DATA
                 screen.notes.setTable(viewmodel.tableEvent("notes", "eventid", eventID),viewmodel.columnNames("notes"));
