@@ -160,7 +160,7 @@ public class GetCalendarData extends Model {
                 event.setTitle(cachedRowSet.getString("title"));
                 event.setText(cachedRowSet.getString("text"));
                 event.setCustomevent(cachedRowSet.getBoolean("customevent"));
-                event.setCalendarid(cachedRowSet.getInt("CalenderID"));
+                event.setCalendarid(cachedRowSet.getInt("calendarid"));
 
 
                 //Map forecast-data to events
