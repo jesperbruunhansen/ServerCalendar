@@ -24,6 +24,7 @@ public class Event {
     private ArrayList<String> end;
     private ForecastClass forecast;
 
+
     private transient Date dateStart;
     private transient Date dateEnd;
 

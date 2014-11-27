@@ -53,7 +53,7 @@ public class Login extends Model {
                     break;
                 }
                 else{
-                    jsonResponse = "{\"message\": \"LOGIN FAILED\"}";
+                    jsonResponse = "{\"authentication\": \"falsed\"}";
                 }
             }
 
@@ -79,11 +79,11 @@ public class Login extends Model {
 
 
                 //Is forecast NOT up to date, then refresh the data
-                if(!Forecast.isForecastUpToDate()){
-                    System.out.println("\tForecast has to be updated");
-                    Forecast.refreshForecast();
-                    System.out.println("\tForecast has been updated");
-                }
+                //if(!Forecast.isForecastUpToDate()){
+                //    System.out.println("\tForecast has to be updated");
+                //    Forecast.refreshForecast();
+                //    System.out.println("\tForecast has been updated");
+               // }
 
 
                 QueryBuilder queryBuilderForecast = new QueryBuilder();
@@ -105,6 +105,7 @@ public class Login extends Model {
                 ps = doQuery("SELECT * FROM events WHERE CalenderID IN (SELECT CalenderID FROM userevents WHERE userid = ?);");
                 ps.setString(1, id);
                 rs = ps.executeQuery();
+
 
                 while (rs.next()){
 
@@ -145,15 +146,19 @@ public class Login extends Model {
                     }
 
                     cachedRowSetNote.close();
-
                     event.setNoter(noteList);
-
                     eventList.add(event);
                 }
                 cachedRowSetForecast.close();
             }
 
-            jsonResponse = gson.toJson(eventList);
+            //Map to ClientResponse object
+            ClientResponse clientResponse = new ClientResponse();
+            clientResponse.setEventList(eventList);
+            clientResponse.setUser_id(id);
+
+            //Serialize object to json and set to response
+            jsonResponse = gson.toJson(clientResponse);
 
         }catch (Exception e){
             e.printStackTrace();
@@ -166,9 +171,6 @@ public class Login extends Model {
                 ex.printStackTrace();
             }
         }
-
-
-
 
     }
 
@@ -199,4 +201,21 @@ public class Login extends Model {
         private String password;
     }
 
+
+
 }
+class ClientResponse {
+    private List<Event> events = new ArrayList<>();
+    private String userid;
+
+    public void setUser_id(String user_id) {
+        this.userid = user_id;
+    }
+
+    public void setEventList(List<Event> eventList) {
+        this.events = eventList;
+    }
+
+
+}
+
