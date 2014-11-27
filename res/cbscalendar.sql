@@ -292,7 +292,8 @@ INSERT INTO `roles` (`roleid`, `userid`, `type`)
 VALUES
   (1,1,'admin'),
   (2,2,'user'),
-  (3,3,'user');
+  (3,3,'user'),
+  (4,4,'user');
 
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -335,7 +336,8 @@ INSERT INTO `users` (`userid`, `email`, `active`, `created`, `password`)
 VALUES
   (1,'admin@admin.cbs.dk',1,NULL,'admin'),
 	(2,'jeha13ad@student.cbs.dk',1,NULL,'lol123'),
-	(3,'caha13ag@student.cbs.dk',1,NULL,'abc123');
+	(3,'caha13ag@student.cbs.dk',1,NULL,'abc123'),
+	(4, 'hefu13ab@student.cbs.dk', 1, NULL, 'abcd');
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;

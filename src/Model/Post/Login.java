@@ -102,7 +102,7 @@ public class Login extends Model {
                 }
 
 
-                ps = doQuery("SELECT * FROM events WHERE CalenderID IN (SELECT CalenderID FROM userevents WHERE userid = ?);");
+                ps = doQuery("SELECT * FROM events WHERE calendarid IN (SELECT calendarid FROM userevents WHERE userid = ?);");
                 ps.setString(1, id);
                 rs = ps.executeQuery();
 
@@ -121,7 +121,7 @@ public class Login extends Model {
                     event.setTitle(rs.getString("title"));
                     event.setText(rs.getString("text"));
                     event.setCustomevent(rs.getBoolean("customevent"));
-                    event.setCalendarid(rs.getInt("CalenderID"));
+                    event.setCalendarid(rs.getInt("calendarid"));
 
 
                     //Map forecast-data to events
