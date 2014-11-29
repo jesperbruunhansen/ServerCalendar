@@ -148,7 +148,6 @@ public class ViewModel {
         Vector<Vector<Object>> data = new Vector<Vector<Object>>();
 
         try{
-
             resultSet = queryBuilder.selectFrom(table).where("active", "=", "1").ExecuteQuery();
 
             //Get Metadata from ResultSet
@@ -186,7 +185,8 @@ public class ViewModel {
         Vector<Vector<Object>> data = new Vector<Vector<Object>>();
 
         try{
-            resultSet = queryBuilder.selectFrom(table).where(key, "=", id).ExecuteQuery();
+            System.out.println("tableEvent fired");
+            resultSet = queryBuilder.selectFrom(table).where("active = 1 AND "+key, "=", id).ExecuteQuery();
 
             //Get Metadata from ResultSet
             ResultSetMetaData metaData = resultSet.getMetaData();

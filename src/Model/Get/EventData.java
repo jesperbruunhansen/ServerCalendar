@@ -17,14 +17,41 @@ public class EventData {
 }
 class Event {
     private String activityid;
+
+    public void setEventid(String eventid) {
+        this.eventid = eventid;
+    }
+
+    public void setActivityid(String activityid) {
+        this.activityid = activityid;
+    }
+
+    public void setCreatedby(int createdby) {
+        this.createdby = createdby;
+    }
+
     private String eventid;
     private String type;
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setCalendarid(int calendarid) {
+        this.calendarid = calendarid;
+    }
+
     private String title;
     private String description;
     private String location;
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     private int createdby;
-    private  ArrayList<String> start;
-    private  ArrayList<String> end;
+    private ArrayList<String> start;
+    private ArrayList<String> end;
     private ForecastClass forecast;
     private int calendarid;
 

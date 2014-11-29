@@ -21,6 +21,7 @@ public class Forecast extends Model{
             ForecastModel fm = new ForecastModel();
             QueryBuilder queryBuilder = new QueryBuilder();
             ArrayList<ForecastClass> forecastList = fm.requestForecast();
+            long createdon = System.currentTimeMillis() / 1000L;
 
             for(int i = 0; i < forecastList.size(); i++) {
                 String date = forecastList.get(i).getDate();
@@ -28,41 +29,40 @@ public class Forecast extends Model{
                 String celsius = forecastList.get(i).getCelsius();
 
                 //System.out.println(date);
-                queryBuilder.insertInto("forecast",new String[]{"date", "description", "celsius"}).values(new String[]{date, desc, celsius}).Execute();
-
+                queryBuilder
+                        .insertInto("forecast",new String[]{"date", "description", "celsius", "createdon"})
+                        .values(new String[]{date, desc, celsius, String.valueOf(createdon)})
+                        .Execute();
             }
 
             System.out.println("Forecast has been inserted to db");
         }
         catch (Exception e){
-          //  e.printStackTrace();
+            e.printStackTrace();
         }
     }
 
     public static boolean isForecastUpToDate(){
 
         QueryBuilder queryBuilder = new QueryBuilder();
-        LocalDate firstDay = null;
-        Date now = new Date();
-        LocalDate dateNow = new LocalDate(now);
+        Long createdon = 0L;
+        Long timeNow = System.currentTimeMillis() / 1000L;
 
         try{
-            CachedRowSetImpl rs = queryBuilder.selectFrom(new String[]{"date"}, "forecast").where("id", "=", "1").ExecuteQuery();
+            CachedRowSetImpl rs = queryBuilder.selectFrom(new String[]{"createdon"}, "forecast").where("id", "=", "1").ExecuteQuery();
             while (rs.next()){
-                firstDay = new DateTime(rs.getDate("date")).toLocalDate();
+                createdon = rs.getLong("createdon");
             }
-
-            if(firstDay != null && dateNow.equals(firstDay)){
-                //System.out.println("Forecast er up to date");
+            if((timeNow - createdon) > 3600){
+                return false;
+            }
+            else {
                 return true;
             }
-
-
         }catch (SQLException e){
             e.printStackTrace();
         }
 
-        //System.out.println("Forecast er IKKE uptodate");
         return false;
 
     }

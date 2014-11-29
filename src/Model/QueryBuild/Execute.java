@@ -98,6 +98,7 @@ public class Execute extends Model {
                 sql = SELECT + getQueryBuilder().getSelectValue() +
                         FROM + getQueryBuilder().getTableName() +
                         WHERE + getWhere().getWhereKey() + " " + getWhere().getWhereOperator() + " ?;";
+                System.out.println(sql);
 
                 try {
                     getConnection();
