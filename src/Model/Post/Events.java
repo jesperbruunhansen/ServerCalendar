@@ -37,10 +37,7 @@ public class Events extends Model {
         } else if (eventCredentials.getCalendarid().equals("")) {
             jsonResponse = "{\"response\": \"CALENDAR ID MISSING\"}";
 
-        } else if (eventCredentials.getEventid().equals("")) {
-            jsonResponse = "{\"response\": \"EVENT ID MISSING\"}";
-
-        } else if (eventCredentials.getLocation().equals("")) {
+        }  else if (eventCredentials.getLocation().equals("")) {
             jsonResponse = "{\"response\": \"LOCATION MISSING\"}";
 
         } else if (eventCredentials.getTitle().equals("")) {
@@ -55,10 +52,13 @@ public class Events extends Model {
         } else {
             try {
                 //Create calendar in database
+
+                long eventId = System.currentTimeMillis() / 1000L + Integer.parseInt(eventCredentials.getUserid());
+
                 String customevent = "1";
                 queryBuilder
                         .insertInto("events", new String[]{"event_id", "location", "createdby", "start", "end", "title", "customevent", "calendarid"})
-                        .values(new String[]{eventCredentials.getEventid(), eventCredentials.getLocation(), eventCredentials.getUserid()
+                        .values(new String[]{String.valueOf(eventId), eventCredentials.getLocation(), eventCredentials.getUserid()
                         , eventCredentials.getStart(), eventCredentials.getEnd(), eventCredentials.getTitle(), customevent, eventCredentials.getCalendarid()})
                         .Execute();
 

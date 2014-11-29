@@ -1,7 +1,8 @@
 package Controller;
 
-import Model.Get.GetCalendarData;
-import Model.Get.GetUsers;
+import Model.Get.CalendarData;
+import Model.Get.NoteData;
+import Model.Get.UserData;
 import Model.Forecast.Forecast;
 import Model.Post.Calendar;
 import Model.Post.Login;
@@ -31,16 +32,20 @@ public class SwitchController extends ServerRequestHandler{
             switch (parameterValue){
                 case "getAllEvents" :
                     setHTTPResponseCode(HTTP.OK);
-                    setJsonResponse(GetCalendarData.getAllEvents(getGetParameterId()));
+                    setJsonResponse(CalendarData.getAllEvents(getGetParameterId()));
+                    break;
+                case "getAllNotes" :
+                    setHTTPResponseCode(HTTP.OK);
+                    setJsonResponse(NoteData.getAllNotes(getGetParameterId()));
                     break;
                 case "getAllCalendars" :
                     setHTTPResponseCode(HTTP.OK);
-                    setJsonResponse(GetCalendarData.getAllCalendars(getGetParameterId()));
+                    setJsonResponse(CalendarData.getAllCalendars(getGetParameterId()));
                     break;
                 case "setAllEvents" :
                     setHTTPResponseCode(HTTP.OK);
                     setJsonResponse("Alle data er blevet smidt i db");
-                    GetCalendarData.setCalendarEventsToDb();
+                    CalendarData.setCalendarEventsToDb();
                     break;
                 case "forecastTest" :
                     Forecast.isForecastUpToDate();
@@ -49,7 +54,7 @@ public class SwitchController extends ServerRequestHandler{
                     break;
                 case "getAllUsers" :
                     setHTTPResponseCode(HTTP.OK);
-                    setJsonResponse(GetUsers.getAllUsers());
+                    setJsonResponse(UserData.getAllUsers());
                     break;
                 case "forecast" :
                     setHTTPResponseCode(HTTP.OK);

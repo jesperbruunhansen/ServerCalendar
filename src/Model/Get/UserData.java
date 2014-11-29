@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by jesperbruun on 29/11/14.
  */
-public class GetUsers {
+public class UserData {
 
     public static String getAllUsers() {
 
