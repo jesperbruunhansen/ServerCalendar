@@ -4,9 +4,6 @@ import Model.QueryBuild.QueryBuilder;
 import com.google.gson.Gson;
 import com.sun.rowset.CachedRowSetImpl;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 

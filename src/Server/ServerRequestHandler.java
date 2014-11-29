@@ -109,14 +109,20 @@ public abstract class ServerRequestHandler {
 
         //Browsers creates an extra GET request from their favicon
         //and we dont want to that extra call.
+        String getString = params[0];
+
         if(!params[0].contains("favicon")){
-            callParameter = params[0].substring(params[0].indexOf(getPart) + getPart.length(),params[0].indexOf("HTTP")).trim(); //Create substring from HTTP header
+            callParameter = getString.substring(getString.indexOf(getPart) + getPart.length(),getString.indexOf("HTTP")).trim(); //Create substring from HTTP header
 
-            String[] s = callParameter.split("/");
+            if(callParameter.contains("/")){
+                String[] s = callParameter.split("/");
 
-            callParameter = s[0].trim();
-            callParameterId = s[1].trim();
-
+                callParameter = s[0].trim();
+                callParameterId = s[1].trim();
+            }
+            else {
+                callParameterId = "";
+            }
             isGet = true;
         }
         else {

@@ -2,6 +2,7 @@ package Controller;
 
 import Model.Get.CalendarData;
 import Model.Get.NoteData;
+import Model.Get.QouteData;
 import Model.Get.UserData;
 import Model.Forecast.Forecast;
 import Model.Post.Calendar;
@@ -34,6 +35,10 @@ public class SwitchController extends ServerRequestHandler{
                     setHTTPResponseCode(HTTP.OK);
                     setJsonResponse(CalendarData.getAllEvents(getGetParameterId()));
                     break;
+                case "getQuote" :
+                    setHTTPResponseCode(HTTP.OK);
+                    setJsonResponse(QouteData.getQuote());
+                    break;
                 case "getAllNotes" :
                     setHTTPResponseCode(HTTP.OK);
                     setJsonResponse(NoteData.getAllNotes(getGetParameterId()));
@@ -45,7 +50,7 @@ public class SwitchController extends ServerRequestHandler{
                 case "setAllEvents" :
                     setHTTPResponseCode(HTTP.OK);
                     setJsonResponse("Alle data er blevet smidt i db");
-                    CalendarData.setCalendarEventsToDb();
+                    //CalendarData.setCalendarEventsToDb();
                     break;
                 case "forecastTest" :
                     Forecast.isForecastUpToDate();

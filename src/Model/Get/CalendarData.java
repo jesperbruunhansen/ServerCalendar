@@ -1,5 +1,6 @@
 package Model.Get;
 
+import Model.Forecast.Forecast;
 import Model.Forecast.ForecastClass;
 import Model.Model;
 import Model.QueryBuild.QueryBuilder;
@@ -52,15 +53,15 @@ public class CalendarData extends Model {
     public static String getAllEvents(String id){
         PreparedStatement ps = null;
         ResultSet rs = null;
+        CachedRowSetImpl crs;
         Gson gson = new Gson();
-        List<Event> eventList = new ArrayList<>();
+        List<EventJson> eventList = new ArrayList<>();
 
         try{
             if(id.isEmpty() || id == null){
                 throw new Exception("No user_id was given");
             }
             else{
-
 
                 //Is forecast NOT up to date, then refresh the data
                 //if(!Forecast.isForecastUpToDate()){
@@ -69,88 +70,104 @@ public class CalendarData extends Model {
                 //    System.out.println("\tForecast has been updated");
                 // }
 
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                QueryBuilder qbUser = new QueryBuilder();
+                crs = qbUser.selectFrom(new String[]{"email"}, "users").where("userid", "=", id).ExecuteQuery();
+                if(crs.next()){
+                    String email = crs.getString("email");
+                    EncryptUserID.setUserId(email.substring(0, email.indexOf("@")));
+                    String json = readUrl("http://calendar.cbs.dk/events.php/" + EncryptUserID.getUserId() + "/" + EncryptUserID.getKey() + ".json");
 
-                QueryBuilder queryBuilderForecast = new QueryBuilder();
-                QueryBuilder queryBuilderNote = new QueryBuilder();
-                CachedRowSetImpl cachedRowSetForecast = queryBuilderForecast.selectFrom("forecast").all().ExecuteQuery();
-
-                //Create arraylist of forecast data
-                List<ForecastClass> forecastDays = new ArrayList<>();
-                while (cachedRowSetForecast.next()){
-                    ForecastClass fc = new ForecastClass();
-                    fc.setDateDate(cachedRowSetForecast.getDate("date"));
-                    fc.setCelsius(cachedRowSetForecast.getString("celsius"));
-                    fc.setDesc(cachedRowSetForecast.getString("description"));
-                    forecastDays.add(fc);
-                }
+                    Events events = gson.fromJson(json, Events.class);
 
 
-                ps = doQuery("SELECT * FROM events WHERE calendarid IN (SELECT calendarid FROM userevents WHERE userid = ?);");
-                ps.setString(1, id);
-                rs = ps.executeQuery();
+                    QueryBuilder queryBuilderForecast = new QueryBuilder();
+                    QueryBuilder queryBuilderNote = new QueryBuilder();
+                    CachedRowSetImpl cachedRowSetForecast = queryBuilderForecast.selectFrom("forecast").all().ExecuteQuery();
 
+                    //Create arraylist of forecast data
+                    List<ForecastClass> forecastDays = new ArrayList<>();
+                    while (cachedRowSetForecast.next()){
+                        ForecastClass fc = new ForecastClass();
+                        fc.setDateDate(cachedRowSetForecast.getDate("date"));
+                        fc.setCelsius(cachedRowSetForecast.getString("celsius"));
+                        fc.setDesc(cachedRowSetForecast.getString("description"));
+                        forecastDays.add(fc);
+                    }
+                    cachedRowSetForecast.close();
 
-                while (rs.next()){
+                    for(Event event : events.getEvents()){
 
-                    Event event = new Event();
-                    event.setActivityid(rs.getString("activity_id"));
-                    event.setEventid(rs.getString("event_id"));
-                    event.setLocation(rs.getString("location"));
-                    event.setCreatedby(rs.getInt("createdby"));
-                    event.setDateStart(rs.getDate("start"));
-                    event.setDateEnd(rs.getDate("end"));
-                    event.setStrDateStart(rs.getString("start"));
-                    event.setStrDateEnd(rs.getString("end"));
-                    event.setTitle(rs.getString("title"));
-                    event.setText(rs.getString("text"));
-                    event.setCustomevent(rs.getBoolean("customevent"));
-                    event.setCalendarid(rs.getInt("calendarid"));
+                        int monthStart = Integer.parseInt(event.getStart().get(1)) + 1;
+                        String start =
+                                event.getStart().get(2) + "-" +
+                                        monthStart + "-" +
+                                        event.getStart().get(0) + " " +
+                                        event.getStart().get(3) + ":" +
+                                        event.getStart().get(4);
+                        Date startDate = new SimpleDateFormat("dd-MM-yyyy HH:mm").parse(start);
+                        event.setDateStart(startDate);
+                        event.setStrDateStart(sdf.format(startDate));
 
+                        int monthEnd = Integer.parseInt(event.getEnd().get(1)) + 1;
+                        String end =
+                                event.getEnd().get(2) + "-" +
+                                        monthEnd + "-" +
+                                        event.getEnd().get(0) + " " +
+                                        event.getEnd().get(3) + ":" +
+                                        event.getEnd().get(4);
+                        Date endDate = new SimpleDateFormat("dd-MM-yyyy HH:mm").parse(end);
+                        event.setDateEnd(endDate);
+                        event.setStrDateEnd(sdf.format(endDate));
 
-                    //Map forecast-data to events
-                    LocalDate eventDay = new DateTime(event.getDateStart()).toLocalDate();
-                    for (int i = 0; i < forecastDays.size(); i++) {
-                        LocalDate forecastDate = new DateTime(forecastDays.get(i).getDateDate()).toLocalDate();
-                        if (eventDay.equals(forecastDate)) {
-                            event.setForecastClass(forecastDays.get(i));
-                            break;
+                        //Map forecast-data to events
+                        LocalDate eventDay = new DateTime(event.getDateStart()).toLocalDate();
+                        for (int i = 0; i < forecastDays.size(); i++) {
+                            LocalDate forecastDate = new DateTime(forecastDays.get(i).getDateDate()).toLocalDate();
+                            if (eventDay.equals(forecastDate)) {
+                                event.setForecastClass(forecastDays.get(i));
+                                break;
+                            }
                         }
-                    }
 
-                    //Merge notes to events
-                    ArrayList<Note> noteList = new ArrayList<>();
-                    CachedRowSetImpl cachedRowSetNote = queryBuilderNote.selectFrom("notes").where("eventid", "=", rs.getString("event_id")).ExecuteQuery();
-                    while (cachedRowSetNote.next()) {
-                        Note note = new Note();
-                        note.setCreatedby(cachedRowSetNote.getInt("createdby"));
-                        note.setText(cachedRowSetNote.getString("text"));
-                        note.setCreatedon(cachedRowSetNote.getTimestamp("created").toString());
-                        noteList.add(note);
-                    }
+                        //Merge notes to events
+                        ArrayList<Note> noteList = new ArrayList<>();
+                        CachedRowSetImpl cachedRowSetNote = queryBuilderNote.selectFrom("notes").where("eventid", "=", event.getEventid()).ExecuteQuery();
+                        while (cachedRowSetNote.next()) {
+                            Note note = new Note();
+                            note.setCreatedby(cachedRowSetNote.getInt("createdby"));
+                            note.setText(cachedRowSetNote.getString("text"));
+                            note.setCreatedon(cachedRowSetNote.getTimestamp("created").toString());
+                            noteList.add(note);
+                        }
+                        event.setNoter(noteList);
+                        cachedRowSetNote.close();
 
-                    cachedRowSetNote.close();
-                    event.setNoter(noteList);
-                    eventList.add(event);
+                        EventJson eventJson = new EventJson();
+                        eventJson.setActivityid(event.getActivityid());
+                        eventJson.setEventid(event.getEventid());
+                        eventJson.setEnd(event.getStrDateEnd());
+                        eventJson.setStart(event.getStrDateStart());
+                        eventJson.setLocation(event.getLocation());
+                        eventJson.setTitle(event.getDescription());
+                        eventJson.setNotes(event.getNoter());
+                        eventJson.setWeatherdata(event.getForecast());
+                        eventList.add(eventJson);
+
+                    }
+                    return gson.toJson(eventList);
+
                 }
-                cachedRowSetForecast.close();
+                else {
+                    throw new Exception("userid does not exist");
+                }
+                // ps = doQuery("SELECT * FROM events WHERE calendarid IN (SELECT calendarid FROM userevents WHERE userid = ?);");
+                //ps.setString(1, id);
             }
-
-
-            //Serialize object to json and set to response
-            return gson.toJson(eventList);
 
         }catch (Exception e){
             e.printStackTrace();
         }
-        finally {
-            try {
-                ps.close();
-                rs.close();
-            } catch (SQLException ex){
-                ex.printStackTrace();
-            }
-        }
-
 
         return null;
 
@@ -193,13 +210,12 @@ public class CalendarData extends Model {
         return null;
     }
 
-    public static void setCalendarEventsToDb() {
+    /*public static void setCalendarEventsToDb() {
 
         try {
             String json = readUrl("http://calendar.cbs.dk/events.php/" + EncryptUserID.getUserId() + "/" + EncryptUserID.getKey() + ".json");
 
-            gson = new Gson();
-            Events events = gson.fromJson(json, Events.class);
+
             queryBuilder = new QueryBuilder();
 
             String[] fields = {"activity_id", "event_id", "location", "createdby", "start", "end", "title", "text", "customevent", "calendarid"};
@@ -250,7 +266,7 @@ public class CalendarData extends Model {
             e.printStackTrace();
         }
 
-    }
+    }*/
 
 }
 class GetAllCalendars {
@@ -315,7 +331,7 @@ class EncryptUserID {
      * http://www.miraclesalad.com/webtools/md5.php - Du kan her saette userid foerst og derefter hashkey for at teste
      */
     private static final String HASHKEY = "v.eRyzeKretW0r_t";
-    private static String userId = "caha13ag";
+    private static String userId;
     private static String key;
     private static MessageDigest digester;
 
@@ -346,6 +362,8 @@ class EncryptUserID {
         return hexString.toString();
     }
 
+    public static void setUserId(String userid){EncryptUserID.userId = userid;}
+
     public static String getUserId() {
         return userId;
     }
@@ -353,5 +371,50 @@ class EncryptUserID {
     public static String getKey() {
         return crypt(EncryptUserID.getUserId() + HASHKEY);
     }
+
+}
+class EventJson {
+    public void setActivityid(String activityid) {
+        this.activityid = activityid;
+    }
+
+    public void setEventid(String eventid) {
+        this.eventid = eventid;
+    }
+
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setStart(String start) {
+        this.start = start;
+    }
+
+    public void setEnd(String end) {
+        this.end = end;
+    }
+
+    public void setWeatherdata(ForecastClass weatherdata) {
+        this.weatherdata = weatherdata;
+    }
+
+    public void setNotes(ArrayList<Note> notes) {
+        this.notes = notes;
+    }
+
+    private String activityid;
+    private String eventid;
+    private String title;
+    private String location;
+    private String start;
+    private String end;
+    private ForecastClass weatherdata;
+    private ArrayList<Note> notes;
 
 }

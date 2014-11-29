@@ -1,5 +1,6 @@
 package Model.Get;
 
+import Model.Forecast.Forecast;
 import Model.Forecast.ForecastClass;
 
 import java.util.ArrayList;
@@ -22,8 +23,8 @@ class Event {
     private String description;
     private String location;
     private int createdby;
-    private ArrayList<String> start;
-    private ArrayList<String> end;
+    private  ArrayList<String> start;
+    private  ArrayList<String> end;
     private ForecastClass forecast;
     private int calendarid;
 
@@ -36,74 +37,51 @@ class Event {
 
     private String text;
     private ArrayList<Note> noter;
-    private boolean customevent;
 
 
     public void setForecastClass(ForecastClass forecastClass) {
         this.forecast = forecastClass;
     }
+    public ForecastClass getForecast(){return forecast;}
 
     public void setStrDateStart(String strDateStart) {
         this.strDateStart = strDateStart;
     }
+    public String getStrDateStart(){return strDateStart;}
 
     public void setStrDateEnd(String strDateEnd) {
         this.strDateEnd = strDateEnd;
     }
+    public String getStrDateEnd(){return strDateEnd;}
 
     public void setNoter(ArrayList<Note> noter) {
         this.noter = noter;
     }
-    public void setCalendarid(int calendarid) {
-        this.calendarid = calendarid;
-    }
+    public ArrayList<Note> getNoter(){return noter;}
 
-    public void setCustomevent(boolean customevent) {
-        this.customevent = customevent;
-    }
-
-    // Settere og gettere for Event objektet
-    public void setActivityid(String activityid){
-        this.activityid = activityid;
-    }
     public String getActivityid(){
         return activityid;
     }
 
-    public void setEventid(String eventid){
-        this.eventid = eventid;
-    }
     public String getEventid(){
         return eventid;
-    }
-
-    public void setTitle(String title){
-        this.title = title;
     }
 
     public String getDescription(){
         return description;
     }
 
-    public void setLocation(String location){
-        this.location = location;
-    }
     public String getLocation(){
         return location;
     }
 
-    public void setCreatedby(int createdby){
-        this.createdby = createdby;
-    }
 
-    public ArrayList<String> getStart(){return start;
-    }
+    public ArrayList<String> getStart(){return start;}
 
     public void setDateStart(Date start){this.dateStart = start;}
     public Date getDateStart(){return dateStart;}
 
     public void setDateEnd(Date end){this.dateEnd = end;}
-
 
     public void setText(String text){this.text = text;}
 
