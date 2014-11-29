@@ -1,7 +1,7 @@
 package Controller;
 
-import Model.Calendar.Event;
-import Model.Calendar.GetCalendarData;
+import Model.Get.GetCalendarData;
+import Model.Get.GetUsers;
 import Model.Forecast.Forecast;
 import Model.Post.Calendar;
 import Model.Post.Login;
@@ -25,23 +25,22 @@ public class SwitchController extends ServerRequestHandler{
     public static void getRequest(){
 
         String parameterValue = getGetParameter();
-        GetCalendarData calendarData = new GetCalendarData();
         Forecast forecast = new Forecast();
 
         if(!parameterValue.isEmpty()){
             switch (parameterValue){
                 case "getAllEvents" :
                     setHTTPResponseCode(HTTP.OK);
-                    setJsonResponse(calendarData.getAllEvents());
+                    setJsonResponse(GetCalendarData.getAllEvents(getGetParameterId()));
                     break;
-                case "getJustSomeEvents" :
+                case "getAllCalendars" :
                     setHTTPResponseCode(HTTP.OK);
-                    setJsonResponse("{This is just some of the events}");
+                    setJsonResponse(GetCalendarData.getAllCalendars(getGetParameterId()));
                     break;
                 case "setAllEvents" :
                     setHTTPResponseCode(HTTP.OK);
                     setJsonResponse("Alle data er blevet smidt i db");
-                    calendarData.setCalendarEventsToDb();
+                    GetCalendarData.setCalendarEventsToDb();
                     break;
                 case "forecastTest" :
                     Forecast.isForecastUpToDate();
@@ -50,12 +49,7 @@ public class SwitchController extends ServerRequestHandler{
                     break;
                 case "getAllUsers" :
                     setHTTPResponseCode(HTTP.OK);
-                    setJsonResponse(calendarData.getAllUsers());
-                    break;
-                case "joinTest" :
-                    setHTTPResponseCode(HTTP.OK);
-                    setJsonResponse("OK");
-                    calendarData.joinTest();
+                    setJsonResponse(GetUsers.getAllUsers());
                     break;
                 case "forecast" :
                     setHTTPResponseCode(HTTP.OK);

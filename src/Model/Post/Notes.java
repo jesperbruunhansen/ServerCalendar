@@ -13,7 +13,7 @@ public class Notes {
     private static CachedRowSetImpl rs;
     private static String jsonResponse;
 
-    public static void createNote(String jsonPostRequest){
+        public static void createNote(String jsonPostRequest){
 
         //Implement Gson
         Gson gson = new Gson();
@@ -41,7 +41,6 @@ public class Notes {
                         .insertInto("notes", new String[]{"eventid", "createdby", "text"})
                         .values(new String[]{noteCredentials.getEventid(), noteCredentials.getUserid(), noteCredentials.getText()})
                         .Execute();
-
                 jsonResponse = "{\"response\": \"NOTE CREATED\"}";
 
             } catch (SQLException ex) {

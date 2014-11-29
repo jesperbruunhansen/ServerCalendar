@@ -56,6 +56,7 @@ public abstract class ServerRequestHandler {
     private static final String MIME_TYPE       = "Content-Type: application/json";
     private static final String SERVER_INFO     = "Server: Bot";
     private static String callParameter;
+    private static String callParameterId;
     private static String postId = "";
     private static String postJsonData;
     public  static boolean isPost;
@@ -104,10 +105,18 @@ public abstract class ServerRequestHandler {
 
         final String getPart = "GET /";
 
+        //GET /getAllNotes/12 HTTP/1.1
+
         //Browsers creates an extra GET request from their favicon
         //and we dont want to that extra call.
         if(!params[0].contains("favicon")){
             callParameter = params[0].substring(params[0].indexOf(getPart) + getPart.length(),params[0].indexOf("HTTP")).trim(); //Create substring from HTTP header
+
+            String[] s = callParameter.split("/");
+
+            callParameter = s[0].trim();
+            callParameterId = s[1].trim();
+
             isGet = true;
         }
         else {
@@ -145,6 +154,7 @@ public abstract class ServerRequestHandler {
 
 
     protected static String getGetParameter(){return callParameter;}
+    protected static String getGetParameterId(){return callParameterId;}
     protected static String getPostId(){return postId;}
     protected static String getPostJsonData(){return postJsonData;}
 

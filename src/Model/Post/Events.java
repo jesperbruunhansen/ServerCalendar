@@ -16,6 +16,7 @@ public class Events extends Model {
 
     private static CachedRowSetImpl rs;
     private static String jsonResponse;
+    private static String httpResponse;
 
     public static void createEvent(String jsonPostRequest){
 
@@ -31,6 +32,7 @@ public class Events extends Model {
         //Check if client filled correct necessary information
         if(eventCredentials.getUserid().equals("")) {
             jsonResponse = "{\"response\": \"USERID MISSING\"}";
+            httpResponse = "400 Bad Request";
 
         } else if (eventCredentials.getCalendarid().equals("")) {
             jsonResponse = "{\"response\": \"CALENDAR ID MISSING\"}";
@@ -108,7 +110,7 @@ public class Events extends Model {
        ResultSet rs =  ps.executeQuery();*/
     }
 
-
+    public static String getHTTPResponse(){return httpResponse;}
     public static String getJsonResponse() {
         return jsonResponse;
     }

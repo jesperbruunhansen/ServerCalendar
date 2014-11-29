@@ -76,6 +76,8 @@ public class Server {
                     out.println(ServerRequestHandler.getJSONMIMEType());
                     out.println(ServerRequestHandler.getHTTPServerInfo());
 
+
+
                     // this blank line signals the end of the headers
                     out.println("");
 
