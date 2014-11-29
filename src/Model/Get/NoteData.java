@@ -23,7 +23,7 @@ public class NoteData {
 
         try {
 
-            rs = queryBuilder.selectFrom("notes").where("eventid","=",eventid).ExecuteQuery();
+            rs = queryBuilder.selectFrom("notes").where("active","= '1' AND eventid = ",eventid).ExecuteQuery(); //not pretty, but what you gonna do?
 
             while (rs.next()){
                 GetAllNotes getAllNotes = new GetAllNotes();

@@ -32,8 +32,6 @@ public class Events extends Model {
         //Check if client filled correct necessary information
         if(eventCredentials.getUserid().equals("")) {
             jsonResponse = "{\"response\": \"USERID MISSING\"}";
-            httpResponse = "400 Bad Request";
-
         } else if (eventCredentials.getCalendarid().equals("")) {
             jsonResponse = "{\"response\": \"CALENDAR ID MISSING\"}";
 
@@ -53,12 +51,12 @@ public class Events extends Model {
             try {
                 //Create calendar in database
 
-                long eventId = System.currentTimeMillis() / 1000L + Integer.parseInt(eventCredentials.getUserid());
+                long eventId = System.currentTimeMillis() / 1000L;
 
                 String customevent = "1";
                 queryBuilder
                         .insertInto("events", new String[]{"event_id", "location", "createdby", "start", "end", "title", "customevent", "calendarid"})
-                        .values(new String[]{String.valueOf(eventId), eventCredentials.getLocation(), eventCredentials.getUserid()
+                        .values(new String[]{String.valueOf(eventId) + eventCredentials.getUserid(), eventCredentials.getLocation(), eventCredentials.getUserid()
                         , eventCredentials.getStart(), eventCredentials.getEnd(), eventCredentials.getTitle(), customevent, eventCredentials.getCalendarid()})
                         .Execute();
 
@@ -109,8 +107,6 @@ public class Events extends Model {
         ps.setString(2, "asdf");
        ResultSet rs =  ps.executeQuery();*/
     }
-
-    public static String getHTTPResponse(){return httpResponse;}
     public static String getJsonResponse() {
         return jsonResponse;
     }
@@ -132,10 +128,6 @@ public class Events extends Model {
 
         public String getCalendarid() {
             return calendarid;
-        }
-
-        public String getEventid() {
-            return eventid;
         }
 
         public String getTitle() {

@@ -60,7 +60,6 @@ public class SwitchController extends ServerRequestHandler{
                     setHTTPResponseCode(HTTP.OK);
                     forecast.setForecastToDb();
                     setJsonResponse("Forecast!");
-
                     break;
                 default:
                     System.out.println("\twrong parameter given");
