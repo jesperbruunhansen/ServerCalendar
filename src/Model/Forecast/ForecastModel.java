@@ -71,7 +71,7 @@ public class ForecastModel {
 	                 String string_date = sdf.format(date);
 	                 
 	                 JSONObject temp = (JSONObject) innerObj.get("temp");
-	                 double celsius = (Double) temp.get("day");
+	                 double celsius = Double.parseDouble(temp.get("day").toString());
 	                 
 	                 String temperatur = String.valueOf(celsius);
 	                 JSONArray subList = (JSONArray) innerObj.get("weather");

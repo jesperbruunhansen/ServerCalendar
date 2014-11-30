@@ -15,7 +15,7 @@ import java.net.Socket;
 public class Server {
 
     private int portNr;
-    private PrintWriter out;
+
     private String header = "";
     private char[] inputChars;
     private int charsRead = 0;
@@ -36,57 +36,13 @@ public class Server {
         }
 
         System.out.println("Waiting for connection");
+
         for (; ; ) {
             try {
                 // wait for a connection
                 Socket remote = s.accept();
-                inputChars = null;
-
-                BufferedReader in = new BufferedReader(new InputStreamReader(remote.getInputStream()));
-                out = new PrintWriter(remote.getOutputStream());
-
-
-                int charsRead;
-                inputChars = new char[2048];
-                if ((charsRead = in.read(inputChars)) != -1)
-                {
-                    System.out.println("Chars read from stream: " + charsRead);
-                }
-                header = new String(inputChars);
-
-                //System.out.println(header+"\n");
-
-                //Send header from client and parse parameters
-                ServerRequestHandler.parseHeader(header);
-
-                //Get rid of anything else but GET/Post parameters
-                if(!ServerRequestHandler.isFavicon){
-
-                    //Set header parameters to GiantSwitch
-                    if(ServerRequestHandler.isGet){
-                        SwitchController.getRequest();
-                    }
-                    else if(ServerRequestHandler.isPost){
-                        SwitchController.postRequest();
-                    }
-
-                    // Send the response
-                    // Send the headers
-                    out.println(ServerRequestHandler.getHTTPResponseCode());
-                    out.println(ServerRequestHandler.getJSONMIMEType());
-                    out.println(ServerRequestHandler.getHTTPServerInfo());
-
-
-
-                    // this blank line signals the end of the headers
-                    out.println("");
-
-                    // Send JSON to the page
-                    out.println(SwitchController.getJsonResponse());
-                }
-
-                out.flush();
-                remote.close();
+                Runnable connectionHandler = new ConnectionHandler(remote);
+                new Thread(connectionHandler).start();
             } catch (Exception e) {
                 e.getStackTrace();
             }

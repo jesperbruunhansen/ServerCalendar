@@ -97,6 +97,7 @@ class Event {
     public String getDescription(){
         return description;
     }
+    public void setDescription(String description){this.description = description;}
 
     public String getLocation(){
         return location;

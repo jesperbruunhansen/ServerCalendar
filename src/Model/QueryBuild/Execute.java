@@ -51,7 +51,7 @@ public class Execute extends Model {
         this.where = where;
     }
 
-    public CachedRowSetImpl ExecuteQuery() throws SQLException{
+    public synchronized CachedRowSetImpl ExecuteQuery() throws SQLException{
         String sql;
         try {
             if(isGetAll()){
@@ -98,7 +98,6 @@ public class Execute extends Model {
                 sql = SELECT + getQueryBuilder().getSelectValue() +
                         FROM + getQueryBuilder().getTableName() +
                         WHERE + getWhere().getWhereKey() + " " + getWhere().getWhereOperator() + " ?;";
-                System.out.println(sql);
 
                 try {
                     getConnection();
@@ -129,7 +128,7 @@ public class Execute extends Model {
 
 
 
-    public boolean Execute() throws SQLException{
+    public synchronized boolean Execute() throws SQLException{
         //setSelectedDatabase("cbscalendar");
 
         if(getQueryBuilder().isSoftDelete()){

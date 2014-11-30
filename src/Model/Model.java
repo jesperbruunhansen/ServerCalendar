@@ -20,7 +20,6 @@ public abstract class Model {
     private Statement stmt;
     protected static Connection conn = null;
     protected static PreparedStatement sqlStatement;
-    protected ResultSet resultSet;
 
     /**
      * Overwrite default database url

@@ -7,7 +7,7 @@ import Model.DatabaseInit;
 /**
  * Created by jesperbruun on 15/11/14.
  */
-public class Bootstrap implements Runnable {
+public class Bootstrap {
 
     public Bootstrap(){
         /**
@@ -18,13 +18,13 @@ public class Bootstrap implements Runnable {
 
     }
 
-    @Override
+
     public void run() {
         /**
          * Create new screen object
          */
-        Controller controller = new Controller();
-        controller.init();
+        //Controller controller = new Controller();
+       // controller.init();
 
         /**
          * Create new server object, to make server run on specified port nr.

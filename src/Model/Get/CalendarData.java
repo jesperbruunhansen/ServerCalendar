@@ -51,7 +51,7 @@ public class CalendarData extends Model {
         }
     }
 
-    public static String getAllEvents(String id) {
+    public synchronized static String getAllEvents(String id) {
         CachedRowSetImpl crs;
         Gson gson = new Gson();
         QueryBuilder queryBuilderForecast = new QueryBuilder();
@@ -89,7 +89,7 @@ public class CalendarData extends Model {
                     event.setCreatedby(rs.getInt("createdby"));
                     event.setStrDateStart(rs.getString("start"));
                     event.setStrDateEnd(rs.getString("end"));
-                    event.setTitle(rs.getString("title"));
+                    event.setDescription(rs.getString("title"));
                     event.setText(rs.getString("text"));
                     event.setCalendarid(rs.getInt("calendarid"));
 
