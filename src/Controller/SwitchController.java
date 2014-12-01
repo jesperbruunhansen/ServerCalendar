@@ -122,7 +122,7 @@ public class SwitchController extends ServerRequestHandler{
                 break;
             case "deleteEvent" :
                 Events.deleteEvent(getPostJsonData().trim());
-                setJsonResponse(Events.getJsonResponse());
+                    setJsonResponse(Events.getJsonResponse());
                 setHTTPResponseCode(HTTP.OK);
                 break;
             case "updateEvent" :

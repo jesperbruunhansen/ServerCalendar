@@ -28,8 +28,6 @@ public class ConnectionHandler implements Runnable {
         try {
             inputChars = null;
 
-            System.out.println("ID: " + Thread.currentThread().getId());
-
             BufferedReader in = new BufferedReader(new InputStreamReader(remote.getInputStream()));
             out = new PrintWriter(remote.getOutputStream());
 

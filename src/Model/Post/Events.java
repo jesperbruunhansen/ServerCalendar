@@ -82,13 +82,13 @@ public class Events extends Model {
         EventCredentials eventCredentials = gson.fromJson(jsonPostRequest, EventCredentials.class);
 
         //Check if client filled correct necessary information
-        if(eventCredentials.getId().equals("")) {
+        if(eventCredentials.getEventId().equals("")) {
             jsonResponse = "{\"response\": \"EVENTID MISSING\"}";
 
         } else {
             try {
                 //Delete event from database
-                queryBuilder.deleteFrom("events").where("id", "=", eventCredentials.getId()).Execute();
+                queryBuilder.deleteFrom("events").where("id", "=", eventCredentials.getEventId()).Execute();
                 jsonResponse = "{\"response\": \"EVENT DELETED\"}";
 
             } catch (SQLException e) {
@@ -138,8 +138,8 @@ public class Events extends Model {
             return location;
         }
 
-        public String getId() {
-            return id;
+        public String getEventId() {
+            return eventid;
         }
 
         public String getStart() {

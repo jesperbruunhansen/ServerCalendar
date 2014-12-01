@@ -37,11 +37,11 @@ public class Login extends Model {
                 Boolean active = rs.getBoolean("active");
 
                 if(active && username.equals(loginCredentials.getUsername()) && password.equals(loginCredentials.getPassword())){
-                    jsonResponse = "{\"authentication\": \"true\", \"userid\":\""+ userId + "\"}";
+                    jsonResponse = "{\"authentication\": true, \"userid\":\""+ userId + "\"}";
                     break;
                 }
                 else{
-                    jsonResponse = "{\"authentication\": \"false\"}";
+                    jsonResponse = "{\"authentication\": false}";
                 }
             }
 
