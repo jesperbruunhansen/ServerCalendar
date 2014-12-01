@@ -13,6 +13,11 @@ public class Notes {
     private static CachedRowSetImpl rs;
     private static String jsonResponse;
 
+    /**
+     * Create a new note in local db
+     * Requires userid, eventid and text
+     * @param jsonPostRequest
+     */
         public static void createNote(String jsonPostRequest){
 
         //Implement Gson
@@ -52,6 +57,11 @@ public class Notes {
 
     }
 
+    /**
+     * Delete event
+     * Requires noteid
+     * @param jsonPostRequest
+     */
     public static void deleteNote(String jsonPostRequest){
 
         //Implement Gson
@@ -82,14 +92,14 @@ public class Notes {
 
     }
 
-    public static void updateNote(String jsonPostRequest){
-
-    }
 
     public static String getJsonResponse() {
         return jsonResponse;
     }
 
+    /**
+     * Mapper class for GSON Library
+     */
     private class NoteCredentials{
 
         private String userid;

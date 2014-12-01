@@ -14,9 +14,12 @@ public class Login extends Model {
 
     private static CachedRowSetImpl rs;
     private static String jsonResponse;
-    private static String authReply;
 
-
+    /**
+     * Authenticate user
+     * Requires password and username from client to be evaluated
+     * @param jsonPostRequest
+     */
     public static void authenticateUser(String jsonPostRequest){
 
         jsonResponse = null;
@@ -52,11 +55,14 @@ public class Login extends Model {
 
     }
 
-
     public static String getJsonResponse() {
         return jsonResponse;
     }
 
+
+    /**
+     * Mapper class for GSON library
+     */
     private class LoginCredentials{
 
         public String getPassword() {

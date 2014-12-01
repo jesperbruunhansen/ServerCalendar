@@ -14,6 +14,11 @@ public class Calendar extends Model {
     private static CachedRowSetImpl rs;
     private static String jsonResponse;
 
+    /**
+     * Create calendar from JSON request.
+     * Requires userid, calendar-name and private/public properties
+     * @param jsonPostRequest
+     */
     public static void createCalendar(String jsonPostRequest){
 
         //jsonResponse = null;
@@ -69,6 +74,11 @@ public class Calendar extends Model {
 
     }
 
+    /**
+     * Delete calendar from JSON request.
+     * Requires calendar id.
+     * @param jsonPostRequest
+     */
     public static void deleteCalendar(String jsonPostRequest){
 
         //Implement Gson
@@ -102,6 +112,11 @@ public class Calendar extends Model {
 
     }
 
+    /**
+     * Share calendar from given JSON request
+     * Requires calendar id and email from user
+     * @param jsonPostRequest
+     */
     public static void shareCalendar(String jsonPostRequest){
 
         //Implement Gson
@@ -151,6 +166,9 @@ public class Calendar extends Model {
         return jsonResponse;
     }
 
+    /**
+     * Mapper class library
+     */
     private class CalendarCredentials{
 
         private String userid;

@@ -12,6 +12,10 @@ import java.util.List;
  */
 public class UserData {
 
+    /**
+     * Get all users in the system.
+     * @return JSON string with email addresses
+     */
     public static String getAllUsers() {
 
         try {
@@ -41,6 +45,10 @@ public class UserData {
 
 
 }
+
+/**
+ * Mapper class for GSON library
+ */
 class Users {
     public void setUserName(String userName) {
         this.username = userName;

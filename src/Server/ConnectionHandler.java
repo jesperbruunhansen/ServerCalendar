@@ -16,13 +16,21 @@ public class ConnectionHandler implements Runnable {
     private PrintWriter out;
     private String header = "";
     private char[] inputChars;
-    private int charsRead = 0;
 
-
+    /**
+     * Take a socket object, when a new instance is created. The socket object is passed from the Server class
+     * @param s
+     */
     public ConnectionHandler(Socket s) {
         remote = s;
     }
 
+    /**
+     * Run-method implemented by the Runnable interface. The method are called from the Server class, and takes care
+     * of the multi-threading purposes of our server.
+     * Run-method is a backbone method, taking care of request from the clients, passing through the application
+     * and sending correct responses back the client.
+     */
     @Override
     public void run() {
         try {
@@ -32,7 +40,7 @@ public class ConnectionHandler implements Runnable {
             out = new PrintWriter(remote.getOutputStream());
 
             int charsRead;
-            inputChars = new char[2048];
+            inputChars = new char[1024];
             if ((charsRead = in.read(inputChars)) != -1) {
                 System.out.println("Chars read from stream: " + charsRead);
             }

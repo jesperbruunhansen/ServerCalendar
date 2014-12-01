@@ -12,7 +12,12 @@ import java.net.URL;
 public class QouteData {
 
 
-
+    /**
+     * Read data from any givin url.
+     * @param urlString
+     * @return ouput as string
+     * @throws Exception
+     */
     private static String readUrl(String urlString){
         try {
             BufferedReader reader = null;
@@ -36,6 +41,10 @@ public class QouteData {
         return null;
     }
 
+    /**
+     * Get qoute from URL
+     * @return
+     */
     public static String getQuote(){
         String jsonQuoute = readUrl("http://dist-sso.it-kartellet.dk/quote/");
         return jsonQuoute;

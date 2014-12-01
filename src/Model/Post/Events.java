@@ -16,8 +16,12 @@ public class Events extends Model {
 
     private static CachedRowSetImpl rs;
     private static String jsonResponse;
-    private static String httpResponse;
 
+    /**
+     * Create event in local database
+     * Requires userid, calendar id, location, title, start and end of event.
+     * @param jsonPostRequest
+     */
     public static void createEvent(String jsonPostRequest){
 
         //Implement Gson
@@ -70,6 +74,11 @@ public class Events extends Model {
         }
     }
 
+    /**
+     * Delete event from local db
+     * Requires eventid
+     * @param jsonPostRequest
+     */
     public static void deleteEvent(String jsonPostRequest){
 
         //Implement Gson
@@ -100,17 +109,13 @@ public class Events extends Model {
 
     }
 
-    public static void updateEvent(String jsonPostRequest){
-
-        /*PreparedStatement ps = doQuery("SELECT * FROM events WHERE id = ? AND useriud = ? ;");
-        ps.setString(1, "23");
-        ps.setString(2, "asdf");
-       ResultSet rs =  ps.executeQuery();*/
-    }
     public static String getJsonResponse() {
         return jsonResponse;
     }
 
+    /**
+     * Mapper class for GSON library
+     */
     private class EventCredentials{
 
         private String userid;

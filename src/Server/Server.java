@@ -21,7 +21,9 @@ public class Server {
     private int charsRead = 0;
 
     /**
-     * WebServer constructor.
+     * WebServer constructor. Will create a ServerSocket and hanging for-loop to wait for a connection the server.
+     * When a connection has been accepted, a new thread from Runnable class will be instantiated for multithreading
+     * purposes.
      */
     public void runServer() {
         ServerSocket s;
@@ -51,10 +53,19 @@ public class Server {
 
     }
 
+
+    /**
+     * Set port nr for the server to open  a socket on.
+     * @param port
+     */
     public void setPortNr(int port) {
         this.portNr = port;
     }
 
+    /**
+     * Private get method, to get the current port nr.
+     * @return
+     */
     private int getPortNr() {
         return portNr;
     }

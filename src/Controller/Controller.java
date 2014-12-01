@@ -11,9 +11,11 @@ import Model.ViewModel;
 public class Controller{
 
     protected ViewModel viewModel = new ViewModel();
-    //protected QueryBuilder queryBuilder = new QueryBuilder();
-    //protected ResultSet resultSet;
 
+
+    /**
+     * Create GUI screens
+     */
     public void init(){
 
         /**

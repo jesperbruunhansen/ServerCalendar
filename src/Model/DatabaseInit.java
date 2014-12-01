@@ -10,6 +10,10 @@ import java.sql.SQLException;
  */
 public class DatabaseInit extends Model {
 
+
+    /**
+     * Initialize database environment
+     */
     public static void init() {
 
         try {
@@ -24,8 +28,6 @@ public class DatabaseInit extends Model {
         catch (IOException e) {
             e.printStackTrace();
         }
-
-        //Note fra helena
 
     }
 

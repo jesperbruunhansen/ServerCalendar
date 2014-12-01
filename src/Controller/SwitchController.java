@@ -14,6 +14,8 @@ import Server.ServerRequestHandler;
 
 /**
  * Created by jesperbruun on 13/11/14.
+ * API of our server. The Server class will trigger either the GET or POST method, to determine what action to take,
+ * and what response to return.
  */
 public class SwitchController extends ServerRequestHandler{
 
@@ -27,7 +29,6 @@ public class SwitchController extends ServerRequestHandler{
     public static void getRequest(){
 
         String parameterValue = getGetParameter();
-        Forecast forecast = new Forecast();
 
         if(!parameterValue.isEmpty()){
             switch (parameterValue){
@@ -47,24 +48,9 @@ public class SwitchController extends ServerRequestHandler{
                     setHTTPResponseCode(HTTP.OK);
                     setJsonResponse(CalendarData.getAllCalendars(getGetParameterId()));
                     break;
-                case "setAllEvents" :
-                    setHTTPResponseCode(HTTP.OK);
-                    setJsonResponse("Alle data er blevet smidt i db");
-                    //CalendarData.setCalendarEventsToDb();
-                    break;
-                case "forecastTest" :
-                    Forecast.isForecastUpToDate();
-                    setHTTPResponseCode(HTTP.OK);
-                    setJsonResponse("Forecast uptodate kaldt");
-                    break;
                 case "getAllUsers" :
                     setHTTPResponseCode(HTTP.OK);
                     setJsonResponse(UserData.getAllUsers());
-                    break;
-                case "forecast" :
-                    setHTTPResponseCode(HTTP.OK);
-                    forecast.setForecastToDb();
-                    setJsonResponse("Forecast!");
                     break;
                 default:
                     System.out.println("\twrong parameter given");
@@ -86,7 +72,6 @@ public class SwitchController extends ServerRequestHandler{
      * getPostId is inherited from ServerRequestHandler
      */
     public static void postRequest(){
-
 
         switch (getPostId()){
             case "login" :
@@ -154,9 +139,18 @@ public class SwitchController extends ServerRequestHandler{
 
     }
 
+    /**
+     * Set the response from each switch case
+     * @param value
+     */
     private static void setJsonResponse(String value) {
         SwitchController.jsonResponse = value;
     }
+
+    /**
+     * Get the response from each switch case, for retrieval in our Server class
+     * @return
+     */
     public static String getJsonResponse(){
         return SwitchController.jsonResponse;
     }

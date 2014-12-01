@@ -30,9 +30,12 @@ import org.joda.time.LocalDate;
  */
 public class CalendarData extends Model {
 
-    private static Gson gson;
-    private static QueryBuilder queryBuilder;
-
+    /**
+     * Read data from any givin url.
+     * @param urlString
+     * @return ouput as string
+     * @throws Exception
+     */
     private static String readUrl(String urlString) throws Exception {
         BufferedReader reader = null;
         try {
@@ -51,6 +54,13 @@ public class CalendarData extends Model {
         }
     }
 
+    /**
+     * Get all events from the giving user id. THe method will map data from forecast and notes into each event, and
+     * return as unified JSON string.
+     * Each event from CBS Calendar will be retrieved, then afterwards each event from the servers local database.
+     * @param id userid as string
+     * @return JSON String of all events, mapped with their individual notes, available forecast data
+     */
     public synchronized static String getAllEvents(String id) {
         CachedRowSetImpl crs;
         Gson gson = new Gson();
@@ -190,6 +200,11 @@ public class CalendarData extends Model {
     }
 
 
+    /**
+     * Get all calendars from the servers calendar, and where the user with the givin ID has access to
+     * @param id  userid as string
+     * @return JSON string of all calendars
+     */
     public static String getAllCalendars(String id) {
         Gson g = new Gson();
         PreparedStatement ps = null;
@@ -225,64 +240,6 @@ public class CalendarData extends Model {
         return null;
     }
 
-    /*public static void setCalendarEventsToDb() {
-
-        try {
-            String json = readUrl("http://calendar.cbs.dk/events.php/" + EncryptUserID.getUserId() + "/" + EncryptUserID.getKey() + ".json");
-
-
-            queryBuilder = new QueryBuilder();
-
-            String[] fields = {"activity_id", "event_id", "location", "createdby", "start", "end", "title", "text", "customevent", "calendarid"};
-
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-            for (int i = 0; i < events.getEvents().size(); i++) {
-
-                int monthStart = Integer.parseInt(events.getEvents().get(i).getStart().get(1)) + 1;
-                String start =
-                        events.getEvents().get(i).getStart().get(2) + "-" +
-                                monthStart + "-" +
-                                events.getEvents().get(i).getStart().get(0) + " " +
-                                events.getEvents().get(i).getStart().get(3) + ":" +
-                                events.getEvents().get(i).getStart().get(4);
-
-                Date startDate = new SimpleDateFormat("dd-MM-yyyy HH:mm").parse(start);
-                String strStartDate = sdf.format(startDate);
-
-                int monthEnd = Integer.parseInt(events.getEvents().get(i).getEnd().get(1)) + 1;
-                String end =
-                        events.getEvents().get(i).getEnd().get(2) + "-" +
-                                monthEnd + "-" +
-                                events.getEvents().get(i).getEnd().get(0) + " " +
-                                events.getEvents().get(i).getEnd().get(3) + ":" +
-                                events.getEvents().get(i).getEnd().get(4);
-                Date endDate = new SimpleDateFormat("dd-MM-yyyy HH:mm").parse(end);
-                String strEndDate = sdf.format(endDate);
-
-
-                String[] values = {
-                        events.getEvents().get(i).getActivityid(),  //Activity ID
-                        events.getEvents().get(i).getEventid(),     //EventID
-                        events.getEvents().get(i).getLocation(),    //Location
-                        "1",                                        //CreatedBy
-                        strStartDate,                       //Start
-                        strEndDate,                         //End
-                        events.getEvents().get(i).getDescription(),       //Title
-                        "Text - text",
-                        "0",
-                        "1",
-                };
-
-                queryBuilder.insertInto("events", fields).values(values).Execute();
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }*/
-
 }
 
 
@@ -290,7 +247,6 @@ class EncryptUserID {
 
     /**
      * Constant cipher seed - DO NOT CHANGE.
-     * http://www.miraclesalad.com/webtools/md5.php - Du kan her saette userid foerst og derefter hashkey for at teste
      */
     private static final String HASHKEY = "v.eRyzeKretW0r_t";
     private static String userId;
@@ -305,7 +261,11 @@ class EncryptUserID {
         }
     }
 
-    // Enkryptere en tekst streng som bliver parset til funktionen
+    /**
+     * Encrypt string with MD5 hashing
+     * @param str
+     * @return MD5 hash of string
+     */
     public static String crypt(String str) {
         if (str == null || str.length() == 0) {
             throw new IllegalArgumentException("Error");
@@ -332,12 +292,19 @@ class EncryptUserID {
         return userId;
     }
 
+    /**
+     * Get the hashed key for CBS Calendar.
+     * @return hashed key
+     */
     public static String getKey() {
         return crypt(EncryptUserID.getUserId() + HASHKEY);
     }
 
 }
 
+/**
+ * Mapper class for GSON library.
+ */
 class EventJson {
     public void setActivityid(String activityid) {
         this.activityid = activityid;
@@ -347,11 +314,9 @@ class EventJson {
         this.eventid = eventid;
     }
 
-
     public void setTitle(String title) {
         this.title = title;
     }
-
 
     public void setLocation(String location) {
         this.location = location;
@@ -384,6 +349,9 @@ class EventJson {
 
 }
 
+/**
+ * Mapper class for GSON library.
+ */
 class GetAllCalendars {
 
     public void setCalendarId(String calendarId) {
@@ -403,6 +371,9 @@ class GetAllCalendars {
     private String calendarCreatedBy;
 }
 
+/**
+ * Mapper class for GSON library.
+ */
 class Note {
 
     public void setCreatedby(int createdby) {
@@ -422,6 +393,9 @@ class Note {
     private String createdon;
 }
 
+/**
+ * Mapper class for GSON library.
+ */
 class Events {
     ArrayList<Event> events = new ArrayList<>();
 
@@ -438,5 +412,115 @@ class Events {
         return Arrays.toString(events.toArray());
 
     }
+
+}
+
+/**
+ * Mappe class for GSON library
+ */
+
+class Event {
+    private String activityid;
+
+    public void setEventid(String eventid) {
+        this.eventid = eventid;
+    }
+
+    public void setActivityid(String activityid) {
+        this.activityid = activityid;
+    }
+
+    public void setCreatedby(int createdby) {
+        this.createdby = createdby;
+    }
+
+    private String eventid;
+    private String type;
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setCalendarid(int calendarid) {
+        this.calendarid = calendarid;
+    }
+
+    private String title;
+    private String description;
+    private String location;
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    private int createdby;
+    private ArrayList<String> start;
+    private ArrayList<String> end;
+    private ForecastClass forecast;
+    private int calendarid;
+
+
+    private transient Date dateStart;
+    private transient Date dateEnd;
+
+    private String strDateStart;
+    private String strDateEnd;
+
+    private String text;
+    private ArrayList<Note> noter;
+
+
+    public void setForecastClass(ForecastClass forecastClass) {
+        this.forecast = forecastClass;
+    }
+    public ForecastClass getForecast(){return forecast;}
+
+    public void setStrDateStart(String strDateStart) {
+        this.strDateStart = strDateStart;
+    }
+    public String getStrDateStart(){return strDateStart;}
+
+    public void setStrDateEnd(String strDateEnd) {
+        this.strDateEnd = strDateEnd;
+    }
+    public String getStrDateEnd(){return strDateEnd;}
+
+    public void setNoter(ArrayList<Note> noter) {
+        this.noter = noter;
+    }
+    public ArrayList<Note> getNoter(){return noter;}
+
+    public String getActivityid(){
+        return activityid;
+    }
+
+    public String getEventid(){
+        return eventid;
+    }
+
+    public String getDescription(){
+        return description;
+    }
+    public void setDescription(String description){this.description = description;}
+
+    public String getLocation(){
+        return location;
+    }
+
+
+    public ArrayList<String> getStart(){return start;}
+
+    public void setDateStart(Date start){this.dateStart = start;}
+    public Date getDateStart(){return dateStart;}
+
+    public void setDateEnd(Date end){this.dateEnd = end;}
+
+    public void setText(String text){this.text = text;}
+
+    public ArrayList<String> getEnd(){
+        return end;
+    }
+
+    public Event(){}
 
 }

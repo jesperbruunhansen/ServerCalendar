@@ -12,6 +12,11 @@ import java.util.List;
  */
 public class NoteData {
 
+    /**
+     * Get all notes from givin event id
+     * @param eventid
+     * @return JSON string
+     */
     public static String getAllNotes(String eventid){
         Gson g = new Gson();
         QueryBuilder queryBuilder = new QueryBuilder();
@@ -42,6 +47,10 @@ public class NoteData {
     }
 
 }
+
+/**
+ * Mapper class for GSON library
+ */
 class GetAllNotes {
     private String text;
     private String createdby;

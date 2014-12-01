@@ -7,6 +7,9 @@ import java.net.URLDecoder;
  */
 public abstract class ServerRequestHandler {
 
+    /**
+     * Definition of HTTP response codes
+     */
     protected enum HTTP {
         OK(200, "OK"),
         BAD_REQUEST(400, "Bad Request"),
@@ -158,24 +161,58 @@ public abstract class ServerRequestHandler {
         }
     }
 
-
+    /**
+     * Retrieve the GET parameter from client request
+     * @return GET parameter as string
+     */
     protected static String getGetParameter(){return callParameter;}
+
+    /**
+     * Get the GET parameter ID from client request
+     * @return GET parameter ID as string
+     */
     protected static String getGetParameterId(){return callParameterId;}
+
+    /**
+     * Get the POST id from client request
+     * @return POST id as string
+     */
     protected static String getPostId(){return postId;}
+
+    /**
+     * Get the JSON data from a post request.
+     * @return POST request in JSON format as string
+     */
     protected static String getPostJsonData(){return postJsonData;}
 
+    /**
+     * Get HTTP response code from enums
+     * @return http response as string
+     */
     public static String getHTTPResponseCode(){
         return ServerRequestHandler.HTTPHeader;
     }
 
+    /**
+     * Get MIME type for header in response.
+     * @return MIME type as string
+     */
     public static String getJSONMIMEType(){
         return ServerRequestHandler.MIME_TYPE;
     }
 
+    /**
+     * Get HTTP Server info for header in response
+     * @return info as string
+     */
     public static String getHTTPServerInfo(){
         return ServerRequestHandler.SERVER_INFO;
     }
 
+    /**
+     * Set HTTP response code from sub-classes of this class. Can be called from any class that inherits this class
+     * @param code
+     */
     protected static void setHTTPResponseCode(HTTP code){
         ServerRequestHandler.HTTPHeader = code.toString();
     }

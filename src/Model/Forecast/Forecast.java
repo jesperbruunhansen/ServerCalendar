@@ -14,7 +14,9 @@ import java.util.Date;
 
 public class Forecast extends Model{
 
-	// Main metode til at koere en test af vejrudsigt funktionen
+    /**
+     * Read data from forecast-service and set to database
+     */
     public static void setForecastToDb(){
 
         try{
@@ -42,6 +44,11 @@ public class Forecast extends Model{
         }
     }
 
+    /**
+     * Is the forecast data up-to-date? Method will check for every time it gets called, if 1 hour has passed
+     * and then updates the forecaste data
+     * @return true if last-update < 3600 sec, false if last-update > 3600 sec
+     */
     public static boolean isForecastUpToDate(){
 
         QueryBuilder queryBuilder = new QueryBuilder();
@@ -67,6 +74,9 @@ public class Forecast extends Model{
 
     }
 
+    /**
+     * Truncate forecast table, and set new information
+     */
     public static void refreshForecast(){
         try{
             PreparedStatement ps = doQuery("TRUNCATE TABLE forecast;");

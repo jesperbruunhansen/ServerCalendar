@@ -7,6 +7,11 @@ import Model.DatabaseInit;
 /**
  * Created by jesperbruun on 15/11/14.
  */
+
+/**
+ * Initializer of the server. Constructor will run database initialization
+ * to make sure the correct database environment is available.
+ */
 public class Bootstrap {
 
     public Bootstrap(){
@@ -18,7 +23,9 @@ public class Bootstrap {
 
     }
 
-
+    /**
+     * Start the server. Makes sure the controller class with GUI and Logic are instantiated
+     */
     public void run() {
         /**
          * Create new screen object
