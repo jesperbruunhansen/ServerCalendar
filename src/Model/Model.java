@@ -21,14 +21,6 @@ public abstract class Model {
     protected static PreparedStatement sqlStatement;
 
     /**
-     * Overwrite default database url
-     * @param
-     */
-    public static void setSelectedDatabase(String db) {
-        sqlUrl += "/"+db;
-    }
-
-    /**
      * Checks if the databse exists or not
      * @return bool
      * @throws SQLException
@@ -80,27 +72,6 @@ public abstract class Model {
         }
 
         return sqlStatement;
-    }
-
-
-    public String readFromFile(String path) throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader(path));
-        try {
-            StringBuilder sb = new StringBuilder();
-            String line = br.readLine();
-
-            while (line != null) {
-                sb.append(line);
-                sb.append(System.lineSeparator());
-                line = br.readLine();
-            }
-            return sb.toString();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            br.close();
-        }
-        return "";
     }
 
     /**

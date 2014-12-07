@@ -23,7 +23,6 @@ public class DatabaseInit extends Model {
                 readfromSqlFile(Config.getResPath() + "createDBscript.sql");
             }
             getConnection(false);
-            //System.out.println("db ok");
         }
         catch (SQLException e){
             e.printStackTrace();
