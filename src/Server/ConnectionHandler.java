@@ -46,7 +46,7 @@ public class ConnectionHandler implements Runnable {
             }
             header = new String(inputChars);
 
-            //System.out.println(header+"\n");
+            System.out.println(header+"\n");
 
             //Send header from client and parse parameters
             ServerRequestHandler.parseHeader(header);

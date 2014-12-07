@@ -83,7 +83,7 @@ public class SwitchController extends ServerRequestHandler{
             case "addCalendar" :
                 Calendar.createCalendar(getPostJsonData().trim());
                 setJsonResponse(Calendar.getJsonResponse());
-                setHTTPResponseCode(HTTP.OK);
+                setHTTPResponseCode(HTTP.CREATED);
                 break;
             case "deleteCalendar" :
                 Calendar.deleteCalendar(getPostJsonData().trim());
@@ -103,30 +103,20 @@ public class SwitchController extends ServerRequestHandler{
             case "addEvent" :
                 Events.createEvent(getPostJsonData().trim());
                 setJsonResponse(Events.getJsonResponse());
-                setHTTPResponseCode(HTTP.OK);
+                setHTTPResponseCode(HTTP.CREATED);
                 break;
             case "deleteEvent" :
                 Events.deleteEvent(getPostJsonData().trim());
                     setJsonResponse(Events.getJsonResponse());
                 setHTTPResponseCode(HTTP.OK);
                 break;
-            case "updateEvent" :
-                Events.updateEvent(getPostJsonData().trim());
-                setJsonResponse(Events.getJsonResponse());
-                setHTTPResponseCode(HTTP.OK);
-                break;
             case "addNote" :
                 Notes.createNote(getPostJsonData().trim());
                 setJsonResponse(Notes.getJsonResponse());
-                setHTTPResponseCode(HTTP.OK);
+                setHTTPResponseCode(HTTP.CREATED);
                 break;
             case "deleteNote" :
                 Notes.deleteNote(getPostJsonData().trim());
-                setJsonResponse(Notes.getJsonResponse());
-                setHTTPResponseCode(HTTP.OK);
-                break;
-            case "updateNote" :
-                Notes.updateNote(getPostJsonData().trim());
                 setJsonResponse(Notes.getJsonResponse());
                 setHTTPResponseCode(HTTP.OK);
                 break;

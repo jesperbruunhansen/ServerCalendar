@@ -16,10 +16,6 @@ public class Server {
 
     private int portNr;
 
-    private String header = "";
-    private char[] inputChars;
-    private int charsRead = 0;
-
     /**
      * WebServer constructor. Will create a ServerSocket and hanging for-loop to wait for a connection the server.
      * When a connection has been accepted, a new thread from Runnable class will be instantiated for multithreading
