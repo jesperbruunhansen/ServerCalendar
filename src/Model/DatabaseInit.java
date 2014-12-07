@@ -19,8 +19,11 @@ public class DatabaseInit extends Model {
         try {
             if (!doesDatabaseExist())
             {
+                System.out.println("Database does not exist");
                 readfromSqlFile(Config.getResPath() + "createDBscript.sql");
             }
+            getConnection(false);
+            //System.out.println("db ok");
         }
         catch (SQLException e){
             e.printStackTrace();

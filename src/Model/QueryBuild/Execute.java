@@ -57,7 +57,7 @@ public class Execute extends Model {
             if(isGetAll()){
                 sql = SELECT + getQueryBuilder().getSelectValue() + FROM + getQueryBuilder().getTableName() + ";";
                 try {
-                    getConnection();
+                    getConnection(false);
                     sqlStatement = getConn().prepareStatement(sql);
                     CachedRowSetImpl cachedRowSet = new CachedRowSetImpl();
                     cachedRowSet.populate(sqlStatement.executeQuery());
@@ -79,7 +79,6 @@ public class Execute extends Model {
                                 " INNER JOIN " + getWhere().getJoinTableName() +
                                 " ON " + getOn().getLeftTableName() + " " + getOn().getOperator() + " " + getOn().getRightTableName() + " ;";
                 try{
-                    getConnection();
                     sqlStatement = getConn().prepareStatement(sql);
                     CachedRowSetImpl cachedRowSet = new CachedRowSetImpl();
                     cachedRowSet.populate(sqlStatement.executeQuery());
@@ -100,7 +99,7 @@ public class Execute extends Model {
                         WHERE + getWhere().getWhereKey() + " " + getWhere().getWhereOperator() + " ?;";
 
                 try {
-                    getConnection();
+                    getConnection(false);
                     sqlStatement = getConn().prepareStatement(sql);
                     sqlStatement.setString(1, getWhere().getWhereValue());
                     CachedRowSetImpl cachedRowSet = new CachedRowSetImpl();
@@ -129,14 +128,11 @@ public class Execute extends Model {
 
 
     public synchronized boolean Execute() throws SQLException{
-        //setSelectedDatabase("cbscalendar");
-
+        getConnection(false);
         if(getQueryBuilder().isSoftDelete()){
-
             String sql =
                     "UPDATE " + getQueryBuilder().getTableName() +
                             " SET active = '0' WHERE " +getWhere().getWhereKey() + " " + getWhere().getWhereOperator() + " " +getWhere().getWhereValue() +";";
-            getConnection();
             sqlStatement = getConn().prepareStatement(sql);
         }
 
@@ -152,7 +148,6 @@ public class Execute extends Model {
             sql += " );";
 
             try {
-                getConnection();
                 sqlStatement = getConn().prepareStatement(sql);
                 int x = 0;
                 for(int i = 0; i < getValues().getValues().length; i++){
