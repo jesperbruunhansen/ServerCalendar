@@ -40,7 +40,7 @@ public class ConnectionHandler implements Runnable {
             out = new PrintWriter(remote.getOutputStream());
 
             int charsRead;
-            inputChars = new char[1024];
+
             if ((charsRead = in.read(inputChars)) != -1) {
                 System.out.println("Chars read from stream: " + charsRead);
             }
